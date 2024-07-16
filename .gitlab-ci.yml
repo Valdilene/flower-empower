@@ -4,7 +4,7 @@ stages:
   - lint
   - push
   - cleanup
-#  - deploy
+  - deploy
 
 before_script:
   - chmod -R 777 backend/project/__pycache__
@@ -51,14 +51,14 @@ cleanup:
     - docker compose -p "$CI_PIPELINE_ID" -f docker-compose.ci.yml down --remove-orphans
 
 
-#deploy:
-#  stage: deploy
-#  when: manual
-#  only:
-#    - master
-#  script:
-#    - docker compose -f docker-compose.deploy.yml pull
-#    - docker compose -f docker-compose.deploy.yml down --remove-orphans
-#    - docker volume rm group-2_frontend_build || true
-#    - docker compose -f docker-compose.deploy.yml up -d
+deploy:
+  stage: deploy
+  when: manual
+  only:
+    - master
+  script:
+    - docker compose -f docker-compose.deploy.yml pull
+    - docker compose -f docker-compose.deploy.yml down --remove-orphans
+    - docker volume rm group-2_frontend_build || true
+    - docker compose -f docker-compose.deploy.yml up -d
 
