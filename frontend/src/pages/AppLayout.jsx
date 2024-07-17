@@ -9,8 +9,8 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink, Outlet } from "react-router-dom";
-import Avatar from "/Users/emirmurati/Downloads/avatar.jpeg";
-import Logo from "/Users/emirmurati/Downloads/logo.webp";
+import Avatar from "../assets/img/avatar.jpeg";
+import Logo from "../assets/img/logoFlower.webp";
 
 const user = {
   name: "Emir Murati",
