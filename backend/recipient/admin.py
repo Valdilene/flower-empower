@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Recipient
 
+
 @admin.register(Recipient)
 class RecipientAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'email', 'phone_number', 'city', 'state', 'zip', 'end_date', 'group')
