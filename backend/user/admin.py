@@ -20,8 +20,3 @@ class UserAdmin(UserAdmin):
     # fields which are shown when looking at an list of instances
     list_display = ('email', 'first_name', 'last_name', 'is_staff')
     ordering = ('email',)
-
-
-from django.contrib import admin
-
-# Register your models here.

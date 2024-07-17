@@ -22,8 +22,3 @@ class EventAdmin(admin.ModelAdmin):
             'fields': ('bouquet_makers', 'drivers', 'recipients')
         }),
     )
-
-
-from django.contrib import admin
-
-# Register your models here.
