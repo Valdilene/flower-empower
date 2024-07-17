@@ -1,0 +1,9 @@
+*.ide
+media-files
+static-files
+
+.idea
+.DS_Store
+*.pyc
+__pycache__
+*.sqlite3
