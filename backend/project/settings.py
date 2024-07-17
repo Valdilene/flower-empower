@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
 
+    'user',
+    'event',
+    'recipient',
+    'registration',
+
 ]
 
 MIDDLEWARE = [
@@ -135,3 +140,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media-files') if DEBUG else '/media-files/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# user should be the name of your app, User should be the name of your model
+AUTH_USER_MODEL = 'user.User'
