@@ -29,6 +29,10 @@ li {
   list-style: none;
 }
 
+.active {
+  color: rgb(52, 52, 52);
+}
+
 .loader {
   width: 45px;
   aspect-ratio: 0.75;
