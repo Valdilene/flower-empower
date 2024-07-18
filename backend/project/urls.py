@@ -15,9 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from registration.views import RegistrationView, RegistrationValidationView
+from event.views import CreateEvent
 from user.views import MeView
 
 urlpatterns = [
@@ -31,4 +32,7 @@ urlpatterns = [
     path('api/registration/validation/', RegistrationValidationView.as_view(), name='registration_validation'),
     # user
     path('api/user/me/', MeView.as_view(), name='user_me'),
+    # events
+    path('api/event/', include('event.urls')),
+    path('api/event/create/', CreateEvent, name='create_event'),
 ]
