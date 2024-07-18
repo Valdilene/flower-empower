@@ -6,4 +6,3 @@ urlpatterns = [
     path('', ListCreateRecipientView.as_view()),
     path('<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view())
     ]
-
