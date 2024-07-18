@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 from registration.views import RegistrationView, RegistrationValidationView
+from user.views import MeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +29,6 @@ urlpatterns = [
     # registration
     path('api/registration/', RegistrationView.as_view(), name='registration'),
     path('api/registration/validation/', RegistrationValidationView.as_view(), name='registration_validation'),
+    # user
+    path('api/user/me/', MeView.as_view(), name='user_me'),
 ]
