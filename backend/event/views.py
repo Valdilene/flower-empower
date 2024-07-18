@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+
 from django.utils.dateparse import parse_date
 import json
 
@@ -9,10 +9,8 @@ from .models import Event
 from project import settings
 
 
-@csrf_exempt
 def create_event(request):
     if request.method == 'POST':
-
         data = json.loads(request.body)
 
         date = parse_date(data.get('date'))
@@ -20,7 +18,6 @@ def create_event(request):
         drivers_needed = data.get('drivers_needed')
         group = data.get('group')
         closed = data.get('closed', False)
-
 
         event = Event.objects.create(
             date=date,
@@ -30,16 +27,13 @@ def create_event(request):
             closed=closed
         )
 
-
         bouquet_makers_ids = data.get('bouquet_makers', [])
         bouquet_makers = settings.AUTH_USER_MODEL.objects.filter(id__in=bouquet_makers_ids)
         event.bouquet_makers.add(*bouquet_makers)
 
-
         drivers_ids = data.get('drivers', [])
         drivers = settings.AUTH_USER_MODEL.objects.filter(id__in=drivers_ids)
         event.drivers.add(*drivers)
-
 
         recipients_ids = data.get('recipients', [])
         recipients = Recipient.objects.filter(id__in=recipients_ids)
@@ -48,4 +42,3 @@ def create_event(request):
         return JsonResponse({'message': 'Event created successfully'}, status=201)
 
     return JsonResponse({'error': 'Only POST method is allowed'}, status=405)
-
