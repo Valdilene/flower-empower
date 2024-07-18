@@ -8,6 +8,9 @@ import Login from "./pages/Login";
 import NewPassword from "./pages/NewPassword";
 import Registration from "./pages/Registration";
 import RegistrationValidation from "./pages/RegistrationValidation";
+import Event from "./pages/Event";
+import Addresses from "./pages/Addresses";
+import Volunteers from "./pages/Volunteers";
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/events" element={<Event />} />
+          <Route path="/addresses" element={<Addresses />} />
+          <Route path="/volunteers" element={<Volunteers />} />
 
           <Route path="/signup" element={<Registration />} />
           <Route path="/login" element={<Login />} />
