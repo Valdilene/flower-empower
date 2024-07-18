@@ -8,7 +8,7 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import Avatar from "../assets/img/avatar.jpeg";
 import Logo from "../assets/img/logoFlower.webp";
 
@@ -31,16 +31,28 @@ function AppLayout() {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4 gap-12">
-                    <NavLink to="/" className="text-slate-200 ">
+                    <NavLink
+                      to="/"
+                      className="text-slate-200 hover:bg-pink-700  py-2 px-4"
+                    >
                       Home
                     </NavLink>
-                    <NavLink to="/events" className="text-slate-200 ">
+                    <NavLink
+                      to="/events"
+                      className="text-slate-200 hover:bg-pink-700  py-2 px-4"
+                    >
                       Events
                     </NavLink>
-                    <NavLink to="/addresses" className="text-slate-200 ">
+                    <NavLink
+                      to="/addresses"
+                      className="text-slate-200 hover:bg-pink-700 py-2 px-4 "
+                    >
                       Addresses
                     </NavLink>
-                    <NavLink to="/volunteers" className="text-slate-200 ">
+                    <NavLink
+                      to="/volunteers"
+                      className="text-slate-200 hover:bg-pink-700 py-2 px-4 "
+                    >
                       Volunteers
                     </NavLink>
                   </div>
@@ -66,20 +78,20 @@ function AppLayout() {
                       className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                     >
                       <MenuItem>
-                        <NavLink
+                        <Link
                           to="profile"
                           className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                         >
                           Your Profile
-                        </NavLink>
+                        </Link>
                       </MenuItem>
                       <MenuItem>
-                        <NavLink
+                        <Link
                           to="login"
                           className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                         >
                           Logout
-                        </NavLink>
+                        </Link>
                       </MenuItem>
                     </MenuItems>
                   </Menu>
@@ -105,25 +117,29 @@ function AppLayout() {
 
           <DisclosurePanel className="md:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3 flex flex-col gap-y-4">
-              <DisclosureButton className="text-white pl-4 " as="a" href="/">
+              <DisclosureButton
+                className="text-white pl-4 hover:bg-pink-700 py-2"
+                as="a"
+                href="/"
+              >
                 Home
               </DisclosureButton>
               <DisclosureButton
-                className="text-white pl-4 "
+                className="text-white pl-4 hover:bg-pink-700  py-2"
                 as="a"
                 href="events"
               >
                 Events
               </DisclosureButton>
               <DisclosureButton
-                className="text-white pl-4"
+                className="text-white pl-4 hover:bg-pink-700 py-2"
                 as="a"
                 href="/addresses"
               >
                 Addresses
               </DisclosureButton>
               <DisclosureButton
-                className="text-white pl-4"
+                className="text-white pl-4 hover:bg-pink-700 py-2"
                 as="a"
                 href="volunteers"
               >
@@ -168,13 +184,6 @@ function AppLayout() {
           </DisclosurePanel>
         </Disclosure>
 
-        <header className="bg-white shadow">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              Events
-            </h1>
-          </div>
-        </header>
         <main>
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <Outlet />
