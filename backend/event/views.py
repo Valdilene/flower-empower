@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 
 from django.utils.dateparse import parse_date
 import json
@@ -42,3 +42,16 @@ def create_event(request):
         return JsonResponse({'message': 'Event created successfully'}, status=201)
 
     return JsonResponse({'error': 'Only POST method is allowed'}, status=405)
+
+
+def delete_event(request, event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+    except Event.DoesNotExist:
+        return HttpResponseNotFound('Event not found')
+
+    if request.method == 'DELETE':
+        event.delete()
+        return JsonResponse({'message': 'Event deleted'})
+
+    return JsonResponse({'error'}, status=405)
