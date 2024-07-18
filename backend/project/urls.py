@@ -19,6 +19,8 @@ from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from registration.views import RegistrationView, RegistrationValidationView
 from event.views import CreateEvent
+from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
+    PasswordResetValidationView
 from user.views import MeView
 
 urlpatterns = [
@@ -30,9 +32,13 @@ urlpatterns = [
     # registration
     path('api/registration/', RegistrationView.as_view(), name='registration'),
     path('api/registration/validation/', RegistrationValidationView.as_view(), name='registration_validation'),
+    # password forget
+    path('api/auth/password-reset/', PasswordResetView.as_view(), name='password-reset'),
+    path('api/auth/password-reset/validate/', PasswordResetValidationView.as_view(), name='me'),
     # user
     path('api/user/me/', MeView.as_view(), name='user_me'),
     # events
     path('api/event/', include('event.urls')),
     path('api/event/create/', CreateEvent, name='create_event'),
+    path('api/recipients/', include('recipient.urls'))
 ]
