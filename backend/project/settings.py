@@ -27,6 +27,11 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://flower-empower.propulsion-learn.ch",
+    "http://161.35.74.204",
+]
+
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_yasg',
     'rest_framework',
+    'corsheaders',
 
     'user',
     'event',
@@ -49,6 +55,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
