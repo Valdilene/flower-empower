@@ -9,7 +9,7 @@ from .models import Event
 from project import settings
 
 
-def CreateEvent(request):
+def create_event(request):
     if request.method == 'POST':
         data = json.loads(request.body)
 
