@@ -1,9 +1,9 @@
 from random import randint
 
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from rest_framework import serializers, status
-from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 
 from registration.models import Registration
@@ -70,6 +70,7 @@ class RegistrationValidationSerializer(serializers.Serializer):
         registration_profile = Registration.objects.get(email=email)
         registration_profile.user = new_user
         registration_profile.save()
+
         return Response(status=status.HTTP_201_CREATED)
 
 
