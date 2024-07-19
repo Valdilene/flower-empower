@@ -45,6 +45,4 @@ urlpatterns = [
     # recipients
     path('api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
     path('api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(), name='update_recipient'),
-
-    # path('api/recipients/', include('recipient.urls'))
 ]
