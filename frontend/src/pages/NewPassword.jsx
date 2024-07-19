@@ -5,10 +5,10 @@ function NewPassword() {
   const { register, handleSubmit } = useForm();
 
   return (
-    <div className="flex flex-col items-center justify-center pt-48">
+    <div className="flex flex-col h-full items-center justify-start mt-40">
       <h2 className=" text-3xl">SET NEW PASSWORD</h2>
 
-      <form className="mt-10 grid w-1/3 grid-cols-2 gap-x-4 space-y-6">
+      <form className="mt-10 grid w-full grid-cols-2 gap-x-4 space-y-6">
         <div className="w-full place-self-end justify-self-start">
           <LabelAndInput
             htmlFor="email"
