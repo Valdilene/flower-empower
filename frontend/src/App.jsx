@@ -11,16 +11,31 @@ import RegistrationValidation from "./pages/RegistrationValidation";
 import Event from "./pages/Event";
 import Addresses from "./pages/Addresses";
 import Volunteers from "./pages/Volunteers";
+import AdminPage from "./pages/AdminPage";
+import PagesProtection from "./pages/PagesProtection";
 
 function App() {
+  const token = window.localStorage.getItem("token");
+  const is_superuser = window.localStorage.getItem("is_superuser");
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AppLayout />}>
+        <Route element={<AppLayout token={token} />}>
           <Route path="/" element={<Home />} />
-          <Route path="/events" element={<Event />} />
-          <Route path="/addresses" element={<Addresses />} />
-          <Route path="/volunteers" element={<Volunteers />} />
+          <Route
+            path="/events"
+            element={token ? <Event /> : <PagesProtection />}
+          />
+
+          <Route
+            path="/addresses"
+            element={is_superuser === "true" ? <Addresses /> : <AdminPage />}
+          />
+          <Route
+            path="/volunteers"
+            element={is_superuser === "true" ? <Volunteers /> : <AdminPage />}
+          />
 
           <Route path="/signup" element={<Registration />} />
           <Route path="/login" element={<Login />} />
