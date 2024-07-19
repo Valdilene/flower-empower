@@ -12,8 +12,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import Avatar from "../assets/img/avatar.jpeg";
 import Logo from "../assets/img/logoFlower.webp";
-import { useQuery } from "@tanstack/react-query";
-import API from "../axios";
+import { useCookies } from "react-cookie";
 
 const user = {
   name: "Emir Murati",
@@ -21,28 +20,15 @@ const user = {
   imageUrl: `${Avatar}`,
 };
 
-function AppLayout({ token }) {
-  const { data: userMe } = useQuery({
-    queryKey: ["user"],
-    queryFn: async () => {
-      const res = await API.get("user/me/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const is_superuser = res.data.is_superuser;
-      window.localStorage.setItem("is_superuser", `${is_superuser}`);
-
-      return res.data;
-    },
-  });
-
+function AppLayout() {
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const token = cookies.token;
+  const is_superuser = cookies.issuperuser;
 
   function handleLogout() {
-    window.localStorage.clear();
-
+    removeCookie("issuperuser");
+    removeCookie("token");
     navigate("/login");
     window.location.reload();
   }
@@ -76,7 +62,7 @@ function AppLayout({ token }) {
                         >
                           Events
                         </NavLink>
-                        {userMe?.is_superuser ? (
+                        {is_superuser ? (
                           <>
                             <NavLink
                               to="/addresses"
@@ -176,7 +162,7 @@ function AppLayout({ token }) {
                   >
                     Events
                   </DisclosureButton>
-                  {userMe?.is_superuser ? (
+                  {is_superuser ? (
                     <>
                       <DisclosureButton
                         className="text-slate-700 pl-4 hover:bg-pink-500 py-2 hover:text-white"

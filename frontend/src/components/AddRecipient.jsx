@@ -5,15 +5,16 @@ import toast from "react-hot-toast";
 import API from "../axios";
 import Loader from "./Loader";
 import LabelAndInput from "./LabelAndInput";
+import { useCookies } from "react-cookie";
 function AddRecipientForm({ setOpen, setIsClicked }) {
-  const token = window.localStorage.getItem("token");
+  const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationFn: async (obj) => {
       const res = await API.post("recipients/", obj, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${cookies.token}`,
         },
       });
       return res.data;
@@ -29,6 +30,7 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
       toast.error("Oh no, retry :(");
     },
   });
+  console.log(error);
 
   function onSubmit(data) {
     mutate(data);

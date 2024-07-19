@@ -5,19 +5,22 @@ import { useMutation } from "@tanstack/react-query";
 import API from "../axios.js";
 import toast from "react-hot-toast";
 import Loader from "../components/Loader";
+import { useCookies } from "react-cookie";
 
 function Login() {
+  const [cookies, setCookie] = useCookies(["user"]);
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: async (obj) => {
       const res = await API.post("token/", obj);
-      console.log(res);
-
       const token = res.data.access;
+      const is_superuser = res.data.user.is_superuser;
+      setCookie("token", token, { path: "/" });
+      setCookie("issuperuser", is_superuser, { path: "/" });
 
-      window.localStorage.setItem("token", `${token}`);
+      // window.localStorage.setItem("token", `${token}`);
     },
     onSuccess: () => {
       toast.success("You are logged in!");

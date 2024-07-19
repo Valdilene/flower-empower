@@ -13,16 +13,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import API from "../axios";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
+import { useCookies } from "react-cookie";
 
 function DeleteModal({ setDeleteClicked, id }) {
-  const token = window.localStorage.getItem("token");
+  const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(true);
   const { mutate, isPending } = useMutation({
     mutationFn: async (id) => {
       const res = await API.delete(`recipients/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${cookies.token}`,
         },
       });
 
