@@ -19,25 +19,30 @@ from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from event.views import create_event
 from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
-    PasswordResetValidationView
-from user.views import MeView
+    PasswordResetValidationView, TokenUserObtainView
+from user.views import MeView, ListCreateUserView, RetrieveUpdateDestroyUserView
+from recipient.views import ListCreateRecipientView, RetrieveUpdateDestroyRecipientView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # authentication
-    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', TokenUserObtainView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_refresh'),
     # registration
     path('api/registration/', RegistrationView.as_view(), name='registration'),
     path('api/registration/validation/', RegistrationValidationView.as_view(), name='registration_validation'),
     # password forget
-    path('api/auth/password-reset/', PasswordResetView.as_view(), name='password-reset'),
-    path('api/auth/password-reset/validate/', PasswordResetValidationView.as_view(), name='me'),
+    path('api/password-reset/', PasswordResetView.as_view(), name='password-reset'),
+    path('api/password-reset/validate/', PasswordResetValidationView.as_view(), name='me'),
     # user
     path('api/user/me/', MeView.as_view(), name='user_me'),
+    path('api/user/', ListCreateUserView.as_view(), name='list_users'),
+    path('api/user/<int:user_id>/', RetrieveUpdateDestroyUserView.as_view(), name='user'),
     # events
     path('api/event/', include('event.urls')),
     path('api/event/create/', create_event, name='create_event'),
-    path('api/recipients/', include('recipient.urls'))
+    # recipients
+    path('api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
+    path('api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(), name='update_recipient'),
 ]
