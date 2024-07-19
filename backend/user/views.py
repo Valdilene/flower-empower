@@ -2,12 +2,11 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from user.serializers import UserSerializer
-from .permissions import IsAuthenticatedOrAdminUser
 
 
 class MeView(GenericAPIView):
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticatedOrAdminUser]
+    permission_classes = []
 
     def get_object(self):
         return self.request.user
