@@ -53,7 +53,9 @@ function Login() {
               Email address
             </LabelAndInput>
             {isError && (
-              <span className="text-red-500">{error?.response.data.email}</span>
+              <span className="text-red-500">
+                {error?.response?.data?.email}
+              </span>
             )}
 
             <LabelAndInput
@@ -66,7 +68,7 @@ function Login() {
             </LabelAndInput>
             {isError && (
               <span className="text-red-500">
-                {error?.response.data.password}
+                {error?.response?.data?.password}
               </span>
             )}
 
@@ -80,7 +82,7 @@ function Login() {
             </div>
 
             {isError ? (
-              <p className="text-red-600">{error?.response.data.detail}</p>
+              <p className="text-red-600">{error?.response?.data?.detail}</p>
             ) : (
               ""
             )}
