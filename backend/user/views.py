@@ -3,8 +3,9 @@ from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
+
+from user.permissions import IsAuthenticatedOrAdminUser
 from user.serializers import UserSerializer
-from .permissions import IsAuthenticatedOrAdminUser
 
 User = get_user_model()
 
