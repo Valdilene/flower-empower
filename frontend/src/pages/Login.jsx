@@ -23,11 +23,13 @@ function Login() {
     onSuccess: () => {
       toast.success("You are logged in!");
       navigate("/");
+      window.location.reload();
     },
     onError: () => {
       toast.error("Oh no, retry :(");
     },
   });
+
   console.log(error);
 
   function onSubmit(data) {
