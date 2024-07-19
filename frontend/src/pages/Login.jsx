@@ -17,8 +17,6 @@ function Login() {
       const token = res.data.access;
 
       window.localStorage.setItem("token", `${token}`);
-
-      console.log(res.data);
     },
     onSuccess: () => {
       toast.success("You are logged in!");
@@ -30,10 +28,7 @@ function Login() {
     },
   });
 
-  console.log(error);
-
   function onSubmit(data) {
-    console.log(data);
     mutate(data);
   }
   if (isPending) return <Loader />;

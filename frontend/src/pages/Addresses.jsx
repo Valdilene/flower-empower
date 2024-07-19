@@ -1,5 +1,11 @@
+import RecipientsTable from "../components/RecipientsTable";
+
 function Addresses() {
-  return <div>Addresses</div>;
+  return (
+    <>
+      <RecipientsTable />
+    </>
+  );
 }
 
 export default Addresses;

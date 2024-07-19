@@ -21,10 +21,8 @@ function Registration() {
       toast.error("Oh no... please try again :(");
     },
   });
-  console.log(error);
 
   function onSubmit(data) {
-    console.log(data);
     mutate(data);
   }
   if (isPending) return <Loader />;

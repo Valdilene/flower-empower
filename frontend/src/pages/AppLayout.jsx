@@ -22,7 +22,7 @@ const user = {
 };
 
 function AppLayout({ token }) {
-  const { data: userMe, isLoading } = useQuery({
+  const { data: userMe } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       const res = await API.get("user/me/", {
@@ -31,7 +31,6 @@ function AppLayout({ token }) {
         },
       });
 
-      console.log(res.data);
       const is_superuser = res.data.is_superuser;
       window.localStorage.setItem("is_superuser", `${is_superuser}`);
 
