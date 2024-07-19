@@ -17,8 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
-from registration.views import RegistrationView, RegistrationValidationView
-from event.views import CreateEvent
+from event.views import create_event
 from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
     PasswordResetValidationView
 from user.views import MeView
@@ -39,6 +38,6 @@ urlpatterns = [
     path('api/user/me/', MeView.as_view(), name='user_me'),
     # events
     path('api/event/', include('event.urls')),
-    path('api/event/create/', CreateEvent, name='create_event'),
+    path('api/event/create/', create_event, name='create_event'),
     path('api/recipients/', include('recipient.urls'))
 ]
