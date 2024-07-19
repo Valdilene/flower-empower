@@ -1,8 +1,9 @@
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+
+from user.permissions import IsAuthenticatedOrAdminUser
 from user.serializers import UserSerializer
-from .permissions import IsAuthenticatedOrAdminUser
 
 
 class MeView(GenericAPIView):
@@ -19,3 +20,15 @@ class MeView(GenericAPIView):
             return Response(serializer.data)
         else:
             return Response({'detail': 'Not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def delete(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
