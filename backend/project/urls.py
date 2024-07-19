@@ -19,21 +19,21 @@ from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from event.views import create_event
 from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
-    PasswordResetValidationView
+    PasswordResetValidationView, TokenUserObtainView
 from user.views import MeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # authentication
-    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', TokenUserObtainView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_refresh'),
     # registration
     path('api/registration/', RegistrationView.as_view(), name='registration'),
     path('api/registration/validation/', RegistrationValidationView.as_view(), name='registration_validation'),
     # password forget
-    path('api/auth/password-reset/', PasswordResetView.as_view(), name='password-reset'),
-    path('api/auth/password-reset/validate/', PasswordResetValidationView.as_view(), name='me'),
+    path('api/password-reset/', PasswordResetView.as_view(), name='password-reset'),
+    path('api/password-reset/validate/', PasswordResetValidationView.as_view(), name='me'),
     # user
     path('api/user/me/', MeView.as_view(), name='user_me'),
     # events
