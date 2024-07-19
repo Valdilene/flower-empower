@@ -5,16 +5,17 @@ import API from "../axios";
 import toast from "react-hot-toast";
 import LabelAndInput from "./LabelAndInput";
 import Loader from "./Loader";
+import { useCookies } from "react-cookie";
 
 function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
-  const token = window.localStorage.getItem("token");
+  const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
   const { mutate, isPending } = useMutation({
     mutationFn: async (obj) => {
       const res = await API.patch(`recipients/${id}/`, obj, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${cookies.token}`,
         },
       });
 

@@ -7,9 +7,10 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "./Loader";
 import DeleteModal from "./DeleteModal";
 import EditRecipientModal from "./EditRecipientModal";
+import { useCookies } from "react-cookie";
 
 function RecipientsTable() {
-  const token = window.localStorage.getItem("token");
+  const [cookies] = useCookies(["user"]);
   const [currRecipient, setCurrRecipient] = useState(null);
   const [id, setId] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
@@ -20,7 +21,7 @@ function RecipientsTable() {
     queryFn: async () => {
       const res = await API.get("recipients/", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${cookies.token}`,
         },
       });
 
