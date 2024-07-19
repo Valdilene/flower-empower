@@ -1,8 +1,12 @@
+from django.contrib.auth import get_user_model
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from user.serializers import UserSerializer
 from .permissions import IsAuthenticatedOrAdminUser
+
+User = get_user_model()
 
 
 class MeView(GenericAPIView):
@@ -31,3 +35,16 @@ class MeView(GenericAPIView):
         user = self.get_object()
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ListCreateUserView(ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]
+
+
+class RetrieveUpdateDestroyUserView(RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_url_kwarg = "user_id"
+    permission_classes = [IsAdminUser]
