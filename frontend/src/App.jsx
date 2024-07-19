@@ -13,29 +13,16 @@ import Addresses from "./pages/Addresses";
 import Volunteers from "./pages/Volunteers";
 import AdminPage from "./pages/AdminPage";
 import PagesProtection from "./pages/PagesProtection";
-import API from "./axios";
-import { useQuery } from "@tanstack/react-query";
 
 function App() {
   const token = window.localStorage.getItem("token");
+  const is_superuser = window.localStorage.getItem("is_superuser");
 
-  const { data: user } = useQuery({
-    queryKey: ["restaurants"],
-    queryFn: async () => {
-      const res = await API.get("user/me/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      return res.data;
-    },
-  });
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AppLayout userMe={user} token={token} />}>
-          <Route path="/" element={token ? <Home /> : <PagesProtection />} />
+        <Route element={<AppLayout token={token} />}>
+          <Route path="/" element={<Home />} />
           <Route
             path="/events"
             element={token ? <Event /> : <PagesProtection />}
@@ -43,11 +30,11 @@ function App() {
 
           <Route
             path="/addresses"
-            element={user?.is_superuser ? <Addresses /> : <AdminPage />}
+            element={is_superuser === "true" ? <Addresses /> : <AdminPage />}
           />
           <Route
             path="/volunteers"
-            element={user?.is_superuser ? <Volunteers /> : <AdminPage />}
+            element={is_superuser === "true" ? <Volunteers /> : <AdminPage />}
           />
 
           <Route path="/signup" element={<Registration />} />

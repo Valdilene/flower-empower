@@ -99,7 +99,10 @@ function RegistrationValidation() {
             <p className="text-red-500">
               {error?.response?.data?.non_field_errors ||
                 error?.response?.data?.code ||
-                error?.response?.data?.email}
+                error?.response?.data?.email ||
+                error?.response?.data?.first_name ||
+                error?.response?.data?.last_name ||
+                error?.response?.data?.phone}
             </p>
           ) : (
             ""
