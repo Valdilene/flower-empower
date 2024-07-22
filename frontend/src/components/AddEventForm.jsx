@@ -50,7 +50,7 @@ function AddEventForm({ setOpen, setIsClicked }) {
             Add the event information in the form below
           </p>
 
-          <div className="flex items-start justify-center gap-6 mt-10 text-start">
+          <div className="flex  items-start justify-center gap-6 mt-10 text-start">
             <LabelAndInput
               htmlFor="first_name"
               type="date"
