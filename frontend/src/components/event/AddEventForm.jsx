@@ -1,32 +1,31 @@
 /* eslint-disable react/prop-types */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import API from "../axios";
 import toast from "react-hot-toast";
-import LabelAndInput from "./LabelAndInput";
-import Loader from "./Loader";
+import API from "../../axios";
+import Loader from "../Loader";
+import LabelAndInput from "../LabelAndInput";
 import { useCookies } from "react-cookie";
-
-function EditVolunteer({ userId, setOpen, setEditClicked, currUser }) {
+function AddEventForm({ setOpen, setIsClicked }) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
   const { mutate, isPending, error } = useMutation({
     mutationFn: async (obj) => {
-      const res = await API.patch(`user/${userId}/`, obj, {
+      const res = await API.post("events/", obj, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
+          // "Content-Type": "multipart/form-data",
         },
       });
-
       return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["users"],
+        queryKey: ["events"],
       });
-      setEditClicked(false);
-      toast.success("Volunteer edited!");
+      setIsClicked(false);
+      toast.success("Event created!");
     },
     onError: () => {
       toast.error("Oh no, retry :(");
@@ -35,75 +34,65 @@ function EditVolunteer({ userId, setOpen, setEditClicked, currUser }) {
   console.log(error);
 
   function onSubmit(data) {
+    console.log(data);
     mutate(data);
   }
+
   if (isPending) return <Loader />;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-12 sm:space-y-16">
         <div>
           <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Personal Information
+            Event information
           </h2>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
-            Edit the volunteer information in the form below
+            Add the event information in the form below
           </p>
 
-          <div className="grid p-10 grid-cols-2 gap-4 mt-10 space-y-8  pb-12">
-            <div className="self-end">
-              <LabelAndInput
-                htmlFor="first_name"
-                type="text"
-                register={register}
-                name="first_name"
-                value={currUser?.first_name}
-              >
-                First Name
-              </LabelAndInput>
-            </div>
-
+          <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-6 mt-10 text-start">
             <LabelAndInput
-              htmlFor="last_name"
-              type="text"
+              htmlFor="date"
+              type="date"
               register={register}
-              name="last_name"
-              value={currUser?.last_name}
+              name="date"
             >
-              Last Name
-            </LabelAndInput>
-
-            <LabelAndInput
-              htmlFor="email"
-              type="email"
-              register={register}
-              name="email"
-              value={currUser?.email}
-            >
-              Email
+              Date
             </LabelAndInput>
             <LabelAndInput
-              htmlFor="phone"
-              type="tel"
+              htmlFor="bouquet_makers_needed"
+              type="number"
               register={register}
-              name="phone"
-              value={currUser?.phone}
+              name="bouquet_makers_needed"
             >
-              Phone
+              Bouquet makers needed
+            </LabelAndInput>
+            <LabelAndInput
+              htmlFor="drivers_needed"
+              type="number"
+              register={register}
+              name="drivers_needed"
+            >
+              Drivers Needed
             </LabelAndInput>
 
             <div>
-              <label htmlFor="comunication" className="sr-only">
-                Preferred comunication
-              </label>
-              <select
-                id="country"
-                name="preferred_communication"
-                {...register("preferred_communication")}
-                defaultValue={currUser?.preferred_communication}
-                className="relative block w-full rounded-none rounded-t-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              <label
+                className="block text-sm font-medium leading-6 mb-2 text-gray-900"
+                htmlFor="group"
               >
-                <option>Phone</option>
-                <option>Email</option>
+                Group
+              </label>
+
+              <select
+                id="group"
+                name="group"
+                {...register("group")}
+                className="block w-full h-9   rounded-none rounded-t-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              >
+                <option>1</option>
+                <option>2</option>
               </select>
             </div>
           </div>
@@ -113,19 +102,19 @@ function EditVolunteer({ userId, setOpen, setEditClicked, currUser }) {
       <div className="mt-6 flex items-center justify-end gap-x-6">
         <button
           onClick={() => {
-            setOpen(false);
-            setEditClicked(false);
+            setOpen((prev) => !prev);
+            setIsClicked((prev) => !prev);
           }}
           className="text-sm font-semibold leading-6 text-gray-900"
         >
           Cancel
         </button>
         <button className="inline-flex justify-center rounded-md bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          Save
+          Add
         </button>
       </div>
     </form>
   );
 }
 
-export default EditVolunteer;
+export default AddEventForm;
