@@ -1,44 +1,42 @@
 /* eslint-disable react/prop-types */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import API from "../../axios";
 import toast from "react-hot-toast";
-import API from "../axios";
-import Loader from "./Loader";
-import LabelAndInput from "./LabelAndInput";
+import LabelAndInput from "../LabelAndInput";
+import Loader from "../Loader";
 import { useCookies } from "react-cookie";
-function AddEventForm({ setOpen, setIsClicked }) {
+
+function EditEvent({ eventId, setOpen, setEditClicked, currEvent }) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (obj) => {
-      const res = await API.post("events/create/", obj, {
+      const res = await API.patch(`events/${eventId}/`, obj, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
       });
+
       return res.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["events"],
       });
-      setIsClicked(false);
-      toast.success("Event created!");
+      setEditClicked(false);
+      toast.success("Event edited!");
     },
     onError: () => {
       toast.error("Oh no, retry :(");
     },
   });
-  console.log(error);
 
   function onSubmit(data) {
-    console.log(data);
     mutate(data);
   }
-
   if (isPending) return <Loader />;
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-12 sm:space-y-16">
@@ -50,14 +48,33 @@ function AddEventForm({ setOpen, setIsClicked }) {
             Add the event information in the form below
           </p>
 
-          <div className="flex  items-start justify-center gap-6 mt-10 text-start">
+          <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-6 mt-10 text-start">
             <LabelAndInput
-              htmlFor="first_name"
+              htmlFor="date"
               type="date"
               register={register}
               name="date"
+              value={currEvent?.date}
             >
               Date
+            </LabelAndInput>
+            <LabelAndInput
+              htmlFor="bouquet_makers_needed"
+              type="number"
+              register={register}
+              name="bouquet_makers_needed"
+              value={currEvent?.bouquet_makers_needed}
+            >
+              Bouquet makers needed
+            </LabelAndInput>
+            <LabelAndInput
+              htmlFor="drivers_needed"
+              type="number"
+              register={register}
+              name="drivers_needed"
+              value={currEvent?.drivers_needed}
+            >
+              Drivers Needed
             </LabelAndInput>
 
             <div>
@@ -72,8 +89,10 @@ function AddEventForm({ setOpen, setIsClicked }) {
                 id="group"
                 name="group"
                 {...register("group")}
+                value={currEvent?.group}
                 className="block w-full h-9   rounded-none rounded-t-md border-0 bg-transparent py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               >
+                <option value="">Select an option</option>
                 <option>1</option>
                 <option>2</option>
               </select>
@@ -86,18 +105,18 @@ function AddEventForm({ setOpen, setIsClicked }) {
         <button
           onClick={() => {
             setOpen((prev) => !prev);
-            setIsClicked((prev) => !prev);
+            setEditClicked((prev) => !prev);
           }}
           className="text-sm font-semibold leading-6 text-gray-900"
         >
           Cancel
         </button>
         <button className="inline-flex justify-center rounded-md bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          Add
+          Save
         </button>
       </div>
     </form>
   );
 }
 
-export default AddEventForm;
+export default EditEvent;

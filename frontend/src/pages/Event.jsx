@@ -1,4 +1,4 @@
-import EventTable from "../components/EventTable";
+import EventTable from "../components/event/EventTable";
 
 function Event() {
   return <EventTable />;

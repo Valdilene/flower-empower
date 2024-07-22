@@ -2,9 +2,9 @@
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import ModalRecipients from "./ModalRecipients";
-import API from "../axios";
+import API from "../../axios";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "./Loader";
+import Loader from "../Loader";
 import DeleteModal from "./DeleteModal";
 import EditRecipientModal from "./EditRecipientModal";
 import { useCookies } from "react-cookie";
@@ -134,6 +134,20 @@ function RecipientsTable() {
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
                       <a href="#" className="group inline-flex">
+                        End Date
+                        <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
+                          <ChevronDownIcon
+                            aria-hidden="true"
+                            className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
+                          />
+                        </span>
+                      </a>
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      <a href="#" className="group inline-flex">
                         Group
                         <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                           <ChevronDownIcon
@@ -165,6 +179,9 @@ function RecipientsTable() {
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {recipient.zip}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {recipient.end_date}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {recipient.group}

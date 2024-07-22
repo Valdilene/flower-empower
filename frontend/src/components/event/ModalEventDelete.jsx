@@ -10,18 +10,18 @@ import {
 } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import API from "../axios";
+import API from "../../axios";
 import toast from "react-hot-toast";
-import Loader from "./Loader";
+import Loader from "../Loader";
 import { useCookies } from "react-cookie";
 
-function VolunteerDeleteModal({ setDeleteClicked, userId }) {
+function ModalEventDelete({ setDeleteClicked, eventId }) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(true);
   const { mutate, isPending } = useMutation({
-    mutationFn: async (userId) => {
-      const res = await API.delete(`user/${userId}`, {
+    mutationFn: async (eventId) => {
+      const res = await API.delete(`events/${eventId}`, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
@@ -31,18 +31,18 @@ function VolunteerDeleteModal({ setDeleteClicked, userId }) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["users"],
+        queryKey: ["events"],
       });
       setDeleteClicked(false);
-      toast.success("Volunteer deleted!");
+      toast.success("Address deleted!");
     },
     onError: () => {
       toast.error("Oh no, retry :(");
     },
   });
 
-  function handleDelete(userId) {
-    mutate(userId);
+  function handleDelete(eventId) {
+    mutate(eventId);
   }
   if (isPending) return <Loader />;
   return (
@@ -53,7 +53,7 @@ function VolunteerDeleteModal({ setDeleteClicked, userId }) {
       />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
             className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
@@ -70,13 +70,12 @@ function VolunteerDeleteModal({ setDeleteClicked, userId }) {
                   as="h3"
                   className="text-base font-semibold leading-6 text-gray-900"
                 >
-                  Delete Volunteer
+                  Delete Address
                 </DialogTitle>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Are you sure you want to delete the volunteer? All of your
-                    data will be permanently removed from our servers forever.
-                    This action cannot be undone.
+                    Are you sure you want to delete the event? This action
+                    cannot be undone.
                   </p>
                 </div>
               </div>
@@ -85,7 +84,7 @@ function VolunteerDeleteModal({ setDeleteClicked, userId }) {
               <button
                 type="button"
                 onClick={() => {
-                  handleDelete(userId);
+                  handleDelete(eventId);
                   setOpen(false);
                 }}
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:w-auto"
@@ -111,4 +110,4 @@ function VolunteerDeleteModal({ setDeleteClicked, userId }) {
   );
 }
 
-export default VolunteerDeleteModal;
+export default ModalEventDelete;

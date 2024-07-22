@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
-import API from "../axios";
+import API from "../../axios";
 import { useQuery } from "@tanstack/react-query";
-import DeleteModal from "./DeleteModal";
-import EditRecipientModal from "./EditRecipientModal";
 import { useCookies } from "react-cookie";
 import ModalEvent from "./ModalEvent";
+import ModalEventDelete from "./ModalEventDelete";
+import EditEventModal from "./EditEventModal";
 
 function EventTable() {
   const [cookies] = useCookies(["user"]);
@@ -76,6 +76,34 @@ function EventTable() {
                         </span>
                       </a>
                     </th>
+                    <th
+                      scope="col"
+                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                    >
+                      <a href="#" className="group inline-flex">
+                        Bouquet makers needed
+                        <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
+                          <ChevronDownIcon
+                            aria-hidden="true"
+                            className="h-5 w-5"
+                          />
+                        </span>
+                      </a>
+                    </th>
+                    <th
+                      scope="col"
+                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
+                    >
+                      <a href="#" className="group inline-flex">
+                        Drivers needed
+                        <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
+                          <ChevronDownIcon
+                            aria-hidden="true"
+                            className="h-5 w-5"
+                          />
+                        </span>
+                      </a>
+                    </th>
 
                     <th
                       scope="col"
@@ -104,45 +132,53 @@ function EventTable() {
                       </td>
 
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {event.bouquet_makers_needed}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {event.drivers_needed}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {event.group}
                       </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-                        <div className="flex gap-x-2">
-                          <button
-                            onClick={() => {
-                              setEventId(event.id);
-                              setCurrEvent(event);
+                      {cookies.issuperuser ? (
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
+                          <div className="flex gap-x-2">
+                            <button
+                              onClick={() => {
+                                setEventId(event.id);
+                                setCurrEvent(event);
 
-                              setEditClicked((prev) => !prev);
-                            }}
-                            className="text-pink-500"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => {
-                              setEventId(event.id);
-                              setDeleteClicked((prev) => !prev);
-                            }}
-                            className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
-                          >
-                            Delete
-                          </button>
-                          {deleteClicked && (
-                            <DeleteModal
-                              setDeleteClicked={setDeleteClicked}
-                              eventId={eventId}
-                            />
-                          )}
-                          {editClicked && (
-                            <EditRecipientModal
-                              setEditClicked={setEditClicked}
-                              eventId={eventId}
-                              currEvent={currEvent}
-                            />
-                          )}
-                        </div>
-                      </td>
+                                setEditClicked((prev) => !prev);
+                              }}
+                              className="text-pink-500"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => {
+                                setEventId(event.id);
+                                setDeleteClicked((prev) => !prev);
+                              }}
+                              className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
+                            >
+                              Delete
+                            </button>
+                            {deleteClicked && (
+                              <ModalEventDelete
+                                setDeleteClicked={setDeleteClicked}
+                                eventId={eventId}
+                              />
+                            )}
+                            {editClicked && (
+                              <EditEventModal
+                                setEditClicked={setEditClicked}
+                                eventId={eventId}
+                                currEvent={currEvent}
+                              />
+                            )}
+                          </div>
+                        </td>
+                      ) : null}
                     </tr>
                   ))}
                 </tbody>
