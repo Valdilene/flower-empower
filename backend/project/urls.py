@@ -23,7 +23,6 @@ from registration.views import RegistrationView, RegistrationValidationView, Pas
 from user.views import MeView, ListCreateUserView, RetrieveUpdateDestroyUserView
 from recipient.views import ListCreateRecipientView, RetrieveUpdateDestroyRecipientView
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     # authentication
