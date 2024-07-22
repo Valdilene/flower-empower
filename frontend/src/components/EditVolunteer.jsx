@@ -49,7 +49,7 @@ function EditVolunteer({ userId, setOpen, setEditClicked, currUser }) {
             Edit the volunteer information in the form below
           </p>
 
-          <div className="grid p-10 grid-cols-2 gap-4 mt-10 space-y-8  pb-12">
+          <div className="grid p-10  md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10 space-y-8  pb-12">
             <div className="self-end">
               <LabelAndInput
                 htmlFor="first_name"
