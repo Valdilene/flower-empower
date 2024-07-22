@@ -87,12 +87,17 @@ function EditVolunteer({ userId, setOpen, setEditClicked, currUser }) {
               register={register}
               name="phone"
               value={currUser?.phone}
+              pattern="\b[2-9][0-9]{2} [2-9][0-9]{2} [0-9]{4}\b"
+              placeholder="555 235 7832"
             >
               Phone
             </LabelAndInput>
 
             <div>
-              <label htmlFor="comunication" className="sr-only">
+              <label
+                className="block text-sm font-medium leading-6 text-gray-900 mb-2"
+                htmlFor="comunication"
+              >
                 Preferred comunication
               </label>
               <select

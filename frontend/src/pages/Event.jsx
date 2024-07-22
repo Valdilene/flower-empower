@@ -1,5 +1,7 @@
+import EventTable from "../components/EventTable";
+
 function Event() {
-  return <div>Events</div>;
+  return <EventTable />;
 }
 
 export default Event;

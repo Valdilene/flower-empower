@@ -91,6 +91,8 @@ function RegistrationValidation() {
             type="number"
             register={register}
             name="phone"
+            pattern="\b[2-9][0-9]{2} [2-9][0-9]{2} [0-9]{4}\b"
+            placeholder="555 235 7832"
           >
             Phone *
           </LabelAndInput>

@@ -86,6 +86,8 @@ function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
               register={register}
               name="phone"
               value={currRecipient?.phone}
+              pattern="\b[2-9][0-9]{2} [2-9][0-9]{2} [0-9]{4}\b"
+              placeholder="555 235 7832"
             >
               Phone
             </LabelAndInput>
@@ -116,6 +118,8 @@ function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
               register={register}
               name="state"
               value={currRecipient?.state}
+              pattern="[A-Z]{2}"
+              placeholder="CA"
             >
               State
             </LabelAndInput>
@@ -126,6 +130,8 @@ function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
               register={register}
               name="zip"
               value={currRecipient?.zip}
+              pattern="[0-9]{5}"
+              placeholder="12345"
             >
               Zip
             </LabelAndInput>

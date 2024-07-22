@@ -141,7 +141,9 @@ function VolunteerTable() {
                           {user.hours}
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {user.preferred_communication}
+                          {user.preferred_communication === "none"
+                            ? "Not specified yet"
+                            : user.preferred_communication}
                         </td>
 
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
