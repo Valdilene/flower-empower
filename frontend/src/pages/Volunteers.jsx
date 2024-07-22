@@ -1,5 +1,7 @@
+import VolunteerTable from "../components/VolunteerTable";
+
 function Volunteers() {
-  return <div>Volunteers</div>;
+  return <VolunteerTable />;
 }
 
 export default Volunteers;
