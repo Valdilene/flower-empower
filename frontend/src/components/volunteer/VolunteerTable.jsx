@@ -1,56 +1,44 @@
 /* eslint-disable react/prop-types */
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
-import ModalRecipients from "./ModalRecipients";
-import API from "../axios";
+import API from "../../axios";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "./Loader";
-import DeleteModal from "./DeleteModal";
-import EditRecipientModal from "./EditRecipientModal";
+import Loader from "../Loader";
 import { useCookies } from "react-cookie";
+import VolunteerDeleteModal from "./VolunteerDeleteModal";
+import VolunteerEditModal from "./VolunteerEditModal";
 
-function RecipientsTable() {
+function VolunteerTable() {
   const [cookies] = useCookies(["user"]);
-  const [currRecipient, setCurrRecipient] = useState(null);
-  const [id, setId] = useState(null);
-  const [isClicked, setIsClicked] = useState(false);
+  const [currUser, setCurrUser] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [deleteClicked, setDeleteClicked] = useState(false);
   const [editClicked, setEditClicked] = useState(false);
-  const { data: recipients, isLoading } = useQuery({
-    queryKey: ["recipients"],
+  const { data: users, isLoading } = useQuery({
+    queryKey: ["users"],
     queryFn: async () => {
-      const res = await API.get("recipients/", {
+      const res = await API.get("user/", {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
       });
-
+      console.log(res.data);
       return res.data;
     },
   });
   if (isLoading) return <Loader />;
   return (
     <>
-      {isClicked && <ModalRecipients setIsClicked={setIsClicked} />}
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-base font-semibold leading-6 text-gray-900">
-              Addresses
+              Volunteers
             </h1>
             <p className="mt-2 text-sm text-gray-700">
-              A list of all the addresses saved the database with their name and
-              address.
+              A list of all the volunteers saved in the database with their
+              information.
             </p>
-          </div>
-          <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <button
-              onClick={() => setIsClicked((prev) => !prev)}
-              type="button"
-              className="block rounded-md bg-pink-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Add Address
-            </button>
           </div>
         </div>
         <div className="mt-8 flow-root">
@@ -78,7 +66,7 @@ function RecipientsTable() {
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
                       <a href="#" className="group inline-flex">
-                        Street
+                        Email
                         <span className="ml-2 flex-none rounded bg-gray-100 text-gray-900 group-hover:bg-gray-200">
                           <ChevronDownIcon
                             aria-hidden="true"
@@ -92,7 +80,7 @@ function RecipientsTable() {
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
                       <a href="#" className="group inline-flex">
-                        City
+                        Phone
                         <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                           <ChevronDownIcon
                             aria-hidden="true"
@@ -106,7 +94,7 @@ function RecipientsTable() {
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
                       <a href="#" className="group inline-flex">
-                        State
+                        Hours
                         <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                           <ChevronDownIcon
                             aria-hidden="true"
@@ -120,7 +108,7 @@ function RecipientsTable() {
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
                       <a href="#" className="group inline-flex">
-                        Zip
+                        Preferred comunication
                         <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                           <ChevronDownIcon
                             aria-hidden="true"
@@ -129,85 +117,74 @@ function RecipientsTable() {
                         </span>
                       </a>
                     </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      <a href="#" className="group inline-flex">
-                        Group
-                        <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                          <ChevronDownIcon
-                            aria-hidden="true"
-                            className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                          />
-                        </span>
-                      </a>
-                    </th>
+
                     <th scope="col" className="relative py-3.5 pl-3 pr-0">
                       <span className="sr-only">Edit</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {recipients?.map((recipient) => (
-                    <tr key={recipient.email}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                        {recipient.first_name} {recipient.last_name}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {recipient.address}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {recipient.city}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {recipient.state}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {recipient.zip}
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {recipient.group}
-                      </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-                        <div className="flex gap-x-2">
-                          <button
-                            onClick={() => {
-                              setId(recipient.id);
-                              setCurrRecipient(recipient);
+                  {users
+                    ?.filter((user) => user.is_superuser != true)
+                    .map((user) => (
+                      <tr key={user.email}>
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                          {user.first_name} {user.last_name}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {user.email}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {user.phone}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {user.hours}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {user.preferred_communication === "none"
+                            ? "Not specified yet"
+                            : user.preferred_communication}
+                        </td>
 
-                              setEditClicked((prev) => !prev);
-                            }}
-                            className="text-pink-500"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => {
-                              setId(recipient.id);
-                              setDeleteClicked((prev) => !prev);
-                            }}
-                            className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
-                          >
-                            Delete
-                          </button>
-                          {deleteClicked && (
-                            <DeleteModal
-                              setDeleteClicked={setDeleteClicked}
-                              id={id}
-                            />
-                          )}
-                          {editClicked && (
-                            <EditRecipientModal
-                              setEditClicked={setEditClicked}
-                              id={id}
-                              currRecipient={currRecipient}
-                            />
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
+                          <div className="flex gap-x-2">
+                            <button
+                              onClick={() => {
+                                setUserId(user.id);
+                                setCurrUser(user);
+
+                                setEditClicked((prev) => !prev);
+                              }}
+                              className="text-pink-500"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => {
+                                setUserId(user.id);
+                                setDeleteClicked((prev) => !prev);
+                              }}
+                              className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
+                            >
+                              Delete
+                            </button>
+                            {deleteClicked && (
+                              <VolunteerDeleteModal
+                                setDeleteClicked={setDeleteClicked}
+                                userId={userId}
+                              />
+                            )}
+                            {editClicked && (
+                              <VolunteerEditModal
+                                setEditClicked={setEditClicked}
+                                userId={userId}
+                                currUser={currUser}
+                              />
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
@@ -218,4 +195,4 @@ function RecipientsTable() {
   );
 }
 
-export default RecipientsTable;
+export default VolunteerTable;

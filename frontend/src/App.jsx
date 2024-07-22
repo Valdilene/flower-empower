@@ -16,7 +16,7 @@ import PagesProtection from "./pages/PagesProtection";
 import { useCookies } from "react-cookie";
 
 function App() {
-  const [cookies, setCookie] = useCookies(["user"]);
+  const [cookies] = useCookies(["user"]);
   const token = cookies.token;
   const is_superuser = cookies.issuperuser;
   return (
@@ -30,7 +30,7 @@ function App() {
           />
 
           <Route
-            path="/addresses"
+            path="/recipients"
             element={is_superuser ? <Addresses /> : <AdminPage />}
           />
           <Route
