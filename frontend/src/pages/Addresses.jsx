@@ -1,4 +1,4 @@
-import RecipientsTable from "../components/RecipientsTable";
+import RecipientsTable from "../components/recipient/RecipientsTable";
 
 function Addresses() {
   return (

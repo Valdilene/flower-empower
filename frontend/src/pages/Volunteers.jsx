@@ -1,4 +1,4 @@
-import VolunteerTable from "../components/VolunteerTable";
+import VolunteerTable from "../components/volunteer/VolunteerTable";
 
 function Volunteers() {
   return <VolunteerTable />;

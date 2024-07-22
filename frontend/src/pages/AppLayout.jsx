@@ -22,7 +22,7 @@ const user = {
 
 function AppLayout() {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const [cookies, removeCookie] = useCookies(["user"]);
   const token = cookies.token;
   const is_superuser = cookies.issuperuser;
 
@@ -65,10 +65,10 @@ function AppLayout() {
                         {is_superuser ? (
                           <>
                             <NavLink
-                              to="/addresses"
+                              to="/recipients"
                               className="text-slate-600 hover:bg-pink-500  hover:text-white py-2 px-4"
                             >
-                              Addresses
+                              Recipients
                             </NavLink>
                             <NavLink
                               to="/volunteers"
