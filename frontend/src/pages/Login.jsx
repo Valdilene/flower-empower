@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 import { useCookies } from "react-cookie";
 
 function Login() {
-  const [setCookie] = useCookies(["user"]);
+  const [cookies, setCookie] = useCookies(["user"]);
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
