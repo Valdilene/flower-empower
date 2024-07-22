@@ -41,8 +41,6 @@ urlpatterns = [
     path('api/user/', ListCreateUserView.as_view(), name='list_users'),
     path('api/user/<int:user_id>/', RetrieveUpdateDestroyUserView.as_view(), name='user'),
     # events
-
-    path('api/events/create/', CreateUpdateDeleteEventView.as_view(), name='create_events'),
     path('api/events/', CreateUpdateDeleteEventView.as_view(), name='view'),
     path('api/events/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='get_events'),
     # recipients
