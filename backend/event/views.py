@@ -88,6 +88,7 @@ class ToggleEventParticipationView(GenericAPIView):
         event.save()
         return Response({'message': message}, status=status.HTTP_200_OK)
 
+
 class EventRetrieveUpdateDestroyView(GenericAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
@@ -111,7 +112,7 @@ class EventRetrieveUpdateDestroyView(GenericAPIView):
         event.delete()
         return Response({'message': 'Event deleted'}, status=status.HTTP_204_NO_CONTENT)
 
-    def patch(self, request, *args, **kwargs):
+    def close_event(self, request, *args, **kwargs):
         event = self.get_object()
         event.closed = True
         event.save()
