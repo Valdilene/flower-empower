@@ -1,5 +1,5 @@
 
-from django.utils.dateparse import parse_date
+# from django.utils.dateparse import parse_date
 from rest_framework import serializers
 from .models import Event
 

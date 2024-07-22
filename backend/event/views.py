@@ -11,11 +11,10 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import EventSerializer
 
 
-class CreateUpdateDeleteEventView(GenericAPIView):
+class ListCreateEvent(GenericAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = (IsAuthenticated,)
-
 
     def post(self, request, *args, **kwargs):
         data = request.data
