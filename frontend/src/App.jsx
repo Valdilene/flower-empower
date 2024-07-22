@@ -13,15 +13,16 @@ import Addresses from "./pages/Addresses";
 import Volunteers from "./pages/Volunteers";
 import AdminPage from "./pages/AdminPage";
 import PagesProtection from "./pages/PagesProtection";
+import { useCookies } from "react-cookie";
 
 function App() {
-  const token = window.localStorage.getItem("token");
-  const is_superuser = window.localStorage.getItem("is_superuser");
-
+  const [cookies, setCookie] = useCookies(["user"]);
+  const token = cookies.token;
+  const is_superuser = cookies.issuperuser;
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AppLayout token={token} />}>
+        <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route
             path="/events"
@@ -30,11 +31,11 @@ function App() {
 
           <Route
             path="/addresses"
-            element={is_superuser === "true" ? <Addresses /> : <AdminPage />}
+            element={is_superuser ? <Addresses /> : <AdminPage />}
           />
           <Route
             path="/volunteers"
-            element={is_superuser === "true" ? <Volunteers /> : <AdminPage />}
+            element={is_superuser ? <Volunteers /> : <AdminPage />}
           />
 
           <Route path="/signup" element={<Registration />} />
