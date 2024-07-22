@@ -10,18 +10,18 @@ import {
 } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import API from "../axios";
+import API from "../../axios";
 import toast from "react-hot-toast";
-import Loader from "./Loader";
+import Loader from "../Loader";
 import { useCookies } from "react-cookie";
 
-function DeleteModal({ setDeleteClicked, id }) {
+function VolunteerDeleteModal({ setDeleteClicked, userId }) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(true);
   const { mutate, isPending } = useMutation({
-    mutationFn: async (id) => {
-      const res = await API.delete(`recipients/${id}`, {
+    mutationFn: async (userId) => {
+      const res = await API.delete(`user/${userId}`, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
@@ -31,18 +31,18 @@ function DeleteModal({ setDeleteClicked, id }) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["recipients"],
+        queryKey: ["users"],
       });
       setDeleteClicked(false);
-      toast.success("Address deleted!");
+      toast.success("Volunteer deleted!");
     },
     onError: () => {
       toast.error("Oh no, retry :(");
     },
   });
 
-  function handleDelete(id) {
-    mutate(id);
+  function handleDelete(userId) {
+    mutate(userId);
   }
   if (isPending) return <Loader />;
   return (
@@ -53,7 +53,7 @@ function DeleteModal({ setDeleteClicked, id }) {
       />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
             className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
@@ -70,11 +70,11 @@ function DeleteModal({ setDeleteClicked, id }) {
                   as="h3"
                   className="text-base font-semibold leading-6 text-gray-900"
                 >
-                  Delete Address
+                  Delete Volunteer
                 </DialogTitle>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Are you sure you want to delete the address? All of your
+                    Are you sure you want to delete the volunteer? All of your
                     data will be permanently removed from our servers forever.
                     This action cannot be undone.
                   </p>
@@ -85,7 +85,7 @@ function DeleteModal({ setDeleteClicked, id }) {
               <button
                 type="button"
                 onClick={() => {
-                  handleDelete(id);
+                  handleDelete(userId);
                   setOpen(false);
                 }}
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:w-auto"
@@ -111,4 +111,4 @@ function DeleteModal({ setDeleteClicked, id }) {
   );
 }
 
-export default DeleteModal;
+export default VolunteerDeleteModal;
