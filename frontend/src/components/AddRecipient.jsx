@@ -83,6 +83,8 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
               type="tel"
               register={register}
               name="phone"
+              pattern="\b[2-9][0-9]{2} [2-9][0-9]{2} [0-9]{4}\b"
+              placeholder="555 235 7832"
             >
               Phone
             </LabelAndInput>
@@ -110,6 +112,8 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
               type="text"
               register={register}
               name="state"
+              pattern="[A-Z]{2}"
+              placeholder="CA"
             >
               State
             </LabelAndInput>
@@ -119,6 +123,8 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
               type="text"
               register={register}
               name="zip"
+              pattern="[0-9]{5}"
+              placeholder="12345"
             >
               Zip
             </LabelAndInput>
