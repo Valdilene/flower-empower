@@ -44,6 +44,7 @@ urlpatterns = [
     path('api/events/', ListCreateEvent.as_view(), name='view'),
     path('api/events/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='get_events'),
     path('api/events/toggle-participation/', ToggleEventParticipationView.as_view(), name='toggle-event-participation'),
+    path('api/events/<int:pk>/close/', EventRetrieveUpdateDestroyView.as_view(), name='close-event'),
     # recipients
     path('api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
     path('api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(), name='update_recipient'),
