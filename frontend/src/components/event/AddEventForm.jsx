@@ -12,7 +12,7 @@ function AddEventForm({ setOpen, setIsClicked }) {
   const { register, handleSubmit } = useForm();
   const { mutate, isPending, error } = useMutation({
     mutationFn: async (obj) => {
-      const res = await API.post("events/create/", obj, {
+      const res = await API.post("events/", obj, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
           // "Content-Type": "multipart/form-data",
