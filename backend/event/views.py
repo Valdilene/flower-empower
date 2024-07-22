@@ -5,7 +5,7 @@ from django.utils.dateparse import parse_date
 import json
 
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from recipient.models import Recipient
 from .models import Event
@@ -50,17 +50,34 @@ class CreateUpdateDeleteEventView(GenericAPIView):
 
         return Response({'message': 'Event created successfully'}, status=status.HTTP_201_CREATED)
     def get(self, request, *args, **kwargs):
-        viewEvent = Event.objects.all()
-        serializer = EventSerializer(viewEvent)
-        permission_classes = [IsAuthenticated]
+        events = self.get_queryset()
+        serializer = self.get_serializer(events, many=True)
         return Response(serializer.data)
-    queryset =
-    serializer_class = EventSerializer
 
-    # def delete(self, request, *args, **kwargs):
-    #     snippet = self.get_object()
-    #     snippet.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
+class EventRetrieveUpdateDestroyView(GenericAPIView):
+
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'pk'
+
+    def get(self, request, *args, **kwargs):
+        event = self.get_object()
+        serializer = self.get_serializer(event)
+        return Response(serializer.data)
+
+    def patch(self, request, *args, **kwargs):
+        event = self.get_object()
+        serializer = self.get_serializer(event, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def delete(self, request, *args, **kwargs):
+        event = self.get_object()
+        event.delete()
+        return Response({'message': 'Event deleted'}, status=status.HTTP_204_NO_CONTENT)
+
 
 
 
