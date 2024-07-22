@@ -1,25 +1,26 @@
 from django.contrib.auth import get_user_model
-from django.http import JsonResponse, HttpResponseNotFound
+
 
 from django.utils.dateparse import parse_date
-import json
+
 
 from rest_framework import status
-from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from recipient.models import Recipient
 from .models import Event
 from rest_framework.permissions import IsAuthenticated
-from project import settings
+
 from .serializers import EventSerializer
 
 
 class CreateUpdateDeleteEventView(GenericAPIView):
-
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = (IsAuthenticated,)
-    def post(self, request, *args, **kwargs):
+
+    @staticmethod
+    def post(request, *args, **kwargs):
         data = request.data
         date = parse_date(data.get('date'))
         bouquet_makers_needed = data.get('bouquet_makers_needed')
@@ -49,13 +50,14 @@ class CreateUpdateDeleteEventView(GenericAPIView):
         event.recipients.add(*recipients)
 
         return Response({'message': 'Event created successfully'}, status=status.HTTP_201_CREATED)
+
     def get(self, request, *args, **kwargs):
         events = self.get_queryset()
         serializer = self.get_serializer(events, many=True)
         return Response(serializer.data)
 
-class EventRetrieveUpdateDestroyView(GenericAPIView):
 
+class EventRetrieveUpdateDestroyView(GenericAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated]
@@ -77,10 +79,3 @@ class EventRetrieveUpdateDestroyView(GenericAPIView):
         event = self.get_object()
         event.delete()
         return Response({'message': 'Event deleted'}, status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
-
-
