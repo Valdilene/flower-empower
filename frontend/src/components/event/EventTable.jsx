@@ -1,45 +1,60 @@
 /* eslint-disable react/prop-types */
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
-import API from "../axios";
+import API from "../../axios";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "./Loader";
 import { useCookies } from "react-cookie";
-import VolunteerDeleteModal from "./VolunteerDeleteModal";
-import VolunteerEditModal from "./VolunteerEditModal";
+import ModalEvent from "./ModalEvent";
+import ModalEventDelete from "./ModalEventDelete";
+import EditEventModal from "./EditEventModal";
 
-function VolunteerTable() {
+function EventTable() {
   const [cookies] = useCookies(["user"]);
-  const [currUser, setCurrUser] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [currEvent, setCurrEvent] = useState(null);
+  const [eventId, setEventId] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
   const [deleteClicked, setDeleteClicked] = useState(false);
   const [editClicked, setEditClicked] = useState(false);
-  const { data: users, isLoading } = useQuery({
-    queryKey: ["users"],
+  const {
+    data: events,
+
+    error,
+  } = useQuery({
+    queryKey: ["events"],
     queryFn: async () => {
-      const res = await API.get("user/", {
+      const res = await API.get("events/", {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
       });
       console.log(res.data);
+
       return res.data;
     },
   });
-  if (isLoading) return <Loader />;
+  console.log(error);
+  // if (isLoading) return <Loader />;
   return (
     <>
+      {isClicked && <ModalEvent setIsClicked={setIsClicked} />}
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-base font-semibold leading-6 text-gray-900">
-              Volunteers
+              Events
             </h1>
-            <p className="mt-2 text-sm text-gray-700">
-              A list of all the volunteers saved in the database with their
-              information.
-            </p>
           </div>
+          {cookies.issuperuser ? (
+            <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+              <button
+                onClick={() => setIsClicked((prev) => !prev)}
+                type="button"
+                className="block rounded-md bg-pink-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Create event
+              </button>
+            </div>
+          ) : null}
         </div>
         <div className="mt-8 flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -52,7 +67,7 @@ function VolunteerTable() {
                       className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                     >
                       <a href="#" className="group inline-flex">
-                        Name
+                        Date
                         <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                           <ChevronDownIcon
                             aria-hidden="true"
@@ -63,11 +78,11 @@ function VolunteerTable() {
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                     >
                       <a href="#" className="group inline-flex">
-                        Email
-                        <span className="ml-2 flex-none rounded bg-gray-100 text-gray-900 group-hover:bg-gray-200">
+                        Bouquet makers needed
+                        <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                           <ChevronDownIcon
                             aria-hidden="true"
                             className="h-5 w-5"
@@ -77,79 +92,61 @@ function VolunteerTable() {
                     </th>
                     <th
                       scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                     >
                       <a href="#" className="group inline-flex">
-                        Phone
+                        Drivers needed
                         <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                           <ChevronDownIcon
                             aria-hidden="true"
-                            className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                          />
-                        </span>
-                      </a>
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      <a href="#" className="group inline-flex">
-                        Hours
-                        <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                          <ChevronDownIcon
-                            aria-hidden="true"
-                            className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                          />
-                        </span>
-                      </a>
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      <a href="#" className="group inline-flex">
-                        Preferred comunication
-                        <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                          <ChevronDownIcon
-                            aria-hidden="true"
-                            className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
+                            className="h-5 w-5"
                           />
                         </span>
                       </a>
                     </th>
 
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      <a href="#" className="group inline-flex">
+                        Group
+                        <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
+                          <ChevronDownIcon
+                            aria-hidden="true"
+                            className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
+                          />
+                        </span>
+                      </a>
+                    </th>
                     <th scope="col" className="relative py-3.5 pl-3 pr-0">
                       <span className="sr-only">Edit</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {users
-                    ?.filter((user) => user.is_superuser != true)
-                    .map((user) => (
-                      <tr key={user.email}>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                          {user.first_name} {user.last_name}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {user.email}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {user.phone}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {user.hours}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {user.preferred_communication}
-                        </td>
+                  {events?.map((event) => (
+                    <tr key={event.date}>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                        {event.date}
+                      </td>
 
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {event.bouquet_makers_needed}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {event.drivers_needed}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {event.group}
+                      </td>
+                      {cookies.issuperuser ? (
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
                           <div className="flex gap-x-2">
                             <button
                               onClick={() => {
-                                setUserId(user.id);
-                                setCurrUser(user);
+                                setEventId(event.id);
+                                setCurrEvent(event);
 
                                 setEditClicked((prev) => !prev);
                               }}
@@ -159,7 +156,7 @@ function VolunteerTable() {
                             </button>
                             <button
                               onClick={() => {
-                                setUserId(user.id);
+                                setEventId(event.id);
                                 setDeleteClicked((prev) => !prev);
                               }}
                               className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
@@ -167,22 +164,23 @@ function VolunteerTable() {
                               Delete
                             </button>
                             {deleteClicked && (
-                              <VolunteerDeleteModal
+                              <ModalEventDelete
                                 setDeleteClicked={setDeleteClicked}
-                                userId={userId}
+                                eventId={eventId}
                               />
                             )}
                             {editClicked && (
-                              <VolunteerEditModal
+                              <EditEventModal
                                 setEditClicked={setEditClicked}
-                                userId={userId}
-                                currUser={currUser}
+                                eventId={eventId}
+                                currEvent={currEvent}
                               />
                             )}
                           </div>
                         </td>
-                      </tr>
-                    ))}
+                      ) : null}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -193,4 +191,4 @@ function VolunteerTable() {
   );
 }
 
-export default VolunteerTable;
+export default EventTable;
