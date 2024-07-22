@@ -22,7 +22,7 @@ function EventTable() {
   } = useQuery({
     queryKey: ["events"],
     queryFn: async () => {
-      const res = await API.get("event/", {
+      const res = await API.get("events/", {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
