@@ -1,8 +1,5 @@
 from django.contrib.auth import get_user_model
-
-
 from django.utils.dateparse import parse_date
-
 
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
@@ -19,8 +16,8 @@ class CreateUpdateDeleteEventView(GenericAPIView):
     serializer_class = EventSerializer
     permission_classes = (IsAuthenticated,)
 
-    @staticmethod
-    def post(request, *args, **kwargs):
+
+    def post(self, request, *args, **kwargs):
         data = request.data
         date = parse_date(data.get('date'))
         bouquet_makers_needed = data.get('bouquet_makers_needed')
