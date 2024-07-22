@@ -53,7 +53,7 @@ class ListCreateEvent(GenericAPIView):
 
 
 class ToggleEventParticipationView(GenericAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAdminUser,)
 
     def post(self, request, *args, **kwargs):
         event_id = request.data.get('event_id')
@@ -77,10 +77,10 @@ class ToggleEventParticipationView(GenericAPIView):
         elif role == 'driver':
             if user in event.drivers.all():
                 event.drivers.remove(user)
-                message = 'You have successfully unregistered as a driver for the event.'
+                message = 'You have unregistered as a driver for the event.'
             else:
                 event.drivers.add(user)
-                message = 'You have successfully registered as a driver for the event.'
+                message = 'You have registered as a driver for the event.'
 
         else:
             return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
@@ -110,3 +110,9 @@ class EventRetrieveUpdateDestroyView(GenericAPIView):
         event = self.get_object()
         event.delete()
         return Response({'message': 'Event deleted'}, status=status.HTTP_204_NO_CONTENT)
+
+    def patch(self, request, *args, **kwargs):
+        event = self.get_object()
+        event.closed = True
+        event.save()
+        return Response({'message': 'Event closed'}, status=status.HTTP_200_OK)
