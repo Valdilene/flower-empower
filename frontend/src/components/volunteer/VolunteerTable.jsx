@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
-import API from "../axios";
+import API from "../../axios";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "./Loader";
+import Loader from "../Loader";
 import { useCookies } from "react-cookie";
 import VolunteerDeleteModal from "./VolunteerDeleteModal";
 import VolunteerEditModal from "./VolunteerEditModal";

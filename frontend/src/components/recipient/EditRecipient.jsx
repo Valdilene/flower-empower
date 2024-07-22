@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import API from "../axios";
+import API from "../../axios";
 import toast from "react-hot-toast";
-import LabelAndInput from "./LabelAndInput";
-import Loader from "./Loader";
+import LabelAndInput from "../LabelAndInput";
+import Loader from "../Loader";
 import { useCookies } from "react-cookie";
 
 function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
@@ -48,7 +48,7 @@ function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
             Add the recipients address in the form below
           </p>
 
-          <div className="grid p-10 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10 space-y-8  pb-12">
+          <div className="grid p-10 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10 space-y-8  pb-12">
             <div className="self-end">
               <LabelAndInput
                 htmlFor="first_name"
@@ -134,6 +134,15 @@ function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
               placeholder="12345"
             >
               Zip
+            </LabelAndInput>
+            <LabelAndInput
+              htmlFor="date"
+              type="date"
+              register={register}
+              name="end_date"
+              value={currRecipient?.end_date}
+            >
+              End Date
             </LabelAndInput>
             <LabelAndInput
               htmlFor="group"
