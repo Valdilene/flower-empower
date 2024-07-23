@@ -8,6 +8,7 @@ from recipient.models import Recipient
 from .models import Event
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .serializers import EventSerializer
+# 1
 
 
 class ListEventView(ListAPIView):
