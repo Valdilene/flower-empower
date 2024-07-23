@@ -24,7 +24,7 @@ from user.views import MeView, ListCreateUserView, RetrieveUpdateDestroyUserView
 from recipient.views import ListCreateRecipientView, RetrieveUpdateDestroyRecipientView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('backend/admin/', admin.site.urls),
     # authentication
     path('backend/api/token/', TokenUserObtainView.as_view(), name='token_obtain_pair'),
     path('backend/api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
@@ -33,18 +33,18 @@ urlpatterns = [
     path('backend/api/registration/', RegistrationView.as_view(), name='registration'),
     path('backend/api/registration/validation/', RegistrationValidationView.as_view(), name='registration_validation'),
     # password forget
-    path('api/password-reset/', PasswordResetView.as_view(), name='password-reset'),
-    path('api/password-reset/validate/', PasswordResetValidationView.as_view(), name='me'),
+    path('backend/api/password-reset/', PasswordResetView.as_view(), name='password-reset'),
+    path('backend/api/password-reset/validate/', PasswordResetValidationView.as_view(), name='me'),
     # user
-    path('api/user/me/', MeView.as_view(), name='user_me'),
-    path('api/user/', ListCreateUserView.as_view(), name='list_users'),
-    path('api/user/<int:user_id>/', RetrieveUpdateDestroyUserView.as_view(), name='user'),
+    path('backend/api/user/me/', MeView.as_view(), name='user_me'),
+    path('backend/api/user/', ListCreateUserView.as_view(), name='list_users'),
+    path('backend/api/user/<int:user_id>/', RetrieveUpdateDestroyUserView.as_view(), name='user'),
     # events
-    path('api/events/', ListCreateEventView.as_view(), name='list-events'),
-    path('api/events/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='get_events'),
-    path('api/events/toggle-participation/<int:pk>/', ToggleEventParticipationView.as_view(),
+    path('backend/api/events/', ListCreateEventView.as_view(), name='list-events'),
+    path('backend/api/events/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='get_events'),
+    path('backend/api/events/toggle-participation/<int:pk>/', ToggleEventParticipationView.as_view(),
          name='toggle-event-participation'),
     # recipients
-    path('api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
-    path('api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(), name='update_recipient'),
+    path('backend/api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
+    path('backend/api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(), name='update_recipient'),
 ]
