@@ -19,13 +19,14 @@ function BouquetMakerModal({ setEnabledDriver, eventId, setEnabledBouqet }) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(true);
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationFn: async (eventId) => {
-      const res = await API.post(`events/${eventId}/toggle-participation/`, {
+      const res = await API.post(`events/toggle-participation/${eventId}/`, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
       });
+      console.log(res.data);
 
       return res.data;
     },
@@ -40,10 +41,12 @@ function BouquetMakerModal({ setEnabledDriver, eventId, setEnabledBouqet }) {
       toast.error("Oh no, retry :(");
     },
   });
+  console.log(error);
 
   function handleDelete(eventId) {
     mutate(eventId);
   }
+
   if (isPending) return <Loader />;
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
