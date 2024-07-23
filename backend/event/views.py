@@ -2,15 +2,22 @@ from django.contrib.auth import get_user_model
 from django.utils.dateparse import parse_date
 
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.response import Response
 from recipient.models import Recipient
 from .models import Event
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .serializers import EventSerializer
+# 1
 
 
-class ListCreateEvent(GenericAPIView):
+class ListEventView(ListAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    permission_classes = (IsAuthenticated,)
+
+
+class CreateEvent(GenericAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = (IsAdminUser,)
@@ -46,17 +53,13 @@ class ListCreateEvent(GenericAPIView):
 
         return Response({'message': 'Event created successfully'}, status=status.HTTP_201_CREATED)
 
-    def get(self, request, *args, **kwargs):
-        events = self.get_queryset()
-        serializer = self.get_serializer(events, many=True)
-        return Response(serializer.data)
-
 
 class ToggleEventParticipationView(GenericAPIView):
-    permission_classes = (IsAuthenticated, IsAdminUser,)
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'pk'
 
     def post(self, request, *args, **kwargs):
-        event_id = request.data.get('event_id')
+        event_id = self.kwargs.get(self.lookup_field)
         role = request.data.get('role')
 
         try:
@@ -85,7 +88,6 @@ class ToggleEventParticipationView(GenericAPIView):
         else:
             return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
 
-        event.save()
         return Response({'message': message}, status=status.HTTP_200_OK)
 
 
