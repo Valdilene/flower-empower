@@ -17,9 +17,10 @@ import { useCookies } from "react-cookie";
 
 function BouquetMakerModal({ setBouquetClicked, eventId }) {
   const [cookies] = useCookies(["user"]);
+  console.log(cookies.token);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(true);
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationFn: async (eventId) => {
       const res = await API.post(`events/${eventId}/toggle-participation/`, {
         headers: {
@@ -40,6 +41,7 @@ function BouquetMakerModal({ setBouquetClicked, eventId }) {
       toast.error("Oh no, retry :(");
     },
   });
+  console.log(error);
 
   function handleDelete(eventId) {
     mutate(eventId);
