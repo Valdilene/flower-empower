@@ -21,12 +21,12 @@ function DriverModal({ setEnabledBouqet, eventId, setEnabledDriver }) {
   const [open, setOpen] = useState(true);
   const { mutate, isPending } = useMutation({
     mutationFn: async (eventId) => {
-      const res = await API.post(`events/${eventId}/toggle-participation/`, {
+      const res = await API.post(`events/toggle-participation/${eventId}/`, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
         },
       });
-
+      console.log(res.data);
       return res.data;
     },
     onSuccess: () => {
