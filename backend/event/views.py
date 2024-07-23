@@ -9,6 +9,7 @@ from .models import Event
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .serializers import EventSerializer
 
+
 class ListEventView(ListAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
@@ -50,7 +51,6 @@ class CreateEvent(GenericAPIView):
         event.recipients.add(*recipients)
 
         return Response({'message': 'Event created successfully'}, status=status.HTTP_201_CREATED)
-
 
 
 class ToggleEventParticipationView(GenericAPIView):
