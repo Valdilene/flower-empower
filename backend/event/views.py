@@ -1,26 +1,31 @@
 from django.contrib.auth import get_user_model
 from django.utils.dateparse import parse_date
 
-from rest_framework import status
-from rest_framework.generics import GenericAPIView, ListAPIView
+from rest_framework import status, permissions
+from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from recipient.models import Recipient
 from .models import Event
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from .serializers import EventSerializer
+from .serializers import EventSerializer, EventUserSerializer
+
+
 # 1
-
-
-class ListEventView(ListAPIView):
+class ListCreateEventView(ListCreateAPIView):
+    # View for listing all events and creating a new event.
     queryset = Event.objects.all()
-    serializer_class = EventSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = [IsAuthenticated]  # Ensure all users must be authenticated
 
+    def get_serializer_class(self, ):
+        if self.request.user.is_staff:
+            return EventSerializer
+        else:
+            return EventUserSerializer
 
-class CreateEvent(GenericAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-    permission_classes = (IsAdminUser,)
+    def get_permissions(self):
+        if self.request.method == "POST":
+            self.permission_classes = [IsAdminUser]
+        return super(ListCreateEventView, self).get_permissions()
 
     def post(self, request, *args, **kwargs):
         data = request.data
@@ -54,43 +59,43 @@ class CreateEvent(GenericAPIView):
         return Response({'message': 'Event created successfully'}, status=status.HTTP_201_CREATED)
 
 
-class ToggleEventParticipationView(GenericAPIView):
-    permission_classes = (IsAuthenticated,)
-    lookup_field = 'pk'
-
-    def post(self, request, *args, **kwargs):
-        event_id = self.kwargs.get(self.lookup_field)
-        role = request.data.get('role')
-
-        try:
-            event = Event.objects.get(pk=event_id)
-        except Event.DoesNotExist:
-            return Response({'error': 'Event not found'}, status=status.HTTP_404_NOT_FOUND)
-
-        user = request.user
-
-        if role == 'bouquet_maker':
-            if user in event.bouquet_makers.all():
-                event.bouquet_makers.remove(user)
-                message = 'You have unregistered as a bouquet maker for the event.'
-            else:
-                event.bouquet_makers.add(user)
-                message = 'You have registered as a bouquet maker for the event.'
-
-        elif role == 'driver':
-            if user in event.drivers.all():
-                event.drivers.remove(user)
-                message = 'You have unregistered as a driver for the event.'
-            else:
-                event.drivers.add(user)
-                message = 'You have registered as a driver for the event.'
-
-        else:
-            return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response({'message': message}, status=status.HTTP_200_OK)
-
-
+# class ToggleEventParticipationView(GenericAPIView):
+#     permission_classes = (IsAuthenticated,)
+#     lookup_field = 'pk'
+#
+#     def post(self, request, *args, **kwargs):
+#         event_id = self.kwargs.get(self.lookup_field)
+#         role = request.data.get('role')
+#
+#         try:
+#             event = Event.objects.get(pk=event_id)
+#         except Event.DoesNotExist:
+#             return Response({'error': 'Event not found'}, status=status.HTTP_404_NOT_FOUND)
+#
+#         user = request.user
+#
+#         if role == 'bouquet_maker':
+#             if user in event.bouquet_makers.all():
+#                 event.bouquet_makers.remove(user)
+#                 message = 'You have unregistered as a bouquet maker for the event.'
+#             else:
+#                 event.bouquet_makers.add(user)
+#                 message = 'You have registered as a bouquet maker for the event.'
+#
+#         elif role == 'driver':
+#             if user in event.drivers.all():
+#                 event.drivers.remove(user)
+#                 message = 'You have unregistered as a driver for the event.'
+#             else:
+#                 event.drivers.add(user)
+#                 message = 'You have registered as a driver for the event.'
+#
+#         else:
+#             return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
+#
+#         return Response({'message': message}, status=status.HTTP_200_OK)
+#
+#
 class EventRetrieveUpdateDestroyView(GenericAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
