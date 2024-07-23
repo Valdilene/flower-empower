@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
-from event.views import CreateEvent, ListEventView, EventRetrieveUpdateDestroyView, ToggleEventParticipationView
+from event.views import ListCreateEventView, EventRetrieveUpdateDestroyView
 from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
     PasswordResetValidationView, TokenUserObtainView
 from user.views import MeView, ListCreateUserView, RetrieveUpdateDestroyUserView
@@ -40,12 +40,10 @@ urlpatterns = [
     path('api/user/', ListCreateUserView.as_view(), name='list_users'),
     path('api/user/<int:user_id>/', RetrieveUpdateDestroyUserView.as_view(), name='user'),
     # events
-    path('api/events/', ListEventView.as_view(), name='list-events'),
-    path('api/events/create/', CreateEvent.as_view(), name='view'),
+    path('api/events/', ListCreateEventView.as_view(), name='list-events'),
     path('api/events/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='get_events'),
-    path('api/events/<int:pk>/toggle-participation/', ToggleEventParticipationView.as_view(), name='toggle-event-participation'),
-    path('api/events/<int:pk>/close/', EventRetrieveUpdateDestroyView.as_view(), name='close-event'),
-    # recipients
+    # path('api/events/<int:pk>/toggle-participation/', ToggleEventParticipationView.as_view(),
+    # name='toggle-event-participation'), recipients
     path('api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
     path('api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(), name='update_recipient'),
 ]

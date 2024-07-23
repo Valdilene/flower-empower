@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'corsheaders',
-    'sendmail.apps.SendmailConfig',
+    # 'sendmail.apps.SendmailConfig',
     'django_celery_results',
     'django_celery_beat',
 
