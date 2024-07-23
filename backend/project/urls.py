@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
-from event.views import ListCreateEventView, EventRetrieveUpdateDestroyView
+from event.views import ListCreateEventView, EventRetrieveUpdateDestroyView, ToggleEventParticipationView
 from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
     PasswordResetValidationView, TokenUserObtainView
 from user.views import MeView, ListCreateUserView, RetrieveUpdateDestroyUserView
@@ -42,8 +42,9 @@ urlpatterns = [
     # events
     path('api/events/', ListCreateEventView.as_view(), name='list-events'),
     path('api/events/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='get_events'),
-    # path('api/events/<int:pk>/toggle-participation/', ToggleEventParticipationView.as_view(),
-    # name='toggle-event-participation'), recipients
+    path('api/events/toggle-participation/<int:pk>/', ToggleEventParticipationView.as_view(),
+         name='toggle-event-participation'),
+    # recipients
     path('api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
     path('api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(), name='update_recipient'),
 ]
