@@ -58,43 +58,6 @@ class ListCreateEventView(ListCreateAPIView):
         return Response({'message': 'Event created successfully'}, status=status.HTTP_201_CREATED)
 
 
-# class ToggleEventParticipationView(GenericAPIView):
-#     permission_classes = (IsAuthenticated,)
-#     lookup_field = 'pk'
-#
-#     def post(self, request, *args, **kwargs):
-#         event_id = self.kwargs.get(self.lookup_field)
-#         role = request.data.get('role')
-#
-#         try:
-#             event = Event.objects.get(pk=event_id)
-#         except Event.DoesNotExist:
-#             return Response({'error': 'Event not found'}, status=status.HTTP_404_NOT_FOUND)
-#
-#         user = request.user
-#
-#         if role == 'bouquet_maker':
-#             if user in event.bouquet_makers.all():
-#                 event.bouquet_makers.remove(user)
-#                 message = 'You have unregistered as a bouquet maker for the event.'
-#             else:
-#                 event.bouquet_makers.add(user)
-#                 message = 'You have registered as a bouquet maker for the event.'
-#
-#         elif role == 'driver':
-#             if user in event.drivers.all():
-#                 event.drivers.remove(user)
-#                 message = 'You have unregistered as a driver for the event.'
-#             else:
-#                 event.drivers.add(user)
-#                 message = 'You have registered as a driver for the event.'
-#
-#         else:
-#             return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
-#
-#         return Response({'message': message}, status=status.HTTP_200_OK)
-#
-#
 class EventRetrieveUpdateDestroyView(GenericAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
@@ -123,3 +86,40 @@ class EventRetrieveUpdateDestroyView(GenericAPIView):
         event.closed = True
         event.save()
         return Response({'message': 'Event closed'}, status=status.HTTP_200_OK)
+
+
+class ToggleEventParticipationView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'pk'
+
+    def patch(self, request, *args, **kwargs):
+        event_id = self.kwargs.get(self.lookup_field)
+        role = request.data.get('role')
+
+        try:
+            event = Event.objects.get(pk=event_id)
+        except Event.DoesNotExist:
+            return Response({'error': 'Event not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        user = request.user
+
+        if role == 'bouquet_maker':
+            if user in event.bouquet_makers.all():
+                event.bouquet_makers.remove(user)
+                message = 'You have unregistered as a bouquet maker for the event.'
+            else:
+                event.bouquet_makers.add(user)
+                message = 'You have registered as a bouquet maker for the event.'
+
+        elif role == 'driver':
+            if user in event.drivers.all():
+                event.drivers.remove(user)
+                message = 'You have unregistered as a driver for the event.'
+            else:
+                event.drivers.add(user)
+                message = 'You have registered as a driver for the event.'
+
+        else:
+            return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'message': message}, status=status.HTTP_200_OK)
