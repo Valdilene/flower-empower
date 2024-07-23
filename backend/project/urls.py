@@ -43,7 +43,7 @@ urlpatterns = [
     path('api/events/', ListEventView.as_view(), name='list-events'),
     path('api/events/create/', CreateEvent.as_view(), name='view'),
     path('api/events/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='get_events'),
-    path('api/events/toggle-participation/', ToggleEventParticipationView.as_view(), name='toggle-event-participation'),
+    path('api/events/<int:pk>/toggle-participation/', ToggleEventParticipationView.as_view(), name='toggle-event-participation'),
     path('api/events/<int:pk>/close/', EventRetrieveUpdateDestroyView.as_view(), name='close-event'),
     # recipients
     path('api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),

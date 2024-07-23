@@ -54,10 +54,11 @@ class CreateEvent(GenericAPIView):
 
 
 class ToggleEventParticipationView(GenericAPIView):
-    permission_classes = (IsAuthenticated, IsAdminUser,)
+    permission_classes = (IsAuthenticated,)
+    lookup_field = 'pk'
 
     def post(self, request, *args, **kwargs):
-        event_id = request.data.get('event_id')
+        event_id = self.kwargs.get(self.lookup_field)
         role = request.data.get('role')
 
         try:
@@ -86,7 +87,6 @@ class ToggleEventParticipationView(GenericAPIView):
         else:
             return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
 
-        event.save()
         return Response({'message': message}, status=status.HTTP_200_OK)
 
 
