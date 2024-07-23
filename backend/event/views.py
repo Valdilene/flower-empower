@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.utils.dateparse import parse_date
-
-from rest_framework import status, permissions
+from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from recipient.models import Recipient
