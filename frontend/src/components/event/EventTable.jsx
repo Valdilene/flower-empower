@@ -7,12 +7,16 @@ import { useCookies } from "react-cookie";
 import ModalEvent from "./ModalEvent";
 import ModalEventDelete from "./ModalEventDelete";
 import EditEventModal from "./EditEventModal";
+import DriverModal from "./driver/DriverModal";
+import BouquetMakerModal from "./bouquetMaker/BouquetMakerModal.jsx";
 
 function EventTable() {
   const [cookies] = useCookies(["user"]);
   const [currEvent, setCurrEvent] = useState(null);
   const [eventId, setEventId] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
+  const [driverClicked, setDriverClicked] = useState(false);
+  const [bouquetClicked, setBouquetClicked] = useState(false);
   const [deleteClicked, setDeleteClicked] = useState(false);
   const [editClicked, setEditClicked] = useState(false);
   const {
@@ -178,7 +182,45 @@ function EventTable() {
                             )}
                           </div>
                         </td>
-                      ) : null}
+                      ) : (
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
+                          <div className="flex gap-x-2">
+                            <button
+                              onClick={() => {
+                                setEventId(event.id);
+                                setCurrEvent(event);
+
+                                setDriverClicked((prev) => !prev);
+                              }}
+                              className="text-white bg-blue-500 py-0.5 px-2 rounded-lg"
+                            >
+                              Driver
+                            </button>
+                            <button
+                              onClick={() => {
+                                setEventId(event.id);
+                                setBouquetClicked((prev) => !prev);
+                              }}
+                              className="text-white bg-green-500 py-0.5 px-2 rounded-lg"
+                            >
+                              Boquet Maker
+                            </button>
+                            {driverClicked && (
+                              <DriverModal
+                                setDriverClicked={setDriverClicked}
+                                eventId={eventId}
+                              />
+                            )}
+                            {bouquetClicked && (
+                              <BouquetMakerModal
+                                setBouquetClicked={setBouquetClicked}
+                                eventId={eventId}
+                                currEvent={currEvent}
+                              />
+                            )}
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
