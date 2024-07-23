@@ -6,19 +6,21 @@ import { useQuery } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import ModalEvent from "./ModalEvent";
 import ModalEventDelete from "./ModalEventDelete";
+import { Switch } from "@headlessui/react";
 import EditEventModal from "./EditEventModal";
 import DriverModal from "./driver/DriverModal";
 import BouquetMakerModal from "./bouquetMaker/BouquetMakerModal.jsx";
 
 function EventTable() {
   const [cookies] = useCookies(["user"]);
+  const [enabledDriver, setEnabledDriver] = useState(false);
+  const [enabledBouqet, setEnabledBouqet] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
   const [eventId, setEventId] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
-  const [driverClicked, setDriverClicked] = useState(false);
-  const [bouquetClicked, setBouquetClicked] = useState(false);
   const [deleteClicked, setDeleteClicked] = useState(false);
   const [editClicked, setEditClicked] = useState(false);
+  console.log(enabledBouqet);
   const {
     data: events,
 
@@ -31,7 +33,6 @@ function EventTable() {
           Authorization: `Bearer ${cookies.token}`,
         },
       });
-      console.log(res.data);
 
       return res.data;
     },
@@ -65,7 +66,7 @@ function EventTable() {
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <table
                 className={`${
-                  cookies.issuperuser ? "min-w-full" : "lg:min-w-full"
+                  cookies.issuperuser ? "min-w-full" : "min-w-full"
                 } divide-y
                 divide-gray-300`}
               >
@@ -197,8 +198,57 @@ function EventTable() {
                         </td>
                       ) : (
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-                          <div className="flex gap-x-2">
-                            <button
+                          <div className="flex gap-x-2 justify-end">
+                            <div className="flex gap-x-2">
+                              <p className="text-green-500">Bouqet maker</p>
+                              <Switch
+                                onClick={() => {
+                                  setEventId(event.id);
+                                  setCurrEvent(event);
+                                }}
+                                // checked={enabledBouqet}
+                                onChange={setEnabledBouqet}
+                                className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                              >
+                                <span className="sr-only">Use setting</span>
+                                <span
+                                  aria-hidden="true"
+                                  className="pointer-events-none absolute h-full w-full rounded-md bg-white"
+                                />
+                                <span
+                                  aria-hidden="true"
+                                  className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
+                                />
+                                <span
+                                  aria-hidden="true"
+                                  className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
+                                />
+                              </Switch>
+                            </div>
+                            <div className="flex gap-x-2">
+                              <p className="text-blue-500">Driver</p>
+
+                              <Switch
+                                // checked={enabledDriver}
+                                onChange={setEnabledDriver}
+                                className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                              >
+                                <span className="sr-only">Use setting</span>
+                                <span
+                                  aria-hidden="true"
+                                  className="pointer-events-none absolute h-full w-full rounded-md bg-white"
+                                />
+                                <span
+                                  aria-hidden="true"
+                                  className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
+                                />
+                                <span
+                                  aria-hidden="true"
+                                  className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
+                                />
+                              </Switch>
+                            </div>
+                            {/* <button
                               onClick={() => {
                                 setEventId(event.id);
                                 setCurrEvent(event);
@@ -208,8 +258,8 @@ function EventTable() {
                               className="text-white bg-blue-500 py-0.5 px-2 rounded-lg"
                             >
                               Driver
-                            </button>
-                            <button
+                            </button> */}
+                            {/* <button
                               onClick={() => {
                                 setEventId(event.id);
                                 setBouquetClicked((prev) => !prev);
@@ -217,16 +267,19 @@ function EventTable() {
                               className="text-white bg-green-500 py-0.5 px-2 rounded-lg"
                             >
                               Boquet Maker
-                            </button>
-                            {driverClicked && (
+                            </button> */}
+                            {enabledDriver && (
                               <DriverModal
-                                setDriverClicked={setDriverClicked}
+                                setEnabledBouqet={setEnabledBouqet}
+                                setEnabledDriver={setEnabledDriver}
                                 eventId={eventId}
+                                currEvent={currEvent}
                               />
                             )}
-                            {bouquetClicked && (
+                            {enabledBouqet && (
                               <BouquetMakerModal
-                                setBouquetClicked={setBouquetClicked}
+                                setEnabledBouqet={setEnabledBouqet}
+                                setEnabledDriver={setEnabledDriver}
                                 eventId={eventId}
                                 currEvent={currEvent}
                               />

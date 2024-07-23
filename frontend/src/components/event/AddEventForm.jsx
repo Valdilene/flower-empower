@@ -31,10 +31,8 @@ function AddEventForm({ setOpen, setIsClicked }) {
       toast.error("Oh no, retry :(");
     },
   });
-  console.log(error);
 
   function onSubmit(data) {
-    console.log(data);
     mutate(data);
   }
 

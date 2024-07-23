@@ -22,7 +22,7 @@ function VolunteerTable() {
           Authorization: `Bearer ${cookies.token}`,
         },
       });
-      console.log(res.data);
+
       return res.data;
     },
   });
