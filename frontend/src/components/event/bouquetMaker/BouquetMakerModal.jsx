@@ -15,12 +15,11 @@ import toast from "react-hot-toast";
 import Loader from "../../Loader";
 import { useCookies } from "react-cookie";
 
-function BouquetMakerModal({ setBouquetClicked, eventId }) {
+function BouquetMakerModal({ setEnabledDriver, eventId, setEnabledBouqet }) {
   const [cookies] = useCookies(["user"]);
-  console.log(cookies.token);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(true);
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (eventId) => {
       const res = await API.post(`events/${eventId}/toggle-participation/`, {
         headers: {
@@ -34,14 +33,13 @@ function BouquetMakerModal({ setBouquetClicked, eventId }) {
       queryClient.invalidateQueries({
         queryKey: ["events"],
       });
-      setBouquetClicked(false);
+      setEnabledDriver(false);
       toast.success("Address deleted!");
     },
     onError: () => {
       toast.error("Oh no, retry :(");
     },
   });
-  console.log(error);
 
   function handleDelete(eventId) {
     mutate(eventId);
@@ -97,8 +95,8 @@ function BouquetMakerModal({ setBouquetClicked, eventId }) {
                 type="button"
                 data-autofocus
                 onClick={() => {
+                  setEnabledBouqet(false);
                   setOpen(false);
-                  setBouquetClicked(false);
                 }}
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-3 sm:mt-0 sm:w-auto"
               >

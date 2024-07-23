@@ -35,7 +35,7 @@ function Login() {
   function onSubmit(data) {
     mutate(data);
   }
-  console.log(error);
+
   if (isPending) return <Loader />;
 
   return (

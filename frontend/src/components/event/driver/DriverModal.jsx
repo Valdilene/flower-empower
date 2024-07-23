@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import Loader from "../../Loader";
 import { useCookies } from "react-cookie";
 
-function DriverModal({ setDriverClicked, eventId }) {
+function DriverModal({ setEnabledBouqet, eventId, setEnabledDriver }) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(true);
@@ -33,7 +33,7 @@ function DriverModal({ setDriverClicked, eventId }) {
       queryClient.invalidateQueries({
         queryKey: ["events"],
       });
-      setDriverClicked(false);
+      setEnabledBouqet(false);
       toast.success("You choose to be a driver!");
     },
     onError: () => {
@@ -96,7 +96,7 @@ function DriverModal({ setDriverClicked, eventId }) {
                 data-autofocus
                 onClick={() => {
                   setOpen(false);
-                  setDriverClicked(false);
+                  setEnabledDriver(false);
                 }}
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-3 sm:mt-0 sm:w-auto"
               >
