@@ -2,15 +2,20 @@ from django.contrib.auth import get_user_model
 from django.utils.dateparse import parse_date
 
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.response import Response
 from recipient.models import Recipient
 from .models import Event
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .serializers import EventSerializer
 
+class ListEventView(ListAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    permission_classes = (IsAuthenticated,)
 
-class ListCreateEvent(GenericAPIView):
+
+class CreateEvent(GenericAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = (IsAdminUser,)
@@ -46,10 +51,6 @@ class ListCreateEvent(GenericAPIView):
 
         return Response({'message': 'Event created successfully'}, status=status.HTTP_201_CREATED)
 
-    def get(self, request, *args, **kwargs):
-        events = self.get_queryset()
-        serializer = self.get_serializer(events, many=True)
-        return Response(serializer.data)
 
 
 class ToggleEventParticipationView(GenericAPIView):
