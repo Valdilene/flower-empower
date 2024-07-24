@@ -25,7 +25,7 @@ function Event() {
           Authorization: `Bearer ${cookies.token}`,
         },
       });
-      console.log(user);
+
       return res.data;
     },
   });

@@ -27,7 +27,6 @@ function EventPage() {
       return res.data;
     },
   });
-  console.log(event);
 
   return (
     <>
