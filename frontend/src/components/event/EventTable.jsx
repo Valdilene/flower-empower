@@ -8,10 +8,7 @@ import EventRow from "./EventRow";
 function EventTable({ user, events }) {
   const [cookies] = useCookies(["user"]);
   const [isClicked, setIsClicked] = useState(false);
-  console.log(events);
-  console.log(user);
 
-  // if (isLoading) return <Loader />;
   return (
     <>
       {isClicked && <ModalEvent setIsClicked={setIsClicked} />}

@@ -16,7 +16,7 @@ function EventRow({ event, user }) {
     event?.bouquet_makers.includes(user?.id)
   );
   const [isDriver, setIsDriver] = useState(event?.drivers.includes(user?.id));
-  console.log(isBoquet);
+
   const [cookies] = useCookies(["user"]);
   const [role, setRole] = useState("");
   const [eventId, setEventId] = useState(null);
@@ -38,7 +38,6 @@ function EventRow({ event, user }) {
           },
         }
       );
-      console.log(res.data);
 
       return res.data;
     },
@@ -53,10 +52,8 @@ function EventRow({ event, user }) {
       toast.error("Oh no, retry :(");
     },
   });
-  // console.log(events);
 
   function onSubmit(data) {
-    console.log({ ...data, role });
     mutate({ ...data, role });
   }
   function handleEventClick(id) {
@@ -67,12 +64,17 @@ function EventRow({ event, user }) {
 
   return (
     <>
-      <tr
-        onClick={() => handleEventClick(event.id)}
-        key={event.date}
-        className="cursor-pointer hover:bg-slate-100"
-      >
-        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+      <tr key={event.date} className={``}>
+        <td
+          onClick={() => {
+            if (cookies.issuperuser) {
+              handleEventClick(event.id);
+            }
+          }}
+          className={`${
+            cookies.issuperuser ? "cursor-pointer hover:bg-slate-100" : ""
+          } whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0`}
+        >
           {event.date}
         </td>
         {cookies.issuperuser ? (
