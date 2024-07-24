@@ -110,6 +110,8 @@ class ToggleEventParticipationView(GenericAPIView):
                 event.bouquet_makers.remove(user)
                 message = 'You have unregistered as a bouquet maker for the event.'
             else:
+                if user in event.drivers.all():
+                    event.drivers.remove(user)
                 event.bouquet_makers.add(user)
                 message = 'You have registered as a bouquet maker for the event.'
 
@@ -118,6 +120,8 @@ class ToggleEventParticipationView(GenericAPIView):
                 event.drivers.remove(user)
                 message = 'You have unregistered as a driver for the event.'
             else:
+                if user in event.bouquet_makers.all():
+                    event.bouquet_makers.remove(user)
                 event.drivers.add(user)
                 message = 'You have registered as a driver for the event.'
 
