@@ -1,5 +1,4 @@
 from django.db import models
-
 from project import settings
 from recipient.models import Recipient
 
