@@ -11,7 +11,7 @@ function EditVolunteer({ userId, setOpen, setEditClicked, currUser }) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (obj) => {
       const res = await API.patch(`user/${userId}/`, obj, {
         headers: {
@@ -32,7 +32,6 @@ function EditVolunteer({ userId, setOpen, setEditClicked, currUser }) {
       toast.error("Oh no, retry :(");
     },
   });
-  console.log(error);
 
   function onSubmit(data) {
     mutate(data);
