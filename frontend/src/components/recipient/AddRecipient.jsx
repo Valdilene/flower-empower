@@ -10,7 +10,7 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (obj) => {
       const res = await API.post("recipients/", obj, {
         headers: {
@@ -30,7 +30,6 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
       toast.error("Oh no, retry :(");
     },
   });
-  console.log(error);
 
   function onSubmit(data) {
     mutate(data);
