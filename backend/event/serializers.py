@@ -9,11 +9,6 @@ class EventSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EventUserSerializer(EventSerializer):
-    class Meta:
-        model = Event
-        fields = ["id", 'date', 'closed']
-
 # def validate_date(self, value):
 #     parsed_date = parse_date(value)
 #     if not parsed_date:
