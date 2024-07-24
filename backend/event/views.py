@@ -6,20 +6,27 @@ from rest_framework.response import Response
 from recipient.models import Recipient
 from .models import Event
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from .serializers import EventSerializer
+from .serializers import EventSerializer, EventAdminSerializer
 
 
 # 1
 class ListCreateEventView(ListCreateAPIView):
     # View for listing all events and creating a new event.
     queryset = Event.objects.all()
-    serializer_class = EventSerializer
     permission_classes = [IsAuthenticated]  # Ensure all users must be authenticated
 
     def get_permissions(self):
         if self.request.method == "POST":
             self.permission_classes = [IsAdminUser]
         return super(ListCreateEventView, self).get_permissions()
+
+    def get_serializer(self, *args, **kwargs):
+        if self.request.user.is_superuser:
+            serializer_class = EventAdminSerializer
+        else:
+            serializer_class = EventSerializer
+
+        return serializer_class(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         data = request.data
