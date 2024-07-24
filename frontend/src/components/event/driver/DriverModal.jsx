@@ -15,24 +15,39 @@ import toast from "react-hot-toast";
 import Loader from "../../Loader";
 import { useCookies } from "react-cookie";
 
-function DriverModal({ setEnabledBouqet, eventId, setEnabledDriver }) {
+function DriverModal({
+  setEnabledBouqet,
+  eventId,
+  setEnabledDriver,
+  role,
+  setModalDriver,
+}) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(true);
   const { mutate, isPending } = useMutation({
-    mutationFn: async (eventId) => {
-      const res = await API.post(`events/toggle-participation/${eventId}/`, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
-        },
-      });
-      console.log(res.data);
+    mutationFn: async (obj) => {
+      const res = await API.patch(
+        `events/toggle-participation/${eventId}/`,
+        obj,
+
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+      console.log(res.data.message);
       return res.data;
     },
+
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["events"],
       });
+      setModalDriver(false);
+
+      setEnabledDriver((prev) => !prev);
       setEnabledBouqet(false);
       toast.success("You choose to be a driver!");
     },
@@ -41,8 +56,8 @@ function DriverModal({ setEnabledBouqet, eventId, setEnabledDriver }) {
     },
   });
 
-  function handleDelete(eventId) {
-    mutate(eventId);
+  function handleToggle(data) {
+    mutate({ ...data, role: role });
   }
   if (isPending) return <Loader />;
   return (
@@ -84,7 +99,7 @@ function DriverModal({ setEnabledBouqet, eventId, setEnabledDriver }) {
               <button
                 type="button"
                 onClick={() => {
-                  handleDelete(eventId);
+                  handleToggle();
                   setOpen(false);
                 }}
                 className="inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 sm:w-auto"
@@ -93,10 +108,11 @@ function DriverModal({ setEnabledBouqet, eventId, setEnabledDriver }) {
               </button>
               <button
                 type="button"
-                data-autofocus
                 onClick={() => {
-                  setOpen(false);
                   setEnabledDriver(false);
+                  setEnabledBouqet(false);
+                  setModalDriver(false);
+                  setOpen(false);
                 }}
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-3 sm:mt-0 sm:w-auto"
               >

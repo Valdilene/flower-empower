@@ -2,30 +2,28 @@
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import API from "../../axios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import ModalEvent from "./ModalEvent";
 import ModalEventDelete from "./ModalEventDelete";
 import { Switch } from "@headlessui/react";
 import EditEventModal from "./EditEventModal";
-import DriverModal from "./driver/DriverModal";
-import BouquetMakerModal from "./bouquetMaker/BouquetMakerModal.jsx";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
 function EventTable() {
+  const { register, handleSubmit } = useForm();
+  const queryClient = useQueryClient();
   const [cookies] = useCookies(["user"]);
   const [enabledDriver, setEnabledDriver] = useState(false);
+  const [eventId, setEventId] = useState(null);
+  const [role, setRole] = useState("");
   const [enabledBouqet, setEnabledBouqet] = useState(false);
   const [currEvent, setCurrEvent] = useState(null);
-  const [eventId, setEventId] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
   const [deleteClicked, setDeleteClicked] = useState(false);
   const [editClicked, setEditClicked] = useState(false);
-  console.log(enabledBouqet);
-  const {
-    data: events,
-
-    error,
-  } = useQuery({
+  const { data: events } = useQuery({
     queryKey: ["events"],
     queryFn: async () => {
       const res = await API.get("events/", {
@@ -37,7 +35,43 @@ function EventTable() {
       return res.data;
     },
   });
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: async (obj) => {
+      const res = await API.patch(
+        `events/toggle-participation/${eventId}/`,
+        obj,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        }
+      );
+      console.log(res.data);
+
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["events"],
+      });
+
+      setEnabledBouqet((prev) => !prev);
+      setEnabledDriver((prev) => !prev);
+
+      toast.success(`Toggle completed`);
+    },
+    onError: () => {
+      toast.error("Oh no, retry :(");
+    },
+  });
   console.log(error);
+
+  function onSubmit(data) {
+    console.log(data);
+    mutate(data);
+  }
+
   // if (isLoading) return <Loader />;
   return (
     <>
@@ -199,61 +233,96 @@ function EventTable() {
                       ) : (
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
                           <div className="flex gap-x-2 justify-end">
-                            <div className="flex gap-x-2">
-                              <p className="text-green-500">Bouqet maker</p>
-                              <Switch
-                                onClick={() => {
-                                  setEventId(event.id);
-                                  setCurrEvent(event);
-                                  setEnabledDriver(false);
-                                }}
-                                // checked={enabledBouqet}
-                                onChange={setEnabledBouqet}
-                                className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
-                              >
-                                <span className="sr-only">Use setting</span>
-                                <span
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute h-full w-full rounded-md bg-white"
-                                />
-                                <span
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
-                                />
-                                <span
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
-                                />
-                              </Switch>
-                            </div>
-                            <div className="flex gap-x-2">
-                              <p className="text-blue-500">Driver</p>
+                            <form
+                              className="flex gap-x-2"
+                              onSubmit={handleSubmit(onSubmit)}
+                            >
+                              <div className="flex gap-x-2">
+                                <p className="text-green-500">Bouqet maker</p>
 
-                              <Switch
-                                // checked={enabledDriver}
-                                onClick={() => {
-                                  setEventId(event.id);
-                                  setCurrEvent(event);
-                                  setEnabledBouqet(false);
-                                }}
-                                onChange={setEnabledDriver}
-                                className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
-                              >
-                                <span className="sr-only">Use setting</span>
-                                <span
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute h-full w-full rounded-md bg-white"
-                                />
-                                <span
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
-                                />
-                                <span
-                                  aria-hidden="true"
-                                  className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
-                                />
-                              </Switch>
-                            </div>
+                                <Switch
+                                  checked={
+                                    eventId === event?.id && !enabledDriver
+                                  }
+                                  name="role"
+                                  value="bouquet_maker"
+                                  disabled={isPending}
+                                  onChange={() => {
+                                    setRole("bouquet_maker");
+                                    setEventId(event.id);
+                                    // handleToggle(event.id);
+                                  }}
+                                  // onClick={() => {
+
+                                  //   // setEnabledBouqet(true);
+                                  //   // setEnabledDriver(false);
+
+                                  //   // setModalToggle((prev) => !prev);
+                                  // }}
+                                  className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                                >
+                                  <span className="sr-only">Use setting</span>
+                                  <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute h-full w-full rounded-md bg-white"
+                                  />
+                                  <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
+                                  />
+                                  <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
+                                  />
+                                  <input
+                                    type="hidden"
+                                    name="role"
+                                    value="bouquet_maker"
+                                    {...register("role")}
+                                  />
+                                </Switch>
+                              </div>
+                              <div className="flex gap-x-2">
+                                <p className="text-blue-500">Driver</p>
+
+                                <Switch
+                                  name="role"
+                                  {...register("role")}
+                                  checked={
+                                    eventId === event?.id && !enabledBouqet
+                                  }
+                                  value="driver"
+                                  disabled={isPending}
+                                  onChange={() => {
+                                    setRole("driver");
+                                    setEventId(event.id);
+                                    // handleToggle(event.id);
+                                  }}
+                                  className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                                >
+                                  <span className="sr-only">Use setting</span>
+                                  <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute h-full w-full rounded-md bg-white"
+                                  />
+                                  <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
+                                  />
+                                  <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
+                                  />
+                                  <input
+                                    type="hidden"
+                                    value="driver"
+                                    name="role"
+                                    {...register("role")}
+                                  />
+                                </Switch>
+                                <button type="submit">Submit</button>
+                              </div>
+                            </form>
                             {/* <button
                               onClick={() => {
                                 setEventId(event.id);
@@ -274,22 +343,24 @@ function EventTable() {
                             >
                               Boquet Maker
                             </button> */}
-                            {enabledDriver && (
+                            {/* {ModalToggle && (
                               <DriverModal
                                 setEnabledBouqet={setEnabledBouqet}
                                 setEnabledDriver={setEnabledDriver}
                                 eventId={eventId}
-                                currEvent={currEvent}
+                                role={role}
+                                setModalDriver={setModalDriver}
                               />
-                            )}
-                            {enabledBouqet && (
+                            )} */}
+                            {/* {ModalToggle && (
                               <BouquetMakerModal
                                 setEnabledBouqet={setEnabledBouqet}
                                 setEnabledDriver={setEnabledDriver}
                                 eventId={eventId}
-                                currEvent={currEvent}
+                                role={role}
+                                setModalToggle={setModalToggle}
                               />
-                            )}
+                            )} */}
                           </div>
                         </td>
                       )}
