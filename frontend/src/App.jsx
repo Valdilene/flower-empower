@@ -14,6 +14,7 @@ import Volunteers from "./pages/Volunteers";
 import AdminPage from "./pages/AdminPage";
 import PagesProtection from "./pages/PagesProtection";
 import { useCookies } from "react-cookie";
+import EventPage from "./pages/EventPage";
 
 function App() {
   const [cookies] = useCookies(["user"]);
@@ -27,6 +28,10 @@ function App() {
           <Route
             path="/events"
             element={token ? <Event /> : <PagesProtection />}
+          />
+          <Route
+            path="/events/:evId"
+            element={token ? <EventPage /> : <PagesProtection />}
           />
 
           <Route
