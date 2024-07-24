@@ -1,5 +1,7 @@
 # from django.utils.dateparse import parse_date
 from rest_framework import serializers
+
+from user.serializers import UserSerializer
 from .models import Event
 
 
@@ -8,6 +10,14 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = '__all__'
 
+
+class EventAdminSerializer(serializers.ModelSerializer):
+    drivers = UserSerializer(many=True, read_only=True)
+    bouquet_makers = UserSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Event
+        fields = '__all__'
 
 # def validate_date(self, value):
 #     parsed_date = parse_date(value)
