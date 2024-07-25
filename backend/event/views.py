@@ -1,9 +1,12 @@
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mass_mail
 from django.utils.dateparse import parse_date
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from recipient.models import Recipient
+from rest_framework.views import APIView
+
 from .models import Event
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .serializers import EventSerializer, EventAdminSerializer
@@ -129,3 +132,36 @@ class ToggleEventParticipationView(GenericAPIView):
             return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'message': message}, status=status.HTTP_200_OK)
+
+
+class SendBouquetMakersEmailView(APIView):
+    queryset = Event.objects.all()
+    serializer_class = EventAdminSerializer
+    permission_classes = [IsAdminUser]
+    lookup_url_kwarg = "event_id"
+
+    def get_object(self):
+        # Override the get_object method to use the lookup_field
+        return Event.objects.get(pk=self.kwargs.get(self.lookup_url_kwarg))
+
+    def post(self, request, *args, **kwargs):
+        event = self.get_object()
+        subject = request.data.get('subject')
+        body = request.data.get('body')
+
+        if not subject or not body:
+            return Response({'error': 'Subject and body are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Retrieve all bouquet makers for the event
+        recipients = event.bouquet_makers.values_list('email', flat=True)
+
+        if not recipients:
+            return Response({'error': 'No bouquet makers found for this event.'}, status=status.HTTP_404_NOT_FOUND)
+
+        messages = [
+            (subject, body, 'flower.empower.management@gmail.com', [recipient])
+            for recipient in recipients
+        ]
+        send_mass_mail(messages)
+
+        return Response({'message': 'Emails sent.'}, status=status.HTTP_200_OK)
