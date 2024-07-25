@@ -83,7 +83,7 @@ function NewPassword() {
 
         <div className="col-span-2 place-self-center justify-self-center">
           <button className="flex w-full justify-center rounded-md bg-pink-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600">
-            SEND CODE
+            CHANGE PASSWORD
           </button>
         </div>
       </form>

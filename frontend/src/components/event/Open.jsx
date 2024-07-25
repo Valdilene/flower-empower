@@ -23,7 +23,7 @@ function Open({ event, cookies }) {
         queryKey: ["events"],
       });
 
-      toast.success("Event open!");
+      toast.success("Event close!");
     },
     onError: () => {
       toast.error("Oh no, retry :(");
@@ -39,12 +39,7 @@ function Open({ event, cookies }) {
       <button disabled={isPending}>
         <CiUnlock style={{ fontSize: "24px", cursor: "pointer" }} />
       </button>
-      <input
-        type="hidden"
-        name="closed"
-        value="false"
-        {...register("closed")}
-      />
+      <input type="hidden" name="closed" value="true" {...register("closed")} />
     </form>
   );
 }
