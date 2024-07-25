@@ -23,7 +23,7 @@ function Open({ event, cookies }) {
         queryKey: ["events"],
       });
 
-      toast.success("Event edited!");
+      toast.success("Event open!");
     },
     onError: () => {
       toast.error("Oh no, retry :(");
@@ -36,7 +36,7 @@ function Open({ event, cookies }) {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <button>
+      <button disabled={isPending}>
         <CiUnlock style={{ fontSize: "24px", cursor: "pointer" }} />
       </button>
       <input
