@@ -37,4 +37,3 @@ class RecipientSerializer(serializers.ModelSerializer):
             return response.json()
         else:
             raise serializers.ValidationError('API Call failed')
-
