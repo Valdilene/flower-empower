@@ -30,7 +30,7 @@ function EventPage() {
 
   return (
     <>
-      <div className="flex gap-x-4 justify-center">
+      <div className="flex gap-x-4 justify-around">
         {/* // FIRST TABLE // */}
         <div className="border-r-2 border-r-slate-100 border-l-2 border-l-slate-100">
           <div>
@@ -160,11 +160,13 @@ function EventPage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center mt-12">
-        <button className="bg-pink-500 py-2 px-4 text-white rounded-xl hover:bg-pink-600 hover:scale-95">
-          SEND EMAILS
-        </button>
-      </div>
+      {event.closed ? null : (
+        <div className="flex justify-center mt-12">
+          <button className="bg-pink-500 py-2 px-4 text-white rounded-xl hover:bg-pink-600 hover:scale-95">
+            SEND EMAILS
+          </button>
+        </div>
+      )}
     </>
   );
 }
