@@ -77,7 +77,7 @@ function Login() {
 
             <div className="text-sm">
               <NavLink
-                to="/forgotPassword"
+                to="/forgot-password"
                 className="font-semibold text-pink-500 hover:text-pink-600"
               >
                 Forgot password?
