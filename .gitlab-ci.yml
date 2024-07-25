@@ -7,7 +7,6 @@ stages:
   - deploy
 
 before_script:
-  - chmod -R 777 backend/project/__pycache__
   - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
 
 pull:
