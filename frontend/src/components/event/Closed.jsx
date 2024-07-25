@@ -23,7 +23,7 @@ function Closed({ event, cookies }) {
         queryKey: ["events"],
       });
 
-      toast.success("Event edited!");
+      toast.success("Event close!");
     },
     onError: () => {
       toast.error("Oh no, retry :(");
@@ -36,7 +36,7 @@ function Closed({ event, cookies }) {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <button>
+      <button disabled={isPending}>
         <CiLock style={{ fontSize: "24px", cursor: "pointer" }} />
       </button>
       <input type="hidden" name="closed" value="true" {...register("closed")} />
