@@ -62,7 +62,7 @@ class ListCreateEventView(ListCreateAPIView):
 
 class EventRetrieveUpdateDestroyView(GenericAPIView):
     queryset = Event.objects.all()
-    serializer_class = EventSerializer
+    serializer_class = EventAdminSerializer
     permission_classes = [IsAdminUser]
     lookup_field = 'pk'
 
