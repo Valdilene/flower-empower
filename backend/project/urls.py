@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
-from event.views import ListCreateEventView, EventRetrieveUpdateDestroyView, ToggleEventParticipationView
+from event.views import ListCreateEventView, EventRetrieveUpdateDestroyView, ToggleEventParticipationView, \
+    SendBouquetMakersEmailView
 from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
     PasswordResetValidationView, TokenUserObtainView
 from user.views import MeView, ListCreateUserView, RetrieveUpdateDestroyUserView
@@ -44,7 +45,10 @@ urlpatterns = [
     path('backend/api/events/<int:pk>/', EventRetrieveUpdateDestroyView.as_view(), name='get_events'),
     path('backend/api/events/toggle-participation/<int:pk>/', ToggleEventParticipationView.as_view(),
          name='toggle-event-participation'),
+    path('backend/api/events/sendbouquetemail/<int:event_id>/', SendBouquetMakersEmailView.as_view(),
+         name='send_bouquet_email'),
     # recipients
     path('backend/api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
-    path('backend/api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(), name='update_recipient'),
+    path('backend/api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(),
+         name='update_recipient'),
 ]
