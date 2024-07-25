@@ -22,7 +22,7 @@ const user = {
 
 function AppLayout() {
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies(["user"]);
+  const [cookies, setCookies, removeCookie] = useCookies(["user"]);
   const token = cookies.token;
   const is_superuser = cookies.issuperuser;
 
