@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CiLock, CiUnlock } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
@@ -8,6 +9,8 @@ import API from "../../axios";
 import toast from "react-hot-toast";
 import ModalEventDelete from "./ModalEventDelete";
 import EditEventModal from "./EditEventModal";
+import Closed from "./Closed";
+import Open from "./Open";
 
 /* eslint-disable react/prop-types */
 function EventRow({ event, user }) {
@@ -61,6 +64,7 @@ function EventRow({ event, user }) {
       replace: true,
     });
   }
+  console.log(event);
 
   return (
     <>
@@ -94,26 +98,38 @@ function EventRow({ event, user }) {
         {cookies.issuperuser ? (
           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
             <div className="flex gap-x-2">
-              <button
-                onClick={() => {
-                  setEventId(event.id);
-                  setCurrEvent(event);
+              {event.closed ? (
+                <Open event={event} cookies={cookies.token} />
+              ) : (
+                <Closed event={event} cookies={cookies.token} />
+              )}
+              {event.closed ? (
+                <p className="text-slate-500">Event close</p>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      setEventId(event.id);
+                      setCurrEvent(event);
 
-                  setEditClicked((prev) => !prev);
-                }}
-                className="text-pink-500"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => {
-                  setEventId(event.id);
-                  setDeleteClicked((prev) => !prev);
-                }}
-                className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
-              >
-                Delete
-              </button>
+                      setEditClicked((prev) => !prev);
+                    }}
+                    className="text-pink-500"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEventId(event.id);
+                      setDeleteClicked((prev) => !prev);
+                    }}
+                    className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
+
               {deleteClicked && (
                 <ModalEventDelete
                   setDeleteClicked={setDeleteClicked}
@@ -132,85 +148,98 @@ function EventRow({ event, user }) {
         ) : (
           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
             <div className="flex gap-x-2 justify-end">
-              <form className="flex gap-x-2" onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex gap-x-2">
-                  <p className="text-green-500">Bouqet maker</p>
-
-                  <Switch
-                    checked={isBoquet}
-                    name="role"
-                    value="bouquet_maker"
-                    onChange={() => {}}
-                    onClick={() => {
-                      setRole("bouquet_maker");
-                      setEventId(event.id);
-                      setIsBoquet((prev) => !prev);
-                      if (isDriver) setIsDriver(false);
-                    }}
-                    className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+              {event.closed ? (
+                <p className="text-slate-500">Event close</p>
+              ) : (
+                <>
+                  <form
+                    className="flex gap-x-2"
+                    onSubmit={handleSubmit(onSubmit)}
                   >
-                    <span className="sr-only">Use setting</span>
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute h-full w-full rounded-md bg-white"
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
-                    />
-                    <input
-                      type="hidden"
-                      name="role"
-                      value="bouquet_maker"
-                      {...register("role")}
-                    />
-                  </Switch>
-                </div>
-                <div className="flex gap-x-2">
-                  <p className="text-blue-500">Driver</p>
+                    <div className="flex gap-x-2">
+                      <p className="text-green-500">Bouqet maker</p>
 
-                  <Switch
-                    name="role"
-                    value="driver"
-                    checked={isDriver}
-                    onChange={() => {}}
-                    onClick={() => {
-                      setRole("driver");
-                      setEventId(event.id);
-                      setIsDriver((prev) => !prev);
-                      if (isBoquet) setIsBoquet(false);
-                    }}
-                    className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
-                  >
-                    <span className="sr-only">Use setting</span>
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute h-full w-full rounded-md bg-white"
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
-                    />
-                    <input type="hidden" name="role" {...register("role")} />
-                  </Switch>
-                  <div className="flex items-center justify-center">
-                    <button
-                      className="bg-pink-500  text-white py-0.5 px-2 hover:bg-pink-600 rounded-xl"
-                      type="submit"
-                    >
-                      SAVE
-                    </button>
-                  </div>
-                </div>
-              </form>
+                      <Switch
+                        checked={isBoquet}
+                        name="role"
+                        value="bouquet_maker"
+                        onChange={() => {}}
+                        onClick={() => {
+                          setRole("bouquet_maker");
+                          setEventId(event.id);
+                          setIsBoquet((prev) => !prev);
+                          if (isDriver) setIsDriver(false);
+                        }}
+                        className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                      >
+                        <span className="sr-only">Use setting</span>
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute h-full w-full rounded-md bg-white"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
+                        />
+                        <input
+                          type="hidden"
+                          name="role"
+                          value="bouquet_maker"
+                          {...register("role")}
+                        />
+                      </Switch>
+                    </div>
+                    <div className="flex gap-x-2">
+                      <p className="text-blue-500">Driver</p>
+
+                      <Switch
+                        name="role"
+                        value="driver"
+                        checked={isDriver}
+                        onChange={() => {}}
+                        onClick={() => {
+                          setRole("driver");
+                          setEventId(event.id);
+                          setIsDriver((prev) => !prev);
+                          if (isBoquet) setIsBoquet(false);
+                        }}
+                        className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                      >
+                        <span className="sr-only">Use setting</span>
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute h-full w-full rounded-md bg-white"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
+                        />
+                        <input
+                          type="hidden"
+                          name="role"
+                          {...register("role")}
+                        />
+                      </Switch>
+                      <div className="flex items-center justify-center">
+                        <button
+                          className="bg-pink-500  text-white py-0.5 px-2 hover:bg-pink-600 rounded-xl"
+                          type="submit"
+                        >
+                          SAVE
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </>
+              )}
             </div>
           </td>
         )}
