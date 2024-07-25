@@ -98,9 +98,9 @@ function EventRow({ event, user }) {
           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
             <div className="flex gap-x-2">
               {event.closed ? (
-                <Open event={event} cookies={cookies.token} />
-              ) : (
                 <Closed event={event} cookies={cookies.token} />
+              ) : (
+                <Open event={event} cookies={cookies.token} />
               )}
               {event.closed ? (
                 <p className="text-slate-500">Event close</p>
