@@ -15,7 +15,7 @@ function Closed({ event, cookies }) {
           Authorization: `Bearer ${cookies}`,
         },
       });
-      console.log(res.data);
+
       return res.data;
     },
     onSuccess: () => {
