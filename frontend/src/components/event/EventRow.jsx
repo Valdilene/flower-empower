@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CiLock, CiUnlock } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
