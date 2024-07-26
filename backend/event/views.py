@@ -189,9 +189,6 @@ class SendDriversEmailView(APIView):
         group = event.group
         recipients = list(Recipient.objects.filter(group=group))
 
-        subject = request.data.get('subject')
-        body = request.data.get('body')
-
         list_of_locations = []
 
         # build location part
