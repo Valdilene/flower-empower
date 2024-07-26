@@ -9,9 +9,9 @@ function DriverEmail({ event, evId, token }) {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationFn: async (obj) => {
-      const res = await API.post(`events/sendbouquetemail/${evId}/`, obj, {
+      const res = await API.post(`events/senddriveremail/${evId}/`, obj, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -19,26 +19,21 @@ function DriverEmail({ event, evId, token }) {
 
       return res.data;
     },
-    onSuccess: async (data) => {
-      console.log(data);
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["event"],
       });
 
-      toast.success(`Emails to bouqet makers sent successfully!`);
+      toast.success(`Emails to drivers sent successfully!`);
     },
     onError: () => {
       toast.error("Oh no, retry :(");
     },
   });
+  console.log(error);
 
   function onSubmit(data) {
-    console.log(data);
-    mutate({
-      ...data,
-      body: `Hello thank you for volunteering, here is a link to watch before coming to the event. It's a little tutorial on how to make the bouqet https://www.youtube.com/watch?v=ytF7e8YuUyo`,
-      subject: "Bouqet Tutorial",
-    });
+    mutate(data);
   }
   if (isPending) return <Loader />;
   return (
@@ -52,18 +47,8 @@ function DriverEmail({ event, evId, token }) {
             >
               SEND DRIVER EMAILS
             </button>
-            <input
-              type="hidden"
-              value="Bouqet Tutorial"
-              name="subject"
-              {...register("subject")}
-            />
-            <input
-              type="hidden"
-              value="Hello thank you for volunteering, here is a link to watch before coming to the event. It's a little tutorial on how to make the bouqet"
-              name="body"
-              {...register("body")}
-            />
+            <input type="hidden" name="subject" {...register("subject")} />
+            <input type="hidden" name="body" {...register("body")} />
           </div>
         </form>
       )}
