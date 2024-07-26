@@ -191,7 +191,7 @@ class SendDriversEmailView(APIView):
 
         list_of_locations = []
 
-        # build location part
+        # build location object for api request
         for recipient in recipients:
             location_object = {
                 "location": [
@@ -239,11 +239,14 @@ class SendDriversEmailView(APIView):
 
         features_list = response['features']
 
-        # isolation the jobs_list, which holds the description value. In this the address from the Excel is stored
+        # isolation the jobs_list, which holds the description value.
+        # In this the address from the description variable is stored
 
         properties_object = response['properties']
         params_object = properties_object['params']
         jobs_list = params_object['jobs']
+
+    # building the final routes per driver
 
         num = 0
 
@@ -252,18 +255,16 @@ class SendDriversEmailView(APIView):
         for item in features_list:
             num += 1
 
-            route_list = []
-
             # isolation of the actions_list which is the order of addresses to drive to
 
             properties_object = item['properties']
             time = int(properties_object['time'] / 60)
             actions_list = properties_object['actions']
 
-            route_list.append(f'-----------DRIVER: {num}-------------APPROX. DRIVING TIME: {time} min-----------')
-
             # iterating through the actions_list and find actions with a job_index. So a action,
             # which is connected to an address in the jobs_list
+
+            route_list = f'-----------DRIVER: {num}-------------APPROX. DRIVING TIME: {time} min-----------\n\n'
 
             for action in actions_list:
                 if 'job_index' in action.keys():
@@ -271,7 +272,7 @@ class SendDriversEmailView(APIView):
                     # In this job the description key holds the value with the address object from the Ex el at the beginning.
 
                     address_object = jobs_list[action['job_index']]
-                    route_list.append(address_object['description'])
+                    route_list = route_list + f'{address_object['description']}\n'
 
             routes_list.append(route_list)
 
@@ -281,7 +282,7 @@ class SendDriversEmailView(APIView):
         for number_of_driver in range(len(routes_list)):
             send_mail(
                 'Flower Empower – Your route for tomorrow',
-                'Here is your route for tomorrow: {}'.format(routes_list[number_of_driver]),
+                'Here is your route for tomorrow:\n\n{}'.format(routes_list[number_of_driver]),
                 'flower.empower.management@gmail.com',
                 ['{}'.format(list(User.objects.filter(id__in=event.drivers.all()))[number_of_driver].email)],
                 fail_silently=False, )
