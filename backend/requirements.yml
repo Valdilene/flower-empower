@@ -13,4 +13,5 @@ dependencies:
       - pillow==10.3.0
       - drf-yasg==1.21.7
       - django-import-export==4.1.1
+      - requests==2.32.3
 
