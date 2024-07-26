@@ -48,7 +48,7 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
             Add the recipients address in the form below
           </p>
 
-          <div className="grid p-10 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10 space-y-8  pb-12">
+          <div className="grid p-10 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10 space-y-8  pb-12">
             <div className="self-end">
               <LabelAndInput
                 htmlFor="first_name"
@@ -67,25 +67,6 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
               name="last_name"
             >
               Last Name
-            </LabelAndInput>
-
-            <LabelAndInput
-              htmlFor="emial"
-              type="email"
-              register={register}
-              name="email"
-            >
-              Email
-            </LabelAndInput>
-            <LabelAndInput
-              htmlFor="phone"
-              type="tel"
-              register={register}
-              name="phone"
-              pattern="\b[2-9][0-9]{2} [2-9][0-9]{2} [0-9]{4}\b"
-              placeholder="555 235 7832"
-            >
-              Phone
             </LabelAndInput>
 
             <LabelAndInput

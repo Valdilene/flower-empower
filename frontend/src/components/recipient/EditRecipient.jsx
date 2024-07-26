@@ -72,27 +72,6 @@ function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
             </LabelAndInput>
 
             <LabelAndInput
-              htmlFor="emial"
-              type="email"
-              register={register}
-              name="email"
-              value={currRecipient?.email}
-            >
-              Email
-            </LabelAndInput>
-            <LabelAndInput
-              htmlFor="phone"
-              type="tel"
-              register={register}
-              name="phone"
-              value={currRecipient?.phone}
-              pattern="\b[2-9][0-9]{2} [2-9][0-9]{2} [0-9]{4}\b"
-              placeholder="555 235 7832"
-            >
-              Phone
-            </LabelAndInput>
-
-            <LabelAndInput
               htmlFor="address"
               type="text"
               register={register}
