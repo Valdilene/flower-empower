@@ -305,4 +305,3 @@ class StatsView(GenericAPIView):
             'total_volunteers': total_volunteers,
             'total_recipients': total_recipients,
         }, status=status.HTTP_200_OK)
-
