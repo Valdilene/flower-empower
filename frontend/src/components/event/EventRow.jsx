@@ -93,7 +93,6 @@ function EventRow({ event, user }) {
             </td>
           </>
         ) : null}
-
         {cookies.issuperuser ? (
           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
             <div className="flex gap-x-2">
@@ -127,20 +126,6 @@ function EventRow({ event, user }) {
                     Delete
                   </button>
                 </>
-              )}
-
-              {deleteClicked && (
-                <ModalEventDelete
-                  setDeleteClicked={setDeleteClicked}
-                  eventId={eventId}
-                />
-              )}
-              {editClicked && (
-                <EditEventModal
-                  setEditClicked={setEditClicked}
-                  eventId={eventId}
-                  currEvent={currEvent}
-                />
               )}
             </div>
           </td>
@@ -194,7 +179,6 @@ function EventRow({ event, user }) {
                     </div>
                     <div className="flex gap-x-2">
                       <p className="text-blue-500">Driver</p>
-
                       <Switch
                         name="role"
                         value="driver"
@@ -243,6 +227,19 @@ function EventRow({ event, user }) {
           </td>
         )}
       </tr>
+      {deleteClicked && (
+        <ModalEventDelete
+          setDeleteClicked={setDeleteClicked}
+          eventId={eventId}
+        />
+      )}
+      {editClicked && (
+        <EditEventModal
+          setEditClicked={setEditClicked}
+          eventId={eventId}
+          currEvent={currEvent}
+        />
+      )}
     </>
   );
 }

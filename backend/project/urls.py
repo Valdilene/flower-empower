@@ -21,7 +21,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework_simplejwt import views as jwt_views
 from event.views import ListCreateEventView, EventRetrieveUpdateDestroyView, ToggleEventParticipationView, \
-    SendBouquetMakersEmailView, StatsView
+    SendBouquetMakersEmailView, SendDriversEmailView, StatsView
 from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
     PasswordResetValidationView, TokenUserObtainView
 from user.views import MeView, ListCreateUserView, RetrieveUpdateDestroyUserView
@@ -43,7 +43,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('backend/admin/', admin.site.urls),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('backend/api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('backend/docs', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     # authentication
     path('backend/api/token/', TokenUserObtainView.as_view(), name='token_obtain_pair'),
@@ -65,6 +65,8 @@ urlpatterns = [
     path('backend/api/events/toggle-participation/<int:pk>/', ToggleEventParticipationView.as_view(),
          name='toggle-event-participation'),
     path('backend/api/events/sendbouquetemail/<int:event_id>/', SendBouquetMakersEmailView.as_view(),
+         name='send_bouquet_email'),
+    path('backend/api/events/senddriveremail/<int:event_id>/', SendDriversEmailView.as_view(),
          name='send_bouquet_email'),
     # recipients
     path('backend/api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
