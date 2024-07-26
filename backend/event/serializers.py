@@ -2,6 +2,7 @@
 from rest_framework import serializers
 
 from user.serializers import UserSerializer
+from recipient.serializers import RecipientSerializer
 from .models import Event
 
 
@@ -14,6 +15,7 @@ class EventSerializer(serializers.ModelSerializer):
 class EventAdminSerializer(serializers.ModelSerializer):
     drivers = UserSerializer(many=True, read_only=True)
     bouquet_makers = UserSerializer(many=True, read_only=True)
+    recipients = RecipientSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event
