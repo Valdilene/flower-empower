@@ -9,7 +9,7 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Avatar from "../assets/img/avatar.jpeg";
 import Logo from "../assets/img/logoFlower.webp";
 import { useCookies } from "react-cookie";
@@ -103,14 +103,6 @@ function AppLayout() {
                         transition
                         className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                       >
-                        <MenuItem>
-                          <Link
-                            to="profile"
-                            className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                          >
-                            Your Profile
-                          </Link>
-                        </MenuItem>
                         {token ? (
                           <MenuItem>
                             <button
@@ -185,40 +177,14 @@ function AppLayout() {
             </div>
             {token ? (
               <>
-                <div className="border-t border-white pb-3 pt-4">
-                  <div className="flex items-center px-5">
-                    <div className="flex-shrink-0">
-                      <img
-                        alt=""
-                        src={user.imageUrl}
-                        className="h-10 w-10 rounded-full"
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-slate-700">
-                        {user.name}
-                      </div>
-                      <div className="text-sm font-medium leading-none text-slate-700">
-                        {user.email}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-3 space-y-1 px-2">
-                    <DisclosureButton
-                      as="a"
-                      href="/profile"
-                      className="block rounded-md px-3 py-2 text-base font-medium text-slate-700 hover:bg-pink-500 hover:text-white"
-                    >
-                      Your Profile
-                    </DisclosureButton>
-                    <DisclosureButton
-                      onClick={() => handleLogout()}
-                      as="a"
-                      className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium text-slate-700 hover:bg-pink-500 hover:text-white"
-                    >
-                      Sign Out
-                    </DisclosureButton>
-                  </div>
+                <div className="border-t border-t-slate-200 px-4 py-3">
+                  <DisclosureButton
+                    onClick={() => handleLogout()}
+                    as="a"
+                    className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium text-slate-500 hover:bg-pink-500 hover:text-white"
+                  >
+                    Logout
+                  </DisclosureButton>
                 </div>
               </>
             ) : null}
