@@ -20,4 +20,4 @@ class EventAdminSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ['id', 'drivers', 'bouquet_makers', 'group', 'recipients_count', 'date', 'bouquet_makers_needed', 'drivers_needed','closed']
+        fields = ['id', 'drivers', 'bouquet_makers', 'group', 'recipients_count', 'date', 'bouquet_makers_needed', 'drivers_needed', 'closed']
