@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 from event.views import ListCreateEventView, EventRetrieveUpdateDestroyView, ToggleEventParticipationView, \
-    SendBouquetMakersEmailView
+    SendBouquetMakersEmailView, SendDriversEmailView
 from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
     PasswordResetValidationView, TokenUserObtainView
 from user.views import MeView, ListCreateUserView, RetrieveUpdateDestroyUserView
@@ -46,6 +46,8 @@ urlpatterns = [
     path('backend/api/events/toggle-participation/<int:pk>/', ToggleEventParticipationView.as_view(),
          name='toggle-event-participation'),
     path('backend/api/events/sendbouquetemail/<int:event_id>/', SendBouquetMakersEmailView.as_view(),
+         name='send_bouquet_email'),
+    path('backend/api/events/senddriveremail/<int:event_id>/', SendDriversEmailView.as_view(),
          name='send_bouquet_email'),
     # recipients
     path('backend/api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
