@@ -12,3 +12,5 @@ class Recipient(models.Model):
     zip = models.CharField(max_length=255, blank=True)
     end_date = models.DateField(null=True, blank=True)
     group = models.IntegerField(null=True)
+    lon = models.FloatField(null=True)
+    lat = models.FloatField(null=True)
