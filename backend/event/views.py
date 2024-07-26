@@ -291,7 +291,6 @@ class SendDriversEmailView(APIView):
 
 class StatsView(GenericAPIView):
     queryset = Event.objects.all()
-    serializer_class = EventAdminSerializer
     permission_classes = [AllowAny]
 
     def get(self, request, *args, **kwargs):
