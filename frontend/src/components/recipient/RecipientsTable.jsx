@@ -164,7 +164,7 @@ function RecipientsTable() {
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {recipients?.map((recipient) => (
-                    <tr key={recipient.email}>
+                    <tr key={recipient.address}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                         {recipient.first_name} {recipient.last_name}
                       </td>
