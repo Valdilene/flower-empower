@@ -305,4 +305,5 @@ class StatsView(GenericAPIView):
         return Response({
             'total_volunteers': total_volunteers,
             'total_recipients': total_recipients,
+            'total_bouquets': total_recipients,
         }, status=status.HTTP_200_OK)
