@@ -166,3 +166,16 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=5)
 }
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,  # Change settings to True to enable Django login option
+    'LOGIN_URL': 'backend/admin/',  # URL For Django login
+    'LOGOUT_URL': 'backend/admin/logout/',  # URL For Django Logout
+    'SECURITY_DEFINITIONS': {  # Allows usage of Access token to make requests on the docs.
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
