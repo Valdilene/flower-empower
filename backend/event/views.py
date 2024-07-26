@@ -8,7 +8,7 @@ from recipient.models import Recipient
 from rest_framework.views import APIView
 
 from .models import Event
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from .serializers import EventSerializer, EventAdminSerializer
 
 
@@ -165,3 +165,22 @@ class SendBouquetMakersEmailView(APIView):
         send_mass_mail(messages)
 
         return Response({'message': 'Emails sent.'}, status=status.HTTP_200_OK)
+
+
+class StatsView(GenericAPIView):
+    queryset = Event.objects.all()
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        total_volunteers = 0
+        total_recipients = 0
+
+        for event in Event.objects.all():
+            total_volunteers += event.bouquet_makers.count() + event.drivers.count()
+            total_recipients += event.recipients.count()
+
+        return Response({
+            'total_volunteers': total_volunteers,
+            'total_recipients': total_recipients,
+        }, status=status.HTTP_200_OK)
+
