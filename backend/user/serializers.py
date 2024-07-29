@@ -9,4 +9,3 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'phone', 'hours', 'address', 'city', 'state',
                   'zip', 'preferred_communication', 'available_for_backup', 'is_superuser']
-        read_only_fields = ['hours']
