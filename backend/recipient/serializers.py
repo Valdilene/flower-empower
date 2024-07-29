@@ -6,7 +6,7 @@ import requests
 class RecipientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipient
-        fields = ['first_name', 'last_name', 'address', 'city', 'state', 'zip', 'end_date', 'group', 'lon', 'lat']
+        fields = ['id', 'first_name', 'last_name', 'address', 'city', 'state', 'zip', 'end_date', 'group', 'lon', 'lat']
 
     def create(self, validated_data):
         address = validated_data.get('address')
