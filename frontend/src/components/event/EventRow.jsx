@@ -89,16 +89,7 @@ function EventRow({ event, user }) {
               {event.group}
             </td>
           </>
-        ) : (
-          <>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 ">
-              {event.bouquet_makers_needed}
-            </td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 ">
-              {event.drivers_needed}
-            </td>
-          </>
-        )}
+        ) : null}
         {cookies.issuperuser ? (
           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
             <div className="flex gap-x-2">
@@ -183,7 +174,7 @@ function EventRow({ event, user }) {
                         />
                       </Switch>
                     </div>
-                    <div className="flex gap-x-2">
+                    <div className="flex gap-x-1">
                       <p className="text-blue-500">Driver</p>
                       <Switch
                         name="role"
@@ -217,7 +208,7 @@ function EventRow({ event, user }) {
                           {...register("role")}
                         />
                       </Switch>
-                      <div className="flex items-center justify-center">
+                      <div className="flex items-center justify-start">
                         <button
                           className="bg-pink-500  text-white py-0.5 px-2 hover:bg-pink-600 rounded-xl"
                           type="submit"
