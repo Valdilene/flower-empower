@@ -1,6 +1,5 @@
 import Background from "../assets/img/flowerEmpowerBackground.jpg";
 import {NavLink} from "react-router-dom";
-import { Carousel } from "@material-tailwind/react";
 function Home() {
   return (<div>
 
