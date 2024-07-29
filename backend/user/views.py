@@ -34,7 +34,9 @@ class MeView(GenericAPIView):
         if 'hours' in data_updated:
             try:
                 new_hours = int(data_updated['hours'])
+                print(f"Current hours: {user.hours}, Additional hours: {new_hours}")
                 data_updated['hours'] = user.hours + new_hours
+                print(f"Updated hours: {data_updated['hours']}")
             except ValueError:
                 return Response({'detail': 'Invalid amount of hours.'}, status=status.HTTP_400_BAD_REQUEST)
 
