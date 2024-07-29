@@ -14,7 +14,7 @@ import Open from "./Open";
 /* eslint-disable react/prop-types */
 function EventRow({ event, user }) {
   const navigate = useNavigate();
-  const [isBoquet, setIsBoquet] = useState(
+  const [isBouquet, setIsBouquet] = useState(
     event?.bouquet_makers.includes(user?.id)
   );
   const [isDriver, setIsDriver] = useState(event?.drivers.includes(user?.id));
@@ -141,17 +141,17 @@ function EventRow({ event, user }) {
                     onSubmit={handleSubmit(onSubmit)}
                   >
                     <div className="flex gap-x-2">
-                      <p className="text-green-500">Bouqet maker</p>
+                      <p className="text-green-500">Bouquet maker</p>
 
                       <Switch
-                        checked={isBoquet}
+                        checked={isBouquet}
                         name="role"
                         value="bouquet_maker"
                         onChange={() => {}}
                         onClick={() => {
                           setRole("bouquet_maker");
                           setEventId(event.id);
-                          setIsBoquet((prev) => !prev);
+                          setIsBouquet((prev) => !prev);
                           if (isDriver) setIsDriver(false);
                         }}
                         className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
@@ -188,7 +188,7 @@ function EventRow({ event, user }) {
                           setRole("driver");
                           setEventId(event.id);
                           setIsDriver((prev) => !prev);
-                          if (isBoquet) setIsBoquet(false);
+                          if (isBouquet) setIsBouquet(false);
                         }}
                         className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                       >
