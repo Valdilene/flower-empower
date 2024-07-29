@@ -1,8 +1,21 @@
 import Background from "../assets/img/flowerEmpowerBackground.jpg";
 import {NavLink} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import API from "../axios.js";
+import Loader from "../components/Loader.jsx";
 
 function Home() {
 
+   const { data: home, isLoading } = useQuery({
+    queryKey: ["home"],
+    queryFn: async () => {
+      const res = await API.get("home/", {
+      });
+
+      return res.data;
+    },
+  });
+  if (isLoading) return <Loader />;
   return (<div>
 
     <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
@@ -56,17 +69,17 @@ function Home() {
           <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
             <div key={""} className="flex flex-col-reverse">
               <dt className="text-base leading-15 font-semibold">Total Volunteers till contribute</dt>
-              <dd className="text-4xl font-bold leading-9 tracking-tight text-white">50</dd>
+              <dd className="text-4xl font-bold leading-9 tracking-tight text-white">{home.total_volunteers}</dd>
 
             </div>
             <div key={""} className="flex flex-col-reverse">
               <dt className="text-base leading-15 font-semibold">Total Bouquet till deliver</dt>
-              <dd className="text-4xl font-bold leading-9 tracking-tight text-white">50</dd>
+              <dd className="text-4xl font-bold leading-9 tracking-tight text-white">{home.total_recipients}</dd>
 
             </div>
             <div key={""} className="flex flex-col-reverse">
               <dt className="text-base leading-15 font-semibold">Our Happy Recipients</dt>
-              <dd className="text-4xl font-bold leading-9 tracking-tight text-white">50</dd>
+              <dd className="text-4xl font-bold leading-9 tracking-tight text-white">{home.total_recipients}</dd>
 
             </div>
           </dl>
