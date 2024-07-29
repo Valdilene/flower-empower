@@ -5,7 +5,7 @@ import Loader from "../Loader";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-function BouqetEmail({ event, evId, token }) {
+function BouquetEmail({ event, evId, token }) {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
 
@@ -81,7 +81,7 @@ function BouqetEmail({ event, evId, token }) {
             />
             <input
               type="hidden"
-              value="Hello thank you for volunteering, here is a link to watch before coming to the event. It's a little tutorial on how to make the bouquet"
+              value="Hello thank you for volunteering, here is a link to watch before you come. It's a little tutorial on how to make the bouquet"
               name="body"
               {...register("body")}
             />
@@ -92,4 +92,4 @@ function BouqetEmail({ event, evId, token }) {
   );
 }
 
-export default BouqetEmail;
+export default BouquetEmail;

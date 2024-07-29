@@ -30,7 +30,17 @@ class MeView(GenericAPIView):
     def patch(self, request, *args, **kwargs):
         # Handle PATCH request to partially update user information.
         user = self.get_object()
-        serializer = self.get_serializer(user, data=request.data, partial=True)
+        data_updated = request.data.copy()
+        if 'hours' in data_updated:
+            try:
+                new_hours = int(data_updated['hours'])
+                print(f"Current hours: {user.hours}, Additional hours: {new_hours}")
+                data_updated['hours'] = user.hours + new_hours
+                print(f"Updated hours: {data_updated['hours']}")
+            except ValueError:
+                return Response({'detail': 'Invalid amount of hours.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(user, data=data_updated, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)

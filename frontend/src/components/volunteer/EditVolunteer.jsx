@@ -97,7 +97,7 @@ function EditVolunteer({ userId, setOpen, setEditClicked, currUser }) {
                 className="block text-sm font-medium leading-6 text-gray-900 mb-2"
                 htmlFor="comunication"
               >
-                Preferred comunication
+                Preferred communication
               </label>
               <select
                 id="country"
