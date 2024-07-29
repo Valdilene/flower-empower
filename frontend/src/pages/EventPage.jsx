@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import API from "../axios";
 import { Switch } from "@headlessui/react";
 import { useForm } from "react-hook-form";
-import BouqetEmail from "../components/event/BouqetEmail";
+import BouquetEmail from "../components/event/BouquetEmail";
 import DriverEmail from "../components/event/DriverEmail";
 
 function EventPage() {
@@ -39,10 +39,10 @@ function EventPage() {
                     <div className="sm:flex sm:items-center">
                       <div className="sm:flex-auto">
                         <h1 className="text-base font-semibold leading-6 text-gray-900">
-                          Bouqet Makers
+                          Bouquet Makers
                         </h1>
                         <p className="mt-2 text-sm text-gray-700">
-                          Bouqet maker for his event
+                          Bouquet maker for his event
                         </p>
                       </div>
                     </div>
@@ -129,10 +129,10 @@ function EventPage() {
                     </div>
                   </div>
                 </div>
-                <BouqetEmail event={event} evId={evId} token={cookies.token} />
+                <BouquetEmail event={event} evId={evId} token={cookies.token} />
               </div>
             ) : (
-              <p className="text-center">No bouqet makers yet 😔</p>
+              <p className="text-center">No bouquet makers yet 😔</p>
             )}
 
             {/* // SECOND TABLE // */}
