@@ -29,7 +29,7 @@ function EventRow({ event, user }) {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
 
-  const { mutate, isPending, error } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async (obj) => {
       const res = await API.patch(
         `events/toggle-participation/${eventId}/`,
@@ -43,18 +43,18 @@ function EventRow({ event, user }) {
 
       return res.data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: ["events"],
       });
 
-      toast.success(`Toggle completed`);
+      toast.success(data.message);
     },
     onError: () => {
       toast.error("Oh no, retry :(");
     },
   });
-
+  console.log(event);
   function onSubmit(data) {
     mutate({ ...data, role });
   }
@@ -63,7 +63,6 @@ function EventRow({ event, user }) {
       replace: true,
     });
   }
-  console.log(event);
 
   return (
     <>
@@ -92,7 +91,16 @@ function EventRow({ event, user }) {
               {event.group}
             </td>
           </>
-        ) : null}
+        ) : (
+          <>
+            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 ">
+              {event.bouquet_makers_needed}
+            </td>
+            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 ">
+              {event.drivers_needed}
+            </td>
+          </>
+        )}
         {cookies.issuperuser ? (
           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
             <div className="flex gap-x-2">

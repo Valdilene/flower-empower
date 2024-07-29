@@ -21,12 +21,11 @@ function NewPassword() {
       toast.error("Oh no... please try again :(");
     },
   });
-  console.log(error);
 
   function onSubmit(data) {
     mutate(data);
   }
-  console.log(error);
+
   if (isPending) return <Loader />;
 
   return (

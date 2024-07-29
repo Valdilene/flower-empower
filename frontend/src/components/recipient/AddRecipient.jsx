@@ -6,7 +6,7 @@ import API from "../../axios";
 import Loader from "../Loader";
 import LabelAndInput from "../LabelAndInput";
 import { useCookies } from "react-cookie";
-function AddRecipientForm({ setOpen, setIsClicked }) {
+function AddRecipientForm({ setOpen, setIsClicked, open }) {
   const [cookies] = useCookies(["user"]);
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
@@ -23,7 +23,9 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
       queryClient.invalidateQueries({
         queryKey: ["recipients"],
       });
+      setOpen(false);
       setIsClicked(false);
+
       toast.success("Address added!");
     },
     onError: () => {
@@ -131,8 +133,8 @@ function AddRecipientForm({ setOpen, setIsClicked }) {
       <div className="mt-6 flex items-center justify-end gap-x-6">
         <button
           onClick={() => {
-            setOpen((prev) => !prev);
-            setIsClicked((prev) => !prev);
+            setOpen(false);
+            setIsClicked(false);
           }}
           className="text-sm font-semibold leading-6 text-gray-900"
         >
