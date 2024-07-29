@@ -24,7 +24,7 @@ function Login() {
     },
     onSuccess: () => {
       toast.success("You are logged in!");
-      navigate("/");
+      navigate("/events");
       window.location.reload();
     },
     onError: () => {
