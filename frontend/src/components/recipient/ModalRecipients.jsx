@@ -9,7 +9,14 @@ function ModalRecipients({ setIsClicked }) {
   const [open, setOpen] = useState(true);
 
   return (
-    <Dialog open={open} onClose={setOpen} className="relative z-10">
+    <Dialog
+      open={open}
+      onClose={() => {
+        setOpen(false);
+        setIsClicked(false);
+      }}
+      className="relative z-10"
+    >
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -21,7 +28,11 @@ function ModalRecipients({ setIsClicked }) {
             transition
             className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
-            <AddRecipientForm setOpen={setOpen} setIsClicked={setIsClicked} />
+            <AddRecipientForm
+              setOpen={setOpen}
+              open={open}
+              setIsClicked={setIsClicked}
+            />
           </DialogPanel>
         </div>
       </div>
