@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 function Closed({ event, cookies }) {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (obj) => {
       const res = await API.patch(`events/${event.id}/`, obj, {
         headers: {
@@ -28,7 +28,6 @@ function Closed({ event, cookies }) {
       toast.error("Oh no, retry :(");
     },
   });
-  console.log(error);
 
   function onSubmit(data) {
     mutate(data);
