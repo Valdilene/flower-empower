@@ -19,8 +19,7 @@ function BouquetEmail({ event, evId, token }) {
 
       return res.data;
     },
-    onSuccess: async (data) => {
-      console.log(data);
+    onSuccess: async () => {
       queryClient.invalidateQueries({
         queryKey: ["event"],
       });
@@ -33,10 +32,9 @@ function BouquetEmail({ event, evId, token }) {
   });
 
   function onSubmit(data) {
-    console.log(data);
     mutate({
       ...data,
-      body:`
+      body: `
       Hi,
       
       I have you signed up for this weekend to make bouquets. If you have any last minute changes, please text me at 

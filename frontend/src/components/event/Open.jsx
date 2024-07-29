@@ -8,14 +8,14 @@ import { CiUnlock } from "react-icons/ci";
 function Open({ event, cookies }) {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (obj) => {
       const res = await API.patch(`events/${event.id}/`, obj, {
         headers: {
           Authorization: `Bearer ${cookies}`,
         },
       });
-      console.log(res.data);
+
       return res.data;
     },
     onSuccess: () => {
@@ -28,7 +28,6 @@ function Open({ event, cookies }) {
       toast.error("Oh no, retry :(");
     },
   });
-  console.log(error);
 
   function onSubmit(data) {
     mutate(data);

@@ -26,6 +26,7 @@ function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
         queryKey: ["recipients"],
       });
       setEditClicked(false);
+      setOpen(false);
       toast.success("Address edited!");
     },
     onError: () => {
