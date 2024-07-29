@@ -22,7 +22,6 @@ function Open({ event, cookies }) {
       queryClient.invalidateQueries({
         queryKey: ["events"],
       });
-
       toast.success("Event close!");
     },
     onError: () => {

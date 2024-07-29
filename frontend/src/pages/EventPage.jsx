@@ -2,8 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import API from "../axios";
+import { Switch } from "@headlessui/react";
+import { useForm } from "react-hook-form";
+import BouqetEmail from "../components/event/BouqetEmail";
+import DriverEmail from "../components/event/DriverEmail";
 
 function EventPage() {
+  const { register } = useForm();
   const params = useParams();
   const [cookies] = useCookies(["user"]);
   const evId = params.evId;
@@ -28,8 +33,8 @@ function EventPage() {
           <div className="flex gap-x-4 justify-around">
             {/* // FIRST TABLE // */}
             {event?.bouquet_makers?.length ? (
-              <div className="border-r-2 border-r-slate-100 border-l-2 border-l-slate-100">
-                <div>
+              <div>
+                <div className="border-r-2 border-r-slate-100 border-l-2 border-l-slate-100">
                   <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="sm:flex sm:items-center">
                       <div className="sm:flex-auto">
@@ -67,11 +72,17 @@ function EventPage() {
                             >
                               Phone
                             </th>
+                            <th
+                              scope="col"
+                              className="relative py-3.5 pl-3 pr-0"
+                            >
+                              <span className="sr-only">Edit</span>
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
                           {event?.bouquet_makers?.map((person) => (
-                            <tr key={person.email}>
+                            <tr key={person.email} className="">
                               <td className="relative py-4 pr-3 text-sm font-medium text-gray-900">
                                 {person.first_name} {person.last_name}
                                 <div className="absolute bottom-0 right-full h-px w-screen bg-gray-100" />
@@ -83,6 +94,34 @@ function EventPage() {
                               <td className="hidden px-3 py-4 text-sm text-gray-500 md:table-cell">
                                 {person.phone}
                               </td>
+                              <td className="flex items-center h-14 gap-x-2">
+                                <p className="text-slate-300">Check</p>
+                                <Switch
+                                  name="role"
+                                  value="bouquet_maker"
+                                  className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                                >
+                                  <span className="sr-only">Use setting</span>
+                                  <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute h-full w-full rounded-md bg-white"
+                                  />
+                                  <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
+                                  />
+                                  <span
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
+                                  />
+                                  <input
+                                    type="hidden"
+                                    name="role"
+                                    value="bouquet_maker"
+                                    {...register("role")}
+                                  />
+                                </Switch>
+                              </td>
                             </tr>
                           ))}
                         </tbody>
@@ -90,6 +129,7 @@ function EventPage() {
                     </div>
                   </div>
                 </div>
+                <BouqetEmail event={event} evId={evId} token={cookies.token} />
               </div>
             ) : (
               <p className="text-center">No bouqet makers yet 😔</p>
@@ -97,8 +137,8 @@ function EventPage() {
 
             {/* // SECOND TABLE // */}
             {event?.drivers?.length ? (
-              <div className="border-r-2 border-r-slate-100 border-l-2 border-l-slate-100 ">
-                <div>
+              <div>
+                <div className="border-r-2 border-r-slate-100 border-l-2 border-l-slate-100 ">
                   <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="sm:flex sm:items-center">
                       <div className="sm:flex-auto">
@@ -159,18 +199,12 @@ function EventPage() {
                     </div>
                   </div>
                 </div>
+                <DriverEmail event={event} evId={evId} token={cookies.token} />
               </div>
             ) : (
               <p>No drivers yet 😔</p>
             )}
           </div>
-          {event?.closed ? null : (
-            <div className="flex justify-center mt-12">
-              <button className="bg-pink-500 py-2 px-4 text-white rounded-xl hover:bg-pink-600 hover:scale-95">
-                SEND EMAILS
-              </button>
-            </div>
-          )}
         </>
       ) : (
         <p className="text-2xl text-center mt-24 ">
