@@ -59,9 +59,7 @@ function EventRow({ event, user }) {
     mutate({ ...data, role });
   }
   function handleEventClick(id) {
-    navigate(`/events/${id}`, {
-      replace: true,
-    });
+    navigate(`${id}`);
   }
 
   return (
