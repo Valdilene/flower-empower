@@ -39,7 +39,7 @@ function RecipientsTable() {
               Recipients
             </h1>
             <p className="mt-2 text-sm text-gray-700">
-              A list of all the recipients saved the database with their name
+              A list of all the recipients saved in the database with their name
               and address.
             </p>
           </div>
@@ -80,71 +80,31 @@ function RecipientsTable() {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        <a href="#" className="group inline-flex">
-                          Street
-                          <span className="ml-2 flex-none rounded bg-gray-100 text-gray-900 group-hover:bg-gray-200">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="h-5 w-5"
-                            />
-                          </span>
-                        </a>
+                        <span className="group inline-flex">Street</span>
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        <a href="#" className="group inline-flex">
-                          City
-                          <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                            />
-                          </span>
-                        </a>
+                        <span className="group inline-flex">City</span>
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        <a href="#" className="group inline-flex">
-                          State
-                          <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                            />
-                          </span>
-                        </a>
+                        <span className="group inline-flex">State</span>
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        <a href="#" className="group inline-flex">
-                          Zip
-                          <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                            />
-                          </span>
-                        </a>
+                        <span className="group inline-flex">Zip</span>
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        <a href="#" className="group inline-flex">
-                          End Date
-                          <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                            />
-                          </span>
-                        </a>
+                        <span className="group inline-flex">End Date</span>
                       </th>
                       <th
                         scope="col"

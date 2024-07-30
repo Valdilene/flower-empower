@@ -68,57 +68,27 @@ function VolunteerTable() {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        <a href="#" className="group inline-flex">
-                          Email
-                          <span className="ml-2 flex-none rounded bg-gray-100 text-gray-900 group-hover:bg-gray-200">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="h-5 w-5"
-                            />
-                          </span>
-                        </a>
+                        <span className="group inline-flex">Email</span>
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        <a href="#" className="group inline-flex">
-                          Phone
-                          <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                            />
-                          </span>
-                        </a>
+                        <span className="group inline-flex">Phone</span>
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        <a href="#" className="group inline-flex">
-                          Hours
-                          <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                            />
-                          </span>
-                        </a>
+                        <span className="group inline-flex">Hours</span>
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        <a href="#" className="group inline-flex">
+                        <span href="#" className="group inline-flex">
                           Preferred comunication
-                          <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
-                            <ChevronDownIcon
-                              aria-hidden="true"
-                              className="invisible ml-2 h-5 w-5 flex-none rounded text-gray-400 group-hover:visible group-focus:visible"
-                            />
-                          </span>
-                        </a>
+                        </span>
                       </th>
 
                       <th scope="col" className="relative py-3.5 pl-3 pr-0">

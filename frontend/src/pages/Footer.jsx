@@ -54,8 +54,8 @@ const navigation = {
 
 function Footer() {
   return (
-      <footer className="bg-white ">
-        <div>
+    <footer className="bg-white mt-10 lg:mt-32 border-t-2 border-t-slate-100">
+      {/* <div>
           <h6
               className="mb-5 flex justify-center font-semibold uppercase md:justify-start ">
             Contact
@@ -105,29 +105,28 @@ function Footer() {
             </p>
           </div>
 
-        </div>
+        </div> */}
 
-        <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-          <div className="mt-10 flex justify-center space-x-10">
-            {navigation.social.map((item) => (
-                <a
-                    target="_blank"
-                    key={item.name}
-                    href={item.href}
-                    className="text-gray-400 hover:text-gray-500"
-                >
-                  <span className="sr-only">{item.name}</span>
-                  <item.icon aria-hidden="true" className="h-6 w-6"/>
-                </a>
-            ))}
-          </div>
-          <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-            &copy; Proudly built and maintained by Flower Empower Team © 2024 |
-            All Rights Reserved
-          </p>
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
+        <div className="mt-10 flex justify-center space-x-10">
+          {navigation.social.map((item) => (
+            <a
+              target="_blank"
+              key={item.name}
+              href={item.href}
+              className="text-gray-400 hover:text-gray-500"
+            >
+              <span className="sr-only">{item.name}</span>
+              <item.icon aria-hidden="true" className="h-6 w-6" />
+            </a>
+          ))}
         </div>
-
-      </footer>
+        <p className="mt-10 text-center text-xs leading-5 text-gray-500">
+          &copy; Proudly built and maintained by Flower Empower Team © 2024 |
+          All Rights Reserved
+        </p>
+      </div>
+    </footer>
   );
 }
 
