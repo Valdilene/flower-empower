@@ -5,17 +5,13 @@ import ModalRecipients from "./ModalRecipients";
 import API from "../../axios";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../Loader";
-import DeleteModal from "./DeleteModal";
-import EditRecipientModal from "./EditRecipientModal";
+
 import { useCookies } from "react-cookie";
+import RecipientRow from "./RecipientRow";
 
 function RecipientsTable() {
   const [cookies] = useCookies(["user"]);
-  const [currRecipient, setCurrRecipient] = useState(null);
-  const [id, setId] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
-  const [deleteClicked, setDeleteClicked] = useState(false);
-  const [editClicked, setEditClicked] = useState(false);
   const { data: recipients, isLoading } = useQuery({
     queryKey: ["recipients"],
     queryFn: async () => {
@@ -126,67 +122,8 @@ function RecipientsTable() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {recipients?.map((recipient) => (
-                      <tr key={recipient.address}>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                          {recipient.first_name} {recipient.last_name}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {recipient.address}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {recipient.city}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {recipient.state}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {recipient.zip}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {recipient.end_date}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {recipient.group}
-                        </td>
-                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-                          <div className="flex gap-x-2">
-                            <button
-                              onClick={() => {
-                                setId(recipient.id);
-                                setCurrRecipient(recipient);
-
-                                setEditClicked((prev) => !prev);
-                              }}
-                              className="text-pink-500"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => {
-                                setId(recipient.id);
-                                setDeleteClicked((prev) => !prev);
-                              }}
-                              className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
-                            >
-                              Delete
-                            </button>
-                            {deleteClicked && (
-                              <DeleteModal
-                                setDeleteClicked={setDeleteClicked}
-                                id={id}
-                              />
-                            )}
-                            {editClicked && (
-                              <EditRecipientModal
-                                setEditClicked={setEditClicked}
-                                id={id}
-                                currRecipient={currRecipient}
-                              />
-                            )}
-                          </div>
-                        </td>
-                      </tr>
+                    {recipients?.map((recipient, index) => (
+                      <RecipientRow key={index} recipient={recipient} />
                     ))}
                   </tbody>
                 </table>
