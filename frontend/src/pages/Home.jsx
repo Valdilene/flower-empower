@@ -40,7 +40,7 @@ function Home() {
             <img
               alt=""
               src={Illustration}
-              className="aspect-[3/2] w-full  bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
+              className="aspect-[3/2] w-full blur-  bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
             />
           </div>
         </div>
