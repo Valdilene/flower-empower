@@ -37,8 +37,10 @@ function Stats() {
   ];
   console.log(home);
   return (
-    <div className="lg:mt-60 md:mt-30 mt-20 sm:mt-20 pb-20">
-      <h2 className="text-center text-3xl mb-12">STATS</h2>
+    <div className="lg:mt-40 lg:mb-36 md:mt-30 md:mb-30 mt-20  pb-20 mb-10">
+      <h2 className="text-center text-3xl mb-24 font-bold ">
+        What we can achieve together
+      </h2>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((item) => (
           <div
