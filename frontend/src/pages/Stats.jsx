@@ -2,6 +2,7 @@ import {
   UsersIcon,
   FaceSmileIcon,
   CheckIcon,
+  ClockIcon,
 } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import API from "../axios";
@@ -34,6 +35,12 @@ function Stats() {
       stat: home?.total_recipients,
       icon: FaceSmileIcon,
     },
+    {
+      id: 4,
+      name: "Total Hours involved",
+      stat: home?.total_hours,
+      icon: ClockIcon,
+    },
   ];
   console.log(home);
   return (
@@ -41,7 +48,7 @@ function Stats() {
       <h2 className="text-center text-3xl mb-24 font-bold ">
         What we can achieve together
       </h2>
-      <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2">
         {stats.map((item) => (
           <div
             key={item.id}

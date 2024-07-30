@@ -54,7 +54,7 @@ function EventRow({ event, user }) {
       toast.error("Oh no, retry :(");
     },
   });
-  console.log(event);
+
   function onSubmit(data) {
     mutate({ ...data, role });
   }
