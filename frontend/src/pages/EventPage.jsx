@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import API from "../axios";
@@ -6,9 +6,12 @@ import { Switch } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import BouquetEmail from "../components/event/BouquetEmail";
 import DriverEmail from "../components/event/DriverEmail";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import DriverBook from "../components/DriverBook";
 
 function EventPage() {
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
   const params = useParams();
   const [cookies] = useCookies(["user"]);
   const evId = params.evId;
@@ -94,34 +97,6 @@ function EventPage() {
                               <td className="hidden px-3 py-4 text-sm text-gray-500 md:table-cell">
                                 {person.phone}
                               </td>
-                              <td className="flex items-center h-14 gap-x-2">
-                                <p className="text-slate-300">Check</p>
-                                <Switch
-                                  name="role"
-                                  value="bouquet_maker"
-                                  className="group relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
-                                >
-                                  <span className="sr-only">Use setting</span>
-                                  <span
-                                    aria-hidden="true"
-                                    className="pointer-events-none absolute h-full w-full rounded-md bg-white"
-                                  />
-                                  <span
-                                    aria-hidden="true"
-                                    className="pointer-events-none absolute mx-auto h-4 w-9 rounded-full bg-gray-200 transition-colors duration-200 ease-in-out group-data-[checked]:bg-indigo-600"
-                                  />
-                                  <span
-                                    aria-hidden="true"
-                                    className="pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-data-[checked]:translate-x-5"
-                                  />
-                                  <input
-                                    type="hidden"
-                                    name="role"
-                                    value="bouquet_maker"
-                                    {...register("role")}
-                                  />
-                                </Switch>
-                              </td>
                             </tr>
                           ))}
                         </tbody>
@@ -192,6 +167,13 @@ function EventPage() {
                               <td className="hidden px-3 py-4 text-sm text-gray-500 md:table-cell">
                                 {driver.phone}
                               </td>
+                              {/* <td className="hidden px-3 py-4 text-sm text-gray-500 md:table-cell">
+                                <DriverBook
+                                  id={driver?.id}
+                                  driver={driver}
+                                  event={event}
+                                />
+                              </td> */}
                             </tr>
                           ))}
                         </tbody>
