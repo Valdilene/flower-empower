@@ -291,19 +291,53 @@ class SendDriversEmailView(APIView):
 
 
 class StatsView(GenericAPIView):
+    # Queryset for the Event model, which will be used to retrieve event data
     queryset = Event.objects.all()
+    # Permission class that allows any user (authenticated or not) to access this view
     permission_classes = [AllowAny]
 
     def get(self, request, *args, **kwargs):
-        total_volunteers = 0
-        total_recipients = 0
+        # Initialize sets to store unique volunteer and recipient IDs
+        total_volunteers = set()
+        total_recipients = set()
+        # Initialize counters for total bouquets and total hours worked
+        total_bouquets = 0
+        total_hours = 0
 
-        for event in Event.objects.all():
-            total_volunteers += event.bouquet_makers.count() + event.drivers.count()
-            total_recipients += event.recipients.count()
+        # Loop through all closed events to gather statistics
+        for event in Event.objects.filter(closed=True):
+            # Get all bouquet makers and drivers associated with the current event
+            bouquet_makers = event.bouquet_makers.all()
+            drivers = event.drivers.all()
+            # Get all recipients associated with the current event
+            recipients = event.recipients.all()
 
+            # Count the total number of bouquets based on the number of recipients for the event
+            total_bouquets += event.recipients.count()
+
+            # Add unique IDs of bouquet makers and drivers to the total_volunteers set
+            for volunteer in bouquet_makers.union(drivers):
+                total_volunteers.add(volunteer.id)
+
+            # Add unique recipient IDs to the total_recipients set
+            for recipient in recipients:
+                total_recipients.add(recipient.id)
+
+            # Calculate the total hours worked by bouquet makers (assuming each works 2.5 hours)
+            bouquet_makers_hours = event.bouquet_makers.count() * 2.5
+            # Calculate the total hours worked by drivers (assuming each works 3 hours)
+            drivers_hours = event.drivers.count() * 3
+            # Add the hours from bouquet makers and drivers to the total hours counter
+            total_hours += bouquet_makers_hours + drivers_hours
+
+        # Calculate the count of unique volunteers and recipients
+        total_volunteers_count = len(total_volunteers)
+        total_recipients_count = len(total_recipients)
+
+        # Return a JSON response containing the statistics
         return Response({
-            'total_volunteers': total_volunteers,
-            'total_recipients': total_recipients,
-            'total_bouquets': total_recipients,
+            'total_volunteers': total_volunteers_count,
+            'total_recipients': total_recipients_count,
+            'total_bouquets': total_bouquets,
+            'total_hours': total_hours
         }, status=status.HTTP_200_OK)
