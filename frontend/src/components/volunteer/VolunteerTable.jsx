@@ -1,19 +1,14 @@
 /* eslint-disable react/prop-types */
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
 import API from "../../axios";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../Loader";
 import { useCookies } from "react-cookie";
-import VolunteerDeleteModal from "./VolunteerDeleteModal";
-import VolunteerEditModal from "./VolunteerEditModal";
+import VolunteerRow from "./VolunteerRow";
 
 function VolunteerTable() {
   const [cookies] = useCookies(["user"]);
-  const [currUser, setCurrUser] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [deleteClicked, setDeleteClicked] = useState(false);
-  const [editClicked, setEditClicked] = useState(false);
+
   const { data: users, isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
@@ -99,64 +94,8 @@ function VolunteerTable() {
                   <tbody className="divide-y divide-gray-200 bg-white">
                     {users
                       ?.filter((user) => user.is_superuser != true)
-                      .map((user) => (
-                        <tr key={user.email}>
-                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                            {user.first_name} {user.last_name}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            {user.email}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            {user.phone}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            {user.hours}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            {user.preferred_communication === "none"
-                              ? "Not specified yet"
-                              : user.preferred_communication}
-                          </td>
-
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-                            <div className="flex gap-x-2">
-                              <button
-                                onClick={() => {
-                                  setUserId(user?.id);
-                                  setCurrUser(user);
-
-                                  setEditClicked((prev) => !prev);
-                                }}
-                                className="text-pink-500"
-                              >
-                                Edit
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setUserId(user?.id);
-                                  setDeleteClicked((prev) => !prev);
-                                }}
-                                className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
-                              >
-                                Delete
-                              </button>
-                              {deleteClicked && (
-                                <VolunteerDeleteModal
-                                  setDeleteClicked={setDeleteClicked}
-                                  userId={userId}
-                                />
-                              )}
-                              {editClicked && (
-                                <VolunteerEditModal
-                                  setEditClicked={setEditClicked}
-                                  userId={userId}
-                                  currUser={currUser}
-                                />
-                              )}
-                            </div>
-                          </td>
-                        </tr>
+                      .map((user, index) => (
+                        <VolunteerRow key={index} user={user} />
                       ))}
                   </tbody>
                 </table>
