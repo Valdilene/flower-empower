@@ -123,7 +123,7 @@ function VolunteerTable() {
                             <div className="flex gap-x-2">
                               <button
                                 onClick={() => {
-                                  setUserId(user.id);
+                                  setUserId(user?.id);
                                   setCurrUser(user);
 
                                   setEditClicked((prev) => !prev);
@@ -134,7 +134,7 @@ function VolunteerTable() {
                               </button>
                               <button
                                 onClick={() => {
-                                  setUserId(user.id);
+                                  setUserId(user?.id);
                                   setDeleteClicked((prev) => !prev);
                                 }}
                                 className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
