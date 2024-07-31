@@ -17,7 +17,7 @@ function Home() {
                 Flower Empower
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                Flower Empower is a program by Dream Foundation. Its a
+                Flower Empower is a program by Dream Foundation. It's a
                 volunteer-run organization with the mission of brightening
                 peoples lives through flowers that local growers donate. Every
                 Saturday, we take the donated flowers, turning them into
