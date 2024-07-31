@@ -82,7 +82,7 @@ function VolunteerTable() {
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
                         <span href="#" className="group inline-flex">
-                          Preferred comunication
+                          Preferred communication
                         </span>
                       </th>
 
