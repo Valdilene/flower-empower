@@ -28,7 +28,7 @@ function Home() {
                 <div className="lg:mt-32 md:mt-20 mt-16  gap-x-6 text-center">
                   <a
                     href="/login"
-                    className="rounded-md bg-pink-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-pink-600"
+                    className="rounded-md bg-purple-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500"
                   >
                     Start Volunteering now
                   </a>

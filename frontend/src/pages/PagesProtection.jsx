@@ -13,7 +13,7 @@ function PagesProtection() {
             Please go back to login
           </p>
           <button
-            className="text-white bg-pink-500 rounded-lg py-2 px-4 hover:bg-pink-600 cursor-pointer border-none mt-6"
+            className="text-white bg-purple-500 rounded-lg py-2 px-4 hover:bg-purple-500 cursor-pointer border-none mt-6"
             onClick={() => navigate("/login")}
           >
             Login

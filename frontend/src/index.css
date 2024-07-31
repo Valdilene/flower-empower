@@ -30,8 +30,7 @@ li {
 }
 
 .active {
-  background-color: #ec4899;
-  color: white;
+  color: #1e293b;
 }
 
 .loader {

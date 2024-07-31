@@ -109,7 +109,7 @@ function EventRow({ event, user }) {
 
                       setEditClicked((prev) => !prev);
                     }}
-                    className="text-pink-500"
+                    className="py-0.5 px-2 rounded-lg bg-purple-500 hover:bg-purple-500 text-white"
                   >
                     Edit
                   </button>
@@ -118,7 +118,7 @@ function EventRow({ event, user }) {
                       setEventId(event.id);
                       setDeleteClicked((prev) => !prev);
                     }}
-                    className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
+                    className="text-slate-900 hover:text-red-500 border-2 border-red-500 py-0.5 px-2"
                   >
                     Delete
                   </button>
@@ -210,7 +210,7 @@ function EventRow({ event, user }) {
                       </Switch>
                       <div className="flex items-center justify-start">
                         <button
-                          className="bg-pink-500  text-white py-0.5 px-2 hover:bg-pink-600 rounded-xl"
+                          className="bg-purple-500  text-white py-0.5 px-2 hover:bg-purple-500 rounded-xl"
                           type="submit"
                         >
                           SAVE
