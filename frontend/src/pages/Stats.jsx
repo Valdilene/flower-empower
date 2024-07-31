@@ -25,7 +25,7 @@ function Stats() {
     },
     {
       id: 2,
-      name: "Total Bouqet delivered",
+      name: "Total Bouquet delivered",
       stat: home?.total_bouquets,
       icon: CheckIcon,
     },
