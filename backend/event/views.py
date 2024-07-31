@@ -20,7 +20,7 @@ from .serializers import EventSerializer, EventAdminSerializer
 # 1
 class ListCreateEventView(ListCreateAPIView):
     # View for listing all events and creating a new event.
-    queryset = Event.objects.all()
+    queryset = Event.objects.all().order_by('-date')
     permission_classes = [IsAuthenticated]  # Ensure all users must be authenticated
 
     def get_permissions(self):
