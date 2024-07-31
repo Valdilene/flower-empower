@@ -22,7 +22,7 @@ function Open({ event, cookies }) {
       queryClient.invalidateQueries({
         queryKey: ["events"],
       });
-      toast.success("Event close!");
+      toast.success("Event closed!");
     },
     onError: () => {
       toast.error("Oh no, retry :(");
