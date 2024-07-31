@@ -49,7 +49,7 @@ function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
             Add the recipients address in the form below
           </p>
 
-          <div className="grid p-10 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10 lg:space-y-8  pb-12">
+          <div className="grid p-1 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-1 md:space-y-4 lg:space-y-8  lg:pb-12">
             <div className="self-end">
               <LabelAndInput
                 htmlFor="first_name"
@@ -147,7 +147,7 @@ function EditRecipient({ id, setOpen, setEditClicked, currRecipient }) {
         >
           Cancel
         </button>
-        <button className="inline-flex justify-center rounded-md bg-pink-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <button className="inline-flex justify-center rounded-md bg-purple-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           Save
         </button>
       </div>
