@@ -45,7 +45,7 @@ function ForgotPassword() {
           </LabelAndInput>
 
           <div className="col-span-2 place-self-center justify-self-center">
-            <button className=" rounded-md bg-[#e48dde] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#e48dde] ">
+            <button className=" rounded-md bg-[#e48dde] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#d973d2] ">
               SEND CODE
             </button>
           </div>

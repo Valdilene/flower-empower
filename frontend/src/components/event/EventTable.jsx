@@ -24,7 +24,7 @@ function EventTable({ user, events }) {
               <button
                 onClick={() => setIsClicked((prev) => !prev)}
                 type="button"
-                className="block rounded-md bg-[#e48dde] px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#e48dde] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="block rounded-md bg-[#e48dde] px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#d973d2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Create event
               </button>

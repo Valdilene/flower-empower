@@ -59,7 +59,7 @@ function Registration() {
                 <div>
                   <button
                     disabled={isPending}
-                    className="flex w-full justify-center rounded-md bg-[#e48dde] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#e48dde]"
+                    className="flex w-full justify-center rounded-md bg-[#e48dde] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#d973d2]"
                   >
                     Sign Up
                   </button>
@@ -70,7 +70,7 @@ function Registration() {
                 Already a volunteer?{" "}
                 <NavLink
                   to="/login"
-                  className="font-semibold leading-6 text-pink-500 hover:text-pink-600"
+                  className="font-semibold leading-6 text-[#e48dde] hover:text-[#d973d2]"
                 >
                   Login
                 </NavLink>

@@ -27,12 +27,12 @@ function VolunteerRow({ user }) {
       </td>
 
       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-        <div className="flex gap-x-2">
+        <div className="flex gap-x-4 justify-end">
           <button
             onClick={() => {
               setEditClicked((prev) => !prev);
             }}
-            className="py-0.5 px-2 rounded-lg bg-[#e48dde] hover:bg-[#e48dde] text-white "
+            className="py-0.5 px-2 rounded-lg bg-[#e48dde] hover:bg-[#d973d2] text-white "
           >
             Edit
           </button>

@@ -81,7 +81,7 @@ function NewPassword() {
         ) : null}
 
         <div className="col-span-2 place-self-center justify-self-center">
-          <button className="flex w-full justify-center rounded-md bg-[#e48dde] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#e48dde] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600">
+          <button className="flex w-full justify-center rounded-md bg-[#e48dde] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#d973d2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600">
             CHANGE PASSWORD
           </button>
         </div>

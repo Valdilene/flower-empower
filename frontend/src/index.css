@@ -31,7 +31,7 @@ li {
 
 .active {
   color: #1e293b;
-  border-bottom: 1px solid #1e293b6e;
+  border-bottom: 2px solid black;
 }
 
 .loader {
