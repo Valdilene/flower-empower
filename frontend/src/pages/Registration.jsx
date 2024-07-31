@@ -59,7 +59,7 @@ function Registration() {
                 <div>
                   <button
                     disabled={isPending}
-                    className="flex w-full justify-center rounded-md bg-purple-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-purple-500"
+                    className="flex w-full justify-center rounded-md bg-[#e48dde] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#e48dde]"
                   >
                     Sign Up
                   </button>

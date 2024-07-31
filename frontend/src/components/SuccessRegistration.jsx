@@ -29,7 +29,7 @@ function SuccessRegistration() {
           We sent a code to your mail box please check and continue
         </p>
         <button
-          className="cursor-pointer rounded-lg bg-purple-500 px-7 py-3 text-lg text-white hover:bg-purple-500"
+          className="cursor-pointer rounded-lg bg-[#e48dde] px-7 py-3 text-lg text-white hover:bg-[#e48dde]"
           onClick={() => handleClick()}
         >
           Continue
