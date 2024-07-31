@@ -69,7 +69,7 @@ function BouquetEmail({ event, evId, token }) {
           <div className="flex justify-center mt-12">
             <button
               disabled={isPending}
-              className="bg-[#e48dde] py-2 px-4 text-white rounded-xl hover:bg-green-600 hover:scale-95"
+              className="bg-[#e48dde] py-2 px-4 text-white rounded-xl hover:bg-[#d973d2]"
             >
               SEND BOUQUET EMAILS
             </button>

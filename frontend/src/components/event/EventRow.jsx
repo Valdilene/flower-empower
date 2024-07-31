@@ -19,7 +19,6 @@ function EventRow({ event, user }) {
     event?.bouquet_makers.includes(user?.id)
   );
   const [isDriver, setIsDriver] = useState(event?.drivers.includes(user?.id));
-
   const [cookies] = useCookies(["user"]);
   const [role, setRole] = useState("");
   const [eventId, setEventId] = useState(null);
@@ -93,16 +92,16 @@ function EventRow({ event, user }) {
         ) : null}
         {cookies.issuperuser ? (
           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
-            <div className="flex gap-x-2">
+            <div className="flex gap-x-2 justify-end">
               {event.closed ? (
                 <Closed event={event} cookies={cookies.token} />
               ) : (
                 <Open event={event} cookies={cookies.token} />
               )}
               {event.closed ? (
-                <p className="text-slate-500">Event closed</p>
+                <p className="text-slate-500 ml-7">Event closed</p>
               ) : (
-                <>
+                <div className="flex gap-x-4 justify-end items-center">
                   <button
                     onClick={() => {
                       setEventId(event.id);
@@ -110,7 +109,7 @@ function EventRow({ event, user }) {
 
                       setEditClicked((prev) => !prev);
                     }}
-                    className="py-0.5 px-2  rounded-lg bg-[#e48dde] hover:bg-[#e48dde] text-white"
+                    className="py-0.5 px-2 ml-4  rounded-lg bg-[#e48dde] hover:bg-[#d973d2] text-white"
                   >
                     Edit
                   </button>
@@ -123,7 +122,7 @@ function EventRow({ event, user }) {
                   >
                     Delete
                   </button>
-                </>
+                </div>
               )}
             </div>
           </td>
@@ -139,7 +138,7 @@ function EventRow({ event, user }) {
                     onSubmit={handleSubmit(onSubmit)}
                   >
                     <div className="flex gap-x-2">
-                      <p className="text-green-500">Bouquet maker</p>
+                      <p className="text-gray-800">Bouquet maker</p>
 
                       <Switch
                         checked={isBouquet}
@@ -176,7 +175,7 @@ function EventRow({ event, user }) {
                       </Switch>
                     </div>
                     <div className="flex gap-x-1">
-                      <p className="text-blue-500">Driver</p>
+                      <p className="text-gray-800">Driver</p>
                       <Switch
                         name="role"
                         value="driver"
@@ -209,12 +208,12 @@ function EventRow({ event, user }) {
                           {...register("role")}
                         />
                       </Switch>
-                      <div className="flex items-center justify-start">
+                      <div className="ml-4 flex items-center justify-start">
                         <button
-                          className="bg-[#e48dde]  text-white py-0.5 px-2 hover:bg-[#e48dde] rounded-xl"
+                          className="bg-[#e48dde]  text-white py-0.5 px-2 hover:bg-[#d973d2] rounded-xl"
                           type="submit"
                         >
-                          SAVE
+                          Save
                         </button>
                       </div>
                     </div>
