@@ -32,7 +32,7 @@ function VolunteerRow({ user }) {
             onClick={() => {
               setEditClicked((prev) => !prev);
             }}
-            className="py-0.5 px-2 rounded-lg bg-purple-500 hover:bg-purple-500 text-white "
+            className="py-0.5 px-2 rounded-lg bg-[#e48dde] hover:bg-[#e48dde] text-white "
           >
             Edit
           </button>
@@ -40,7 +40,7 @@ function VolunteerRow({ user }) {
             onClick={() => {
               setDeleteClicked((prev) => !prev);
             }}
-            className=" text-red-600 hover:text-red-500 "
+            className=" text-black  hover:text-slate-700"
           >
             Delete
           </button>

@@ -13,6 +13,7 @@ import Open from "./Open";
 
 /* eslint-disable react/prop-types */
 function EventRow({ event, user }) {
+  console.log(event);
   const navigate = useNavigate();
   const [isBouquet, setIsBouquet] = useState(
     event?.bouquet_makers.includes(user?.id)
@@ -80,10 +81,10 @@ function EventRow({ event, user }) {
         {cookies.issuperuser ? (
           <>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {event.bouquet_makers_needed}
+              {event.drivers.length} / {event.bouquet_makers_needed}
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {event.drivers_needed}
+              {event.bouquet_makers.length} / {event.drivers_needed}
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
               {event.group}
@@ -109,7 +110,7 @@ function EventRow({ event, user }) {
 
                       setEditClicked((prev) => !prev);
                     }}
-                    className="py-0.5 px-2 rounded-lg bg-purple-500 hover:bg-purple-500 text-white"
+                    className="py-0.5 px-2  rounded-lg bg-[#e48dde] hover:bg-[#e48dde] text-white"
                   >
                     Edit
                   </button>
@@ -118,7 +119,7 @@ function EventRow({ event, user }) {
                       setEventId(event.id);
                       setDeleteClicked((prev) => !prev);
                     }}
-                    className="text-slate-900 hover:text-red-500 border-2 border-red-500 py-0.5 px-2"
+                    className="text-slate-900 hover:text-slate-700 "
                   >
                     Delete
                   </button>
@@ -210,7 +211,7 @@ function EventRow({ event, user }) {
                       </Switch>
                       <div className="flex items-center justify-start">
                         <button
-                          className="bg-purple-500  text-white py-0.5 px-2 hover:bg-purple-500 rounded-xl"
+                          className="bg-[#e48dde]  text-white py-0.5 px-2 hover:bg-[#e48dde] rounded-xl"
                           type="submit"
                         >
                           SAVE
