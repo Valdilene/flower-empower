@@ -50,7 +50,7 @@ function AddRecipientForm({ setOpen, setIsClicked, open }) {
             Add the recipients address in the form below
           </p>
 
-          <div className="grid p-10 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10 space-y-8  pb-12">
+          <div className="grid p-1 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-1 md:space-y-4 lg:space-y-8  lg:pb-12">
             <div className="self-end">
               <LabelAndInput
                 htmlFor="first_name"
