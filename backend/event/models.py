@@ -17,6 +17,8 @@ class Event(models.Model):
     closed = models.BooleanField(default=False)
     bouquet_makers = models.ManyToManyField(to=settings.AUTH_USER_MODEL, blank=True, related_name="bouquet_makers")
     drivers = models.ManyToManyField(to=settings.AUTH_USER_MODEL, blank=True, related_name="drivers")
+    bouquet_makers_attendees = models.ManyToManyField(to=settings.AUTH_USER_MODEL, blank=True, related_name="bouquet_makers_attendees")
+    drivers_attendees = models.ManyToManyField(to=settings.AUTH_USER_MODEL, blank=True, related_name="drivers_attendees")
     recipients = models.ManyToManyField(to=Recipient, blank=True, related_name="recipients")
 
     def save(self, *args, **kwargs):
