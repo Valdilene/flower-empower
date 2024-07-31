@@ -44,9 +44,7 @@ function EventPage() {
                         <h1 className="text-base font-semibold leading-6 text-gray-900">
                           Bouquet Makers
                         </h1>
-                        <p className="mt-2 text-sm text-gray-700">
-                          Bouquet maker for his event
-                        </p>
+
                       </div>
                     </div>
                   </div>
@@ -120,9 +118,7 @@ function EventPage() {
                         <h1 className="text-base font-semibold leading-6 text-gray-900">
                           Drivers
                         </h1>
-                        <p className="mt-2 text-sm text-gray-700">
-                          Drivers for this event
-                        </p>
+
                       </div>
                     </div>
                   </div>
