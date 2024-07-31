@@ -19,25 +19,25 @@ function Stats() {
   const stats = [
     {
       id: 1,
-      name: "Total Volunteers",
+      name: "Total volunteers",
       stat: home?.total_volunteers,
       icon: UsersIcon,
     },
     {
       id: 2,
-      name: "Total Bouqet delivered",
+      name: "Total Bouquet delivered",
       stat: home?.total_bouquets,
       icon: CheckIcon,
     },
     {
       id: 3,
-      name: "Our happy Recipients",
+      name: "People we put a smile on",
       stat: home?.total_recipients,
       icon: FaceSmileIcon,
     },
     {
       id: 4,
-      name: "Total Hours involved",
+      name: "Total hours involved",
       stat: home?.total_hours,
       icon: ClockIcon,
     },
