@@ -35,7 +35,7 @@ function RecipientRow({ recipient }) {
             onClick={() => {
               setEditClicked((prev) => !prev);
             }}
-            className="text-pink-500"
+            className="py-0.5 px-2 rounded-lg bg-[#e48dde] hover:bg-[#e48dde] text-white "
           >
             Edit
           </button>
@@ -43,7 +43,7 @@ function RecipientRow({ recipient }) {
             onClick={() => {
               setDeleteClicked((prev) => !prev);
             }}
-            className="text-white bg-red-500 py-0.5 px-2 rounded-lg"
+            className=" text-black hover:text-slate-700 "
           >
             Delete
           </button>

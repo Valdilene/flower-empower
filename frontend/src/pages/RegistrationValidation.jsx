@@ -148,7 +148,7 @@ function RegistrationValidation() {
                 </select>
               </div>
 
-              <button className="cursor-pointer lg:col-span-2 md:col-span-2 md:place-self-center md:justify-self-center  lg:place-self-center lg:justify-self-center rounded-xl bg-pink-500 px-8 py-2 text-white hover:bg-pink-600">
+              <button className="cursor-pointer lg:col-span-2 md:col-span-2 md:place-self-center md:justify-self-center  lg:place-self-center lg:justify-self-center rounded-xl bg-[#e48dde] px-8 py-2 text-white hover:bg-[#e48dde]">
                 {isPending
                   ? "Finishing Registration..."
                   : "Finish Registration"}
