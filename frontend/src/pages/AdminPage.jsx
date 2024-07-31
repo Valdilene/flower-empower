@@ -14,7 +14,7 @@ function AdminPage() {
             Please go back
           </p>
           <button
-            className="text-white bg-pink-500 rounded-lg py-2 px-4 hover:bg-pink-600 cursor-pointer border-none mt-6"
+            className="text-white bg-[#e48dde] rounded-lg py-2 px-4 hover:bg-[#e48dde] cursor-pointer border-none mt-6"
             onClick={() => navigate(-1)}
           >
             Go back

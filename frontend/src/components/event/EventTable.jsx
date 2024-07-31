@@ -24,7 +24,7 @@ function EventTable({ user, events }) {
               <button
                 onClick={() => setIsClicked((prev) => !prev)}
                 type="button"
-                className="block rounded-md bg-pink-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="block rounded-md bg-[#e48dde] px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#e48dde] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Create event
               </button>
@@ -66,7 +66,7 @@ function EventTable({ user, events }) {
                             className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                           >
                             <a href="#" className="group inline-flex">
-                              Bouquet makers needed
+                              Bouquet makers
                               <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                                 <ChevronDownIcon
                                   aria-hidden="true"
@@ -80,7 +80,7 @@ function EventTable({ user, events }) {
                             className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                           >
                             <a href="#" className="group inline-flex">
-                              Drivers needed
+                              Drivers
                               <span className="invisible ml-2 flex-none rounded text-gray-400 group-hover:visible group-focus:visible">
                                 <ChevronDownIcon
                                   aria-hidden="true"

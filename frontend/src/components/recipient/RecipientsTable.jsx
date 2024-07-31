@@ -34,13 +34,12 @@ function RecipientsTable() {
             <h1 className="text-base font-semibold leading-6 text-gray-900">
               Flower Recipients
             </h1>
-
           </div>
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <button
               onClick={() => setIsClicked((prev) => !prev)}
               type="button"
-              className="block rounded-md bg-pink-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="block rounded-md bg-[#e48dde] px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-[#e48dde] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Add a flower recipient
             </button>

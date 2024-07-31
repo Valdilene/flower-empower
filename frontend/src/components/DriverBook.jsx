@@ -43,7 +43,7 @@ function DriverBook({ id, driver, event }) {
       {isSuccess ? null : (
         <form onSubmit={handleSubmit(onSubmit)}>
           <button
-            className="bg-pink-500 hover:bg-pink-600 cursor-pointer py-1 px-2 text-white rounded-xl"
+            className="bg-[#e48dde] hover:bg-[#e48dde] cursor-pointer py-1 px-2 text-white rounded-xl"
             type="submit"
           >
             Book

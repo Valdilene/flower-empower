@@ -38,7 +38,7 @@ function AppLayout() {
       <div className="min-h-full">
         <Disclosure
           as="nav"
-          className="bg-#D8D8D8 border-b-2 border-b-#A8A8A8 py-2"
+          className="bg-#e48dde border-b-2 border-b-#A8A8A8 py-2"
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
@@ -47,7 +47,7 @@ function AppLayout() {
                   <div className="ml-10 flex items-baseline space-x-4 gap-12">
                     <NavLink
                       to="/"
-                      className="text-slate-600 hover:bg-pink-500 hover:text-white  py-2 px-4"
+                      className="text-slate-500 hover:text-slate-800     py-2 px-4"
                     >
                       Home
                     </NavLink>
@@ -55,7 +55,7 @@ function AppLayout() {
                       <>
                         <NavLink
                           to="/events"
-                          className="text-slate-600 hover:bg-pink-500 hover:text-white py-2 px-4"
+                          className="text-slate-500 hover:text-slate-800 py-2 px-4"
                         >
                           Events
                         </NavLink>
@@ -63,13 +63,13 @@ function AppLayout() {
                           <>
                             <NavLink
                               to="/recipients"
-                              className="text-slate-600 hover:bg-pink-500  hover:text-white py-2 px-4"
+                              className="text-slate-500 hover:text-slate-800 py-2 px-4"
                             >
                               Recipients
                             </NavLink>
                             <NavLink
                               to="/volunteers"
-                              className="text-slate-600 hover:bg-pink-500 hover:text-white py-2 px-4 "
+                              className="text-slate-500 hover:text-slate-800 py-2 px-4 "
                             >
                               Volunteers
                             </NavLink>
@@ -86,7 +86,7 @@ function AppLayout() {
                   {token ? (
                     <Menu as="div" className="relative ml-3">
                       <div>
-                        <MenuButton className="relative flex max-w-xs items-center rounded-full bg-pink-500 text-sm ">
+                        <MenuButton className="relative flex max-w-xs items-center rounded-full bg-[#e48dde] text-sm ">
                           <span className="absolute -inset-1.5" />
                           <span className="sr-only">Open user menu</span>
                           <img
@@ -117,7 +117,7 @@ function AppLayout() {
               </div>
               <div className="-mr-2 flex md:hidden">
                 {/* Mobile menu button */}
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-pink-500 p-2 text-white hover:bg-pink-700">
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-[#e48dde] p-2 text-white hover:bg-pink-700">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   <Bars3Icon
@@ -136,7 +136,7 @@ function AppLayout() {
           <DisclosurePanel className="md:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3 flex flex-col gap-y-4">
               <DisclosureButton
-                className="text-slate-700 pl-4 hover:bg-pink-500 py-2 hover:text-white"
+                className="text-slate-700 pl-4 hover:bg-[#e48dde] py-2 hover:text-white"
                 as="a"
                 href="/"
               >
@@ -145,7 +145,7 @@ function AppLayout() {
               {token ? (
                 <>
                   <DisclosureButton
-                    className="text-slate-700 pl-4 hover:bg-pink-500 hover:text-white  py-2"
+                    className="text-slate-700 pl-4 hover:bg-[#e48dde] hover:text-white  py-2"
                     as="a"
                     href="events"
                   >
@@ -154,14 +154,14 @@ function AppLayout() {
                   {is_superuser ? (
                     <>
                       <DisclosureButton
-                        className="text-slate-700 pl-4 hover:bg-pink-500 py-2 hover:text-white"
+                        className="text-slate-700 pl-4 hover:bg-[#e48dde] py-2 hover:text-white"
                         as="a"
                         href="/addresses"
                       >
                         Addresses
                       </DisclosureButton>
                       <DisclosureButton
-                        className="text-slate-700 pl-4 hover:bg-pink-500 py-2 hover:text-white"
+                        className="text-slate-700 pl-4 hover:bg-[#e48dde] py-2 hover:text-white"
                         as="a"
                         href="volunteers"
                       >
@@ -178,7 +178,7 @@ function AppLayout() {
                   <DisclosureButton
                     onClick={() => handleLogout()}
                     as="a"
-                    className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium text-slate-500 hover:bg-pink-500 hover:text-white"
+                    className="block cursor-pointer rounded-md px-3 py-2 text-base font-medium text-slate-500 hover:bg-[#e48dde] hover:text-white"
                   >
                     Logout
                   </DisclosureButton>

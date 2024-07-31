@@ -16,8 +16,8 @@ function Home() {
               <h1 className="mt-8  text-4xl font-bold tracking-tight text-gray-900 sm:mt-10 sm:text-6xl">
                 Flower Empower
               </h1>
-              <p className="mt-6 text-lg leading-8 text-gray-600">
-                Flower Empower is a program by Dream Foundation. It's a
+              <p className="mt-6 text-lg lg:leading-10 md:leading-8 leading-8 text-gray-600">
+                Flower Empower is a program by Dream Foundation. Its a
                 volunteer-run organization with the mission of brightening
                 peoples lives through flowers that local growers donate. Every
                 Saturday, we take the donated flowers, turning them into
@@ -28,7 +28,7 @@ function Home() {
                 <div className="lg:mt-32 md:mt-20 mt-16  gap-x-6 text-center">
                   <a
                     href="/login"
-                    className="rounded-md bg-pink-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-pink-600"
+                    className="rounded-md bg-[#e48dde] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#e48dde]"
                   >
                     Start Volunteering now
                   </a>
