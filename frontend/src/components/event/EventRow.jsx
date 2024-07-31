@@ -100,7 +100,7 @@ function EventRow({ event, user }) {
                 <Open event={event} cookies={cookies.token} />
               )}
               {event.closed ? (
-                <p className="text-slate-500">Event close</p>
+                <p className="text-slate-500">Event closed</p>
               ) : (
                 <>
                   <button
@@ -131,7 +131,7 @@ function EventRow({ event, user }) {
           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
             <div className="flex gap-x-2 justify-end">
               {event.closed ? (
-                <p className="text-slate-500">Event close</p>
+                <p className="text-slate-500">Event closed</p>
               ) : (
                 <>
                   <form
