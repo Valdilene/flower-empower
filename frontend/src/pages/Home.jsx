@@ -1,7 +1,7 @@
 import { useCookies } from "react-cookie";
 import Footer from "./Footer";
 import Stats from "./Stats";
-import Illustration from "../assets/img/reshot-illustration-isometric-customer-feedback-illustration-FPM25ZD89U.png";
+import Illustration from "../assets/img/ilustration.jpg";
 import Contact from "../components/Contact";
 
 function Home() {
@@ -9,7 +9,7 @@ function Home() {
 
   return (
     <>
-      <div className="relative bg-white">
+      <div className="relative bg-white mt-0">
         <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
           <div className="px-6 pb-24 pt-10 sm:pb-32 lg:col-span-7 lg:px-0 lg:pb-56 lg:pt-48 xl:col-span-6">
             <div className="mx-auto max-w-2xl lg:mx-0 lg:mr-7">
@@ -40,7 +40,7 @@ function Home() {
             <img
               alt=""
               src={Illustration}
-              className="aspect-[3/2] w-full blur-  bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
+              className="aspect-[3/2] blur-  lg:absolute lg:inset-0 lg:aspect-auto w-full h-full object-contain"
             />
           </div>
         </div>
