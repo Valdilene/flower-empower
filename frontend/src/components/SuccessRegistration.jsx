@@ -16,7 +16,7 @@ function SuccessRegistration() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-20 text-pink-500"
+          className="size-20 text-[#e48dde]"
         >
           <path
             strokeLinecap="round"

@@ -20,10 +20,6 @@ function DriverBook({ id, driver, event }) {
       return res.data;
     },
     onSuccess: () => {
-      // queryClient.invalidateQueries({
-      //   queryKey: ["events"],
-      // });
-      // setEditClicked(false);
       toast.success("Hours added!");
     },
     onError: () => {

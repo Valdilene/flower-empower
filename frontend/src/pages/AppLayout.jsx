@@ -11,7 +11,6 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Avatar from "../assets/img/avatar.jpeg";
-import Logo from "../assets/img/logoFlower.webp";
 import { useCookies } from "react-cookie";
 
 const user = {
@@ -36,10 +35,7 @@ function AppLayout() {
   return (
     <>
       <div className="min-h-full">
-        <Disclosure
-          as="nav"
-          className="bg-#e48dde border-b-2 border-b-#A8A8A8 py-2"
-        >
+        <Disclosure as="nav" className=" border-b-2 border-b-#A8A8A8 py-2">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
@@ -47,7 +43,7 @@ function AppLayout() {
                   <div className="ml-10 flex items-baseline space-x-4 gap-12">
                     <NavLink
                       to="/"
-                      className="text-slate-500 hover:text-slate-800     py-2 px-4"
+                      className="text-slate-500 hover:text-slate-800 hover:border-b-2 hover:border-b-slate-400     py-2 px-4"
                     >
                       Home
                     </NavLink>
@@ -55,7 +51,7 @@ function AppLayout() {
                       <>
                         <NavLink
                           to="/events"
-                          className="text-slate-500 hover:text-slate-800 py-2 px-4"
+                          className="text-slate-500 hover:text-slate-800 hover:border-b-2 hover:border-b-slate-400 py-2 px-4"
                         >
                           Events
                         </NavLink>
@@ -63,13 +59,13 @@ function AppLayout() {
                           <>
                             <NavLink
                               to="/recipients"
-                              className="text-slate-500 hover:text-slate-800 py-2 px-4"
+                              className="text-slate-500 hover:text-slate-800 hover:border-b-2 hover:border-b-slate-400 py-2 px-4"
                             >
                               Recipients
                             </NavLink>
                             <NavLink
                               to="/volunteers"
-                              className="text-slate-500 hover:text-slate-800 py-2 px-4 "
+                              className="text-slate-500 hover:text-slate-800 hover:border-b-2 hover:border-b-slate-400  py-2 px-4"
                             >
                               Volunteers
                             </NavLink>
@@ -101,14 +97,16 @@ function AppLayout() {
                         className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                       >
                         {token ? (
-                          <MenuItem>
-                            <button
-                              onClick={() => handleLogout()}
-                              className="block w-full text-start px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                            >
-                              Logout
-                            </button>
-                          </MenuItem>
+                          <>
+                            <MenuItem>
+                              <button
+                                onClick={() => handleLogout()}
+                                className="block w-full text-start px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                              >
+                                Logout
+                              </button>
+                            </MenuItem>
+                          </>
                         ) : null}
                       </MenuItems>
                     </Menu>
@@ -117,7 +115,7 @@ function AppLayout() {
               </div>
               <div className="-mr-2 flex md:hidden">
                 {/* Mobile menu button */}
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-[#e48dde] p-2 text-white hover:bg-pink-700">
+                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md bg-[#e48dde] p-2 text-white hover:bg-[#d973d2]">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   <Bars3Icon
