@@ -19,25 +19,25 @@ function Stats() {
   const stats = [
     {
       id: 1,
-      name: "Total Volunteers",
+      name: "Number of volunteers",
       stat: home?.total_volunteers,
       icon: UsersIcon,
     },
     {
       id: 2,
-      name: "Total Bouquet delivered",
+      name: "Total number of bouquets delivered",
       stat: home?.total_bouquets,
       icon: CheckIcon,
     },
     {
       id: 3,
-      name: "Our happy Recipients",
+      name: "Flower recipients",
       stat: home?.total_recipients,
       icon: FaceSmileIcon,
     },
     {
       id: 4,
-      name: "Total Hours involved",
+      name: "Total volunteer hours",
       stat: home?.total_hours,
       icon: ClockIcon,
     },
@@ -46,7 +46,7 @@ function Stats() {
   return (
     <div className="lg:mt-40 lg:mb-36 md:mt-30 md:mb-30 mt-20  pb-20 mb-10">
       <h2 className="text-center text-3xl mb-24 font-bold ">
-        What we can achieve together
+        What we have achieved so far
       </h2>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2">
         {stats.map((item) => (
