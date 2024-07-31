@@ -30,10 +30,7 @@ function VolunteerTable() {
             <h1 className="text-base font-semibold leading-6 text-gray-900">
               Volunteers
             </h1>
-            <p className="mt-2 text-sm text-gray-700">
-              A list of all the volunteers saved in the database with their
-              information.
-            </p>
+
           </div>
         </div>
         {!users?.length ? (

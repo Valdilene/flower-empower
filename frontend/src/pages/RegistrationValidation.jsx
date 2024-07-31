@@ -112,7 +112,7 @@ function RegistrationValidation() {
                 register={register}
                 name="password_repeat"
               >
-                Password confirm *
+                Repeat password *
               </LabelAndInput>
               <div>
                 <LabelAndInput
