@@ -80,10 +80,10 @@ function EventRow({ event, user }) {
         {cookies.issuperuser ? (
           <>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {event.drivers.length} / {event.bouquet_makers_needed}
+              {event.bouquet_makers.length} / {event.bouquet_makers_needed}
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {event.bouquet_makers.length} / {event.drivers_needed}
+              {event.drivers.length} / {event.drivers_needed}
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
               {event.group}
