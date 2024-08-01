@@ -333,12 +333,10 @@ class SendDriversEmailView(APIView):
 
                     # building list of description and link
 
-
                     address_list.append(address_text)
                     address_list.append(link)
 
                     route_list.append(address_list)
-
 
             routes_list.append(route_list)
 
@@ -346,7 +344,6 @@ class SendDriversEmailView(APIView):
             return Response({'message': 'Emails sent.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         for number_of_driver in range(len(routes_list)):
-
             context = {
                 "content": routes_list[number_of_driver]
             }
@@ -362,7 +359,8 @@ class SendDriversEmailView(APIView):
                 message=plain_message,
                 # 'Here is your route for tomorrow:\n\n{}'.format(routes_list[number_of_driver]),
                 from_email='flower.empower.management@gmail.com',
-                recipient_list=['{}'.format(list(User.objects.filter(id__in=event.drivers.all()))[number_of_driver].email)],
+                recipient_list=[
+                    '{}'.format(list(User.objects.filter(id__in=event.drivers.all()))[number_of_driver].email)],
                 html_message=convert_to_html_content,
                 fail_silently=False, )
 
