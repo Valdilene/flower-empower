@@ -141,49 +141,49 @@ class ToggleEventParticipationView(GenericAPIView):
         return Response({'message': message}, status=status.HTTP_200_OK)
 
 
-class ToggleEventAttendanceView(GenericAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventAdminSerializer
-    permission_classes = [IsAdminUser]
-    lookup_field = 'pk'
-
-    def patch(self, request, *args, **kwargs):
-        event_id = self.kwargs.get(self.lookup_field)
-
-        try:
-            event = Event.objects.get(pk=event_id)
-        except Event.DoesNotExist:
-            return Response({'error': 'Event not found.'}, status=status.HTTP_404_NOT_FOUND)
-
-        user_id = request.data.get('user_id')
-        if not user_id:
-            return Response({'error': 'User ID not provided.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            user = get_user_model().objects.get(pk=user_id)
-        except get_user_model().DoesNotExist:
-            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
-
-        # Check if the user should be in bouquet_makers_attendees
-        if user in event.bouquet_makers.all():
-            if user not in event.bouquet_makers_attendees.all():
-                event.bouquet_makers_attendees.add(user)
-                message = 'Bouquet maker checked in'
-            else:
-                message = 'User is already checked in'
-        # Check if the user should be in drivers_attendees
-        if user in event.drivers.all():
-            if user not in event.drivers_attendees.all():
-                event.drivers_attendees.add(user)
-                message = 'Driver checked in'
-            else:
-                message = 'Volunteer is already checked in'
-        else:
-            message = 'User is not registered for this event'
-        # Save the event instance
-        event.save()
-
-        return Response({'message': message}, status=status.HTTP_200_OK)
+# class ToggleEventAttendanceView(GenericAPIView):
+#     queryset = Event.objects.all()
+#     serializer_class = EventAdminSerializer
+#     permission_classes = [IsAdminUser]
+#     lookup_field = 'pk'
+#
+#     def patch(self, request, *args, **kwargs):
+#         event_id = self.kwargs.get(self.lookup_field)
+#
+#         try:
+#             event = Event.objects.get(pk=event_id)
+#         except Event.DoesNotExist:
+#             return Response({'error': 'Event not found.'}, status=status.HTTP_404_NOT_FOUND)
+#
+#         user_id = request.data.get('user_id')
+#         if not user_id:
+#             return Response({'error': 'User ID not provided.'}, status=status.HTTP_400_BAD_REQUEST)
+#
+#         try:
+#             user = get_user_model().objects.get(pk=user_id)
+#         except get_user_model().DoesNotExist:
+#             return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+#
+#         # Check if the user should be in bouquet_makers_attendees
+#         if user in event.bouquet_makers.all():
+#             if user not in event.bouquet_makers_attendees.all():
+#                 event.bouquet_makers_attendees.add(user)
+#                 message = 'Bouquet maker checked in'
+#             else:
+#                 message = 'User is already checked in'
+#         # Check if the user should be in drivers_attendees
+#         if user in event.drivers.all():
+#             if user not in event.drivers_attendees.all():
+#                 event.drivers_attendees.add(user)
+#                 message = 'Driver checked in'
+#             else:
+#                 message = 'Volunteer is already checked in'
+#         else:
+#             message = 'User is not registered for this event'
+#         # Save the event instance
+#         event.save()
+#
+#         return Response({'message': message}, status=status.HTTP_200_OK)
 
 
 class SendBouquetMakersEmailView(APIView):
@@ -403,9 +403,9 @@ class StatsView(GenericAPIView):
                 total_recipients.add(recipient.id)
 
             # Calculate the total hours worked by bouquet makers (assuming each works 2.5 hours)
-            bouquet_makers_hours = event.bouquet_makers_attendees.count() * 2.5
+            bouquet_makers_hours = event.bouquet_makers.count() * 2.5
             # Calculate the total hours worked by drivers (assuming each works 3 hours)
-            drivers_hours = event.drivers_attendees.count() * 3
+            drivers_hours = event.drivers.count() * 3
             # Add the hours from bouquet makers and drivers to the total hours counter
             total_hours += bouquet_makers_hours + drivers_hours
 
