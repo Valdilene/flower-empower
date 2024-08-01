@@ -22,10 +22,10 @@
                 Thank you for your help!
             </p>
             <p>
-            This is your list of addresses:
+            This is your list of addresses (Approx. driving time {{ content.0 }} min):
             </p>
             <ul>
-                {%  for recipient in content %}
+                {%  for recipient in content|slice:"1:" %}
                     <li><a href={{ recipient.1 }}>{{ recipient.0 }}</a></li>
                 {% endfor %}
             </ul>

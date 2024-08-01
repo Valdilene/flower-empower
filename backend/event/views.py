@@ -305,7 +305,7 @@ class SendDriversEmailView(APIView):
             # isolation of the actions_list which is the order of addresses to drive to
 
             properties_object = item['properties']
-            # time = int(properties_object['time'] / 60)
+            time = int(properties_object['time'] / 60)
             actions_list = properties_object['actions']
 
             # iterating through the actions_list and find actions with a job_index. So a action,
@@ -313,7 +313,7 @@ class SendDriversEmailView(APIView):
 
             # route_list = f'-----------DRIVER: {num}-------------APPROX. DRIVING TIME: {time} min-----------\n\n'
 
-            route_list = []
+            route_list = [time]
 
             for action in actions_list:
                 if 'job_index' in action.keys():
