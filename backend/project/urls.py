@@ -21,7 +21,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework_simplejwt import views as jwt_views
 from event.views import ListCreateEventView, EventRetrieveUpdateDestroyView, ToggleEventParticipationView, \
-    SendBouquetMakersEmailView, SendDriversEmailView, StatsView, ToggleEventAttendanceView
+    SendBouquetMakersEmailView, SendDriversEmailView, StatsView
 from registration.views import RegistrationView, RegistrationValidationView, PasswordResetView, \
     PasswordResetValidationView, TokenUserObtainView
 from user.views import MeView, ListCreateUserView, RetrieveUpdateDestroyUserView
@@ -68,8 +68,8 @@ urlpatterns = [
          name='send_bouquet_email'),
     path('backend/api/events/senddriveremail/<int:event_id>/', SendDriversEmailView.as_view(),
          name='send_bouquet_email'),
-    path('backend/api/events/toggle-attendance/<int:pk>/', ToggleEventAttendanceView.as_view(),
-         name='toggle_attendance'),
+    # path('backend/api/events/toggle-attendance/<int:pk>/', ToggleEventAttendanceView.as_view(),
+    #      name='toggle_attendance'),
     # recipients
     path('backend/api/recipients/', ListCreateRecipientView.as_view(), name='list_recipients'),
     path('backend/api/recipients/<int:recipient_id>/', RetrieveUpdateDestroyRecipientView.as_view(),
