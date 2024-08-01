@@ -4,7 +4,9 @@ import math
 
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mass_mail, send_mail
+from django.template.loader import render_to_string
 from django.utils.dateparse import parse_date
+from django.utils.html import strip_tags
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.response import Response
@@ -309,15 +311,34 @@ class SendDriversEmailView(APIView):
             # iterating through the actions_list and find actions with a job_index. So a action,
             # which is connected to an address in the jobs_list
 
-            route_list = f'-----------DRIVER: {num}-------------APPROX. DRIVING TIME: {time} min-----------\n\n'
+            # route_list = f'-----------DRIVER: {num}-------------APPROX. DRIVING TIME: {time} min-----------\n\n'
+
+            route_list = []
 
             for action in actions_list:
                 if 'job_index' in action.keys():
                     # take the job_index in the action and use this job_index to find the job in the jobs_list.
                     # In this job the description key holds the value with the address object from the Ex el at the beginning.
 
+                    address_list = []
+
                     address_object = jobs_list[action['job_index']]
-                    route_list = route_list + f'{address_object['description']}\n'
+                    # route_list.append(f'{address_object['description']}')
+
+                    address_text = f'{address_object['description']}'
+
+                    # building the link
+                    coordinates = address_object['location']
+                    link = f'https://www.google.com/maps/search/?api=1&query={coordinates[1]}%2C{coordinates[0]}'
+
+                    # building list of description and link
+
+
+                    address_list.append(address_text)
+                    address_list.append(link)
+
+                    route_list.append(address_list)
+
 
             routes_list.append(route_list)
 
@@ -325,11 +346,24 @@ class SendDriversEmailView(APIView):
             return Response({'message': 'Emails sent.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         for number_of_driver in range(len(routes_list)):
+
+            context = {
+                "content": routes_list[number_of_driver]
+            }
+            template_mail = "driver_email.html"
+            convert_to_html_content = render_to_string(
+                template_name=template_mail,
+                context=context
+            )
+            plain_message = strip_tags(convert_to_html_content)
+
             send_mail(
-                'Flower Empower – Your route for tomorrow',
-                'Here is your route for tomorrow:\n\n{}'.format(routes_list[number_of_driver]),
-                'flower.empower.management@gmail.com',
-                ['{}'.format(list(User.objects.filter(id__in=event.drivers.all()))[number_of_driver].email)],
+                'See you Saturday for Deliveries! 🌸 – Your driving route',
+                message=plain_message,
+                # 'Here is your route for tomorrow:\n\n{}'.format(routes_list[number_of_driver]),
+                from_email='flower.empower.management@gmail.com',
+                recipient_list=['{}'.format(list(User.objects.filter(id__in=event.drivers.all()))[number_of_driver].email)],
+                html_message=convert_to_html_content,
                 fail_silently=False, )
 
         return Response({'message': 'Emails sent.'}, status=status.HTTP_200_OK)
