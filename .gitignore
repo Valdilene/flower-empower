@@ -11,3 +11,4 @@ media-files
 pycache
 */pycache
 *.env
+/envs
