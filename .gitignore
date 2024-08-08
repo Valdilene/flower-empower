@@ -10,5 +10,7 @@ static-files
 media-files
 pycache
 */pycache
-*.env
-/envs
+envs/.env
+envs/.dev.env
+envs/.prod.env
+envs/
